@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.salondeventas.cliente.desktop.view.PanelProducto">
+	<padding><Insets top="25" right="25" bottom="10" left="25"/></padding>   
+<Label text="idproducto:"
+        GridPane.columnIndex="0" GridPane.rowIndex="1"/>   
+	<TextField fx:id="txtidproducto" maxWidth="100"
+        GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+<Label text="detalle:"
+        GridPane.columnIndex="0" GridPane.rowIndex="2"/>   
+
+ 	<TextField fx:id="txtdetalle"  maxWidth="200"
+        GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+       
+<Label text="nombre:"
+        GridPane.columnIndex="0" GridPane.rowIndex="3"/>   
+
+ 	<TextField fx:id="txtnombre"  maxWidth="200"
+        GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+       
+<Label text="precioproductoIdprecioproducto:"
+        GridPane.columnIndex="0" GridPane.rowIndex="4"/>   
+	<TextField fx:id="txtprecioproductoIdprecioproducto" maxWidth="100"
+        GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+   <Button id="btnGuardar" fx:id="btnGuardar" onAction="#guardar" text="Guardar" />         
+</GridPane> 

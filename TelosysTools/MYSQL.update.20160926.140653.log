@@ -1,0 +1,28 @@
+Update date : Mon Sep 26 14:06:53 ART 2016
+ 
+ Table 'empresa' found in repository
+ . Column 'nombre' : NotNull changed to true
+ . Column 'nombre' updated
+ (*) table 'empresa' updated : 1 change(s)
+ 
+ Table 'licencias' found in repository
+ (=) table 'licencias' unchanged
+ 
+ Table 'lineadeventa' found in repository
+ (=) table 'lineadeventa' unchanged
+ 
+ Table 'precioproducto' found in repository
+ (=) table 'precioproducto' unchanged
+ 
+ Table 'producto' found in repository
+ . Column 'nombre' : NotNull changed to true
+ . Column 'nombre' updated
+ (*) table 'producto' updated : 1 change(s)
+ 
+ Table 'usuario' found in repository
+ (=) table 'usuario' unchanged
+ 
+ Table 'venta' found in repository
+ . Column 'fecha' : NotNull changed to true
+ . Column 'fecha' updated
+ (*) table 'venta' updated : 1 change(s)

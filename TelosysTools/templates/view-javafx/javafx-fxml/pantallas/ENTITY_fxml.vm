@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="${target.javaPackageFromFolder($SRC)}.Panel${entity.name}">
+	<padding><Insets top="25" right="25" bottom="10" left="25"/></padding>   
+#foreach($attribute in $entity.attributes)
+<Label text="$attribute.name:"
+        GridPane.columnIndex="0" GridPane.rowIndex="$foreach.count"/>   
+#if($attribute.type == "Integer")
+	<TextField fx:id="txt${attribute.name}" maxWidth="100"
+        GridPane.columnIndex="1" GridPane.rowIndex="$foreach.count"/>
+#end
+
+#if($attribute.type == "String")
+ 	<TextField fx:id="txt${attribute.name}"  maxWidth="200"
+        GridPane.columnIndex="1" GridPane.rowIndex="$foreach.count"/>
+       
+#end		 
+#end     
+   <Button id="btnGuardar" fx:id="btnGuardar" onAction="#guardar" text="Guardar" />         
+</GridPane> 

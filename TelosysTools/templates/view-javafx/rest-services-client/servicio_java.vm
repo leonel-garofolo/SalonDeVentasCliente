@@ -1,0 +1,7 @@
+package ${target.javaPackageFromFolder($SRC)};
+
+import ${ROOT_PKG}.modelo.${entity.name};
+
+public interface I${entity.name}Servicio extends IServicio<${entity.name}, java.lang.Long>{
+	
+}

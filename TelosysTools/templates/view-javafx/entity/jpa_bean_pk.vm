@@ -1,0 +1,57 @@
+package ${target.javaPackageFromFolder($SRC)};
+#set( $currentClassName = "${entity.name}Key" )
+import java.io.Serializable;
+
+#foreach( $import in $java.imports($entity.keyAttributes) )
+import $import;
+#end
+
+public class ${entity.name} implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+#foreach( $field in $entity.keyAttributes )
+	private $field.formattedType(10) $field.formattedName(12) #if($field.hasInitialValue())= ${field.initialValue} #end;
+#end
+
+    public ${entity.name}() {
+        super();
+    }
+
+    public ${currentClassName}( $fn.argumentsListWithType($entity.keyAttributes) ) {
+        super();
+#foreach( $field in $entity.keyAttributes )
+        this.$field.name = $field.name ;
+#end
+    }
+
+#foreach( $field in $entity.keyAttributes )
+#if ( $field.databaseName ) 
+#end
+#if ( $field.setter )    public void ${field.setter}( $field.type value ) {
+        this.$field.name = value;
+    }
+#end
+#if ( $field.getter )    public $field.type ${field.getter}() {
+        return this.$field.name;
+    }
+#end
+
+#end  
+
+$java.equalsMethod($currentClassName, $entity.keyAttributes )
+
+$java.hashCodeMethod($currentClassName, $entity.keyAttributes )
+
+    public String toString() {
+		StringBuffer sb = new StringBuffer(); 
+#set( $count = 0 )
+#foreach( $field in $entity.keyAttributes )
+#if( $count > 0 )
+		sb.append("|"); 
+#end
+		sb.append($field.name); 
+#set( $count = $count + 1 )
+#end  
+        return sb.toString();
+    }
+}

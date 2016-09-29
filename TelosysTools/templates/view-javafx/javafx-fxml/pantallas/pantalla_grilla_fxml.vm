@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="601.0">
+               <children>
+                  <BorderPane prefHeight="370.0" prefWidth="600.0">
+                     <top>
+                        <Pane prefHeight="26.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" text="+" />
+                              <Button layoutX="46.0" mnemonicParsing="false" text="-" />
+                              <Label layoutX="318.0" layoutY="5.0" text="Buscar:" />
+                              <TextField layoutX="364.0" prefHeight="25.0" prefWidth="234.0" />
+                              <Separator layoutX="67.0" layoutY="2.0" orientation="VERTICAL" prefHeight="21.0" prefWidth="9.0" />
+                              <Button layoutX="24.0" mnemonicParsing="false" text="E" />
+                              <Button layoutX="72.0" mnemonicParsing="false" text="I" />
+                           </children>
+                        </Pane>
+                     </top>
+                     <center>
+                        <TableView prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                          <columns>
+#foreach($attribute in $entity.attributes)
+
+#if($attribute.type == "Integer") 
+ 				<TableColumn prefWidth="50.0" text="${attribute.name}" />
+
+#else
+ #if($attribute.type == "String")
+				<TableColumn prefWidth="150.0" text="${attribute.name}" />
+ #else
+				<TableColumn prefWidth="200.0" text="${attribute.name}" />
+ #end	
+#end	 
+#end                             
+                          </columns>
+                        </TableView>
+                     </center>
+                  </BorderPane>
+               </children>
+		</AnchorPane>

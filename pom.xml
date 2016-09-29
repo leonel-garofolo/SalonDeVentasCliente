@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.salondeventas.cliente</groupId>
+	<artifactId>SalonDeVentasCliente</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<compileSource>1.8</compileSource>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jersey.version>1.19</jersey.version>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${compileSource}</source>
+					<target>${compileSource}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<!-- llamada a servicio rest -->
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<!-- resuelve mapeo json to object -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.6.3</version>
+		</dependency>				
+	</dependencies>
+</project>
