@@ -1,7 +1,6 @@
 // ENTITY_java.vm
 package org.salondeventas.desktop.view.cliente;
 
-import java.awt.Panel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,22 +11,23 @@ import org.salondeventas.cliente.desktop.servicios.impl.UsuarioServicio;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
-public class PanelGrillaUsuario extends Pane implements Initializable, IPanelControllerGrilla<IUsuarioServicio> {
+public class PanelGrillaUsuario extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IUsuarioServicio> {
 	private IUsuarioServicio usuarioServicio;
-	
 	private Node top;
 	private Node center;
 	private Node bottom;
-	
+	private Tab tab;
 	@FXML
 	private BorderPane pnlBorder;
 	
@@ -37,12 +37,13 @@ public class PanelGrillaUsuario extends Pane implements Initializable, IPanelCon
 	@FXML	
 	private TableView<Usuario> tblProducto;
 	
-	public PanelGrillaUsuario() {
+	public PanelGrillaUsuario(Tab tab) {
+		this.tab = tab;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
         		"/org/salondeventas/desktop/view/cliente/" + this.getClass().getSimpleName() + ".fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
+        
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
@@ -54,10 +55,16 @@ public class PanelGrillaUsuario extends Pane implements Initializable, IPanelCon
 		usuarioServicio = new UsuarioServicio();				
 		loadGrilla();
 		
-		PanelControlesABM botoneraABM = new PanelControlesABM(this, new PanelUsuario(this));	
-		pnlBorder.setTop(botoneraABM);
+		pnlBorder.setTop(generarPanel());
 		this.top = pnlBorder.getTop();
 		this.center = pnlBorder.getCenter();
+		this.btnAgregar.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				 PanelUsuario panel = new PanelUsuario(PanelGrillaUsuario.this);				
+			}
+		});
 		
 	}
 	
@@ -96,13 +103,19 @@ public class PanelGrillaUsuario extends Pane implements Initializable, IPanelCon
 
 	public PanelGrillaUsuario getController() {
 		return this;
+	}	
+
+	public TableView<Usuario> getTblProducto() {
+		return tblProducto;
+	}
+
+	public Tab getTab() {
+		return tab;
 	}
 
 	@Override
 	public void reLoad() {
-		pnlBorder.setTop(top);
-		pnlBorder.setCenter(center);
+		tab.setContent(this);
 		loadGrilla();
-		
 	}
 }

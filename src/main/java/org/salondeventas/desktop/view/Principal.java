@@ -103,10 +103,11 @@ public class Principal extends Application {
 	
 	@FXML
 	private void handleItemUsuariosAction(ActionEvent event) {
-		borderPane = (BorderPane) scene.lookup("#borderPane");		
-		PanelGrillaUsuario grilla = new PanelGrillaUsuario();
-		Tab tab = new Tab("Usuarios",grilla);		
-		tabPane.getTabs().add(tab);		
+		borderPane = (BorderPane) scene.lookup("#borderPane");
+		Tab tab = new Tab("Usuarios");
+		PanelGrillaUsuario grilla = new PanelGrillaUsuario(tab);
+		tab.setContent(grilla);
+		tabPane.getTabs().add(tab);			
 	}
 
 
