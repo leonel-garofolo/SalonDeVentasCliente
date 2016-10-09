@@ -3,6 +3,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
 
 <fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
               <children>
@@ -13,17 +14,21 @@
 #foreach($attribute in $entity.attributes)
 
 #if($attribute.type == "Integer") 
- 				<TableColumn prefWidth="50.0" text="${attribute.name}" />
-
+ 				<TableColumn fx:id="${attribute.name}" prefWidth="50.0" text="${attribute.name}" >
 #else
  #if($attribute.type == "String")
-				<TableColumn prefWidth="150.0" text="${attribute.name}" />
+				<TableColumn fx:id="${attribute.name}" prefWidth="150.0" text="${attribute.name}" >
  #else
-				<TableColumn prefWidth="200.0" text="${attribute.name}" />
+				<TableColumn fx:id="${attribute.name}" prefWidth="200.0" text="${attribute.name}" >
  #end	
-#end	 
+#end
+
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="${attribute.name}" />
+			            </cellValueFactory>
+		        </TableColumn>	 
 #end                             
-                          </columns>
+                         </columns>
                         </TableView>
                      </center>
                   </BorderPane>

@@ -3,6 +3,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
 
 <fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
               <children>
@@ -11,16 +12,34 @@
                         <TableView fx:id="tblProducto" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                           <columns>
 
- 				<TableColumn prefWidth="50.0" text="idproducto" />
+ 				<TableColumn fx:id="idproducto" prefWidth="50.0" text="idproducto" >
 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="idproducto" />
+			            </cellValueFactory>
+		        </TableColumn>	 
 
- 				<TableColumn prefWidth="150.0" text="detalle" />
+ 				<TableColumn fx:id="detalle" prefWidth="150.0" text="detalle" >
  
- 				<TableColumn prefWidth="150.0" text="nombre" />
- 
- 				<TableColumn prefWidth="50.0" text="precioproductoIdprecioproducto" />
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="detalle" />
+			            </cellValueFactory>
+		        </TableColumn>	 
 
-                          </columns>
+ 				<TableColumn fx:id="nombre" prefWidth="150.0" text="nombre" >
+ 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="nombre" />
+			            </cellValueFactory>
+		        </TableColumn>	 
+
+ 				<TableColumn fx:id="precioproductoIdprecioproducto" prefWidth="50.0" text="precioproductoIdprecioproducto" >
+
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="precioproductoIdprecioproducto" />
+			            </cellValueFactory>
+		        </TableColumn>	 
+                         </columns>
                         </TableView>
                      </center>
                   </BorderPane>

@@ -3,6 +3,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
 
 <fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
               <children>
@@ -11,13 +12,27 @@
                         <TableView fx:id="tblVenta" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                           <columns>
 
- 				<TableColumn prefWidth="50.0" text="idventa" />
+ 				<TableColumn fx:id="idventa" prefWidth="50.0" text="idventa" >
 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="idventa" />
+			            </cellValueFactory>
+		        </TableColumn>	 
 
- 				<TableColumn prefWidth="200.0" text="fecha" />
+ 				<TableColumn fx:id="fecha" prefWidth="200.0" text="fecha" >
  
- 				<TableColumn prefWidth="200.0" text="fechaPago" />
-                           </columns>
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="fecha" />
+			            </cellValueFactory>
+		        </TableColumn>	 
+
+ 				<TableColumn fx:id="fechaPago" prefWidth="200.0" text="fechaPago" >
+ 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="fechaPago" />
+			            </cellValueFactory>
+		        </TableColumn>	 
+                         </columns>
                         </TableView>
                      </center>
                   </BorderPane>

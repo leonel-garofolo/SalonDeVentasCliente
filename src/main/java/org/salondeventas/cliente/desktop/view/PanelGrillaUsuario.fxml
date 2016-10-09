@@ -3,6 +3,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
 
 <fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
               <children>
@@ -11,13 +12,27 @@
                         <TableView fx:id="tblUsuario" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                           <columns>
 
- 				<TableColumn prefWidth="50.0" text="idusuario" />
+ 				<TableColumn fx:id="idusuario" prefWidth="50.0" text="idusuario" >
 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="idusuario" />
+			            </cellValueFactory>
+		        </TableColumn>	 
 
- 				<TableColumn prefWidth="150.0" text="clave" />
+ 				<TableColumn fx:id="clave" prefWidth="150.0" text="clave" >
  
- 				<TableColumn prefWidth="150.0" text="nombre" />
-                           </columns>
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="clave" />
+			            </cellValueFactory>
+		        </TableColumn>	 
+
+ 				<TableColumn fx:id="nombre" prefWidth="150.0" text="nombre" >
+ 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="nombre" />
+			            </cellValueFactory>
+		        </TableColumn>	 
+                         </columns>
                         </TableView>
                      </center>
                   </BorderPane>

@@ -15,66 +15,66 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class PanelGrillaUsuario extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IUsuarioServicio> {
+public class PanelGrillaUsuario extends PanelControlesABM
+		implements Initializable, IPanelControllerGrilla<IUsuarioServicio>, EventHandler<ActionEvent> {
 	private IUsuarioServicio usuarioServicio;
-	private Node top;
-	private Node center;
-	private Node bottom;
+	
 	private Tab tab;
 	@FXML
 	private BorderPane pnlBorder;
-	
+
 	@FXML
 	private TextField txtBuscar;
-	
-	@FXML	
+
+	@FXML
 	private TableView<Usuario> tblUsuario;
-	
+
 	public PanelGrillaUsuario(Tab tab) {
 		this.tab = tab;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
+		fxmlLoader.setRoot(this);
+		fxmlLoader.setController(this);
+
+		try {
+			fxmlLoader.load();
+		} catch (IOException exception) {
+			throw new RuntimeException(exception);
+		}
+	}
 
 	public void initialize(URL location, ResourceBundle resources) {
-		usuarioServicio = new UsuarioServicio();				
-		loadGrilla();
-		
-		pnlBorder.setTop(generarPanel());
-		this.top = pnlBorder.getTop();
-		this.center = pnlBorder.getCenter();
-		this.btnAgregar.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				 PanelUsuario panel = new PanelUsuario(PanelGrillaUsuario.this);				
-			}
+		usuarioServicio = new UsuarioServicio();
+		tblUsuario.setOnMousePressed(new EventHandler<MouseEvent>() {
+		    @Override 
+		    public void handle(MouseEvent event) {
+		        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+		        	btnEditarAction();          
+		        }
+		    }
 		});
+		loadGrilla();
+
+		pnlBorder.setTop(generarPanel());		
+		this.btnAgregar.setOnAction(this);
+		this.btnEditar.setOnAction(this);
+		this.btnEliminar.setOnAction(this);
 	}
-	
-	public void loadGrilla(){
+
+	public void loadGrilla() {
 		try {
-			final ObservableList<Usuario> data =
-			        FXCollections.observableArrayList(usuarioServicio.loadAll());
+			final ObservableList<Usuario> data = FXCollections.observableArrayList(usuarioServicio.loadAll());
 			tblUsuario.setItems(data);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}	
+	}
 
 	public IUsuarioServicio getUsuarioServicio() {
 		return usuarioServicio;
@@ -100,7 +100,7 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 
 	public PanelGrillaUsuario getController() {
 		return this;
-	}	
+	}
 
 	public TableView<Usuario> getTblUsuario() {
 		return tblUsuario;
@@ -114,5 +114,35 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 	public void reLoad() {
 		tab.setContent(this);
 		loadGrilla();
+	}
+
+	@Override
+	public void handle(ActionEvent event) {
+		if (event.getSource().equals(btnAgregar)) {
+			new PanelUsuario(PanelGrillaUsuario.this);
+		}
+		if (event.getSource().equals(btnEditar)) {
+			btnEditarAction();					
+		}
+		if (event.getSource().equals(btnEliminar)) {
+			
+			Usuario itemSelected = tblUsuario.getSelectionModel().getSelectedItem();
+			if(itemSelected != null){
+				try {
+					usuarioServicio.delete(itemSelected);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			loadGrilla();
+		}
+	}
+	
+	private void btnEditarAction(){
+		int itemSelected = tblUsuario.getSelectionModel().getSelectedItem().getIdusuario();
+		if(itemSelected > 0){
+			new PanelUsuario(PanelGrillaUsuario.this, itemSelected);
+		}
 	}
 }

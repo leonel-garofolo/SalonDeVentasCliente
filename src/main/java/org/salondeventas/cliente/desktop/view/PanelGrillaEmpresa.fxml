@@ -3,6 +3,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
 
 <fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
               <children>
@@ -11,19 +12,48 @@
                         <TableView fx:id="tblEmpresa" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                           <columns>
 
- 				<TableColumn prefWidth="50.0" text="idempresa" />
+ 				<TableColumn fx:id="idempresa" prefWidth="50.0" text="idempresa" >
 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="idempresa" />
+			            </cellValueFactory>
+		        </TableColumn>	 
 
- 				<TableColumn prefWidth="150.0" text="descripcion" />
+ 				<TableColumn fx:id="descripcion" prefWidth="150.0" text="descripcion" >
  
- 				<TableColumn prefWidth="150.0" text="direccion" />
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="descripcion" />
+			            </cellValueFactory>
+		        </TableColumn>	 
+
+ 				<TableColumn fx:id="direccion" prefWidth="150.0" text="direccion" >
  
- 				<TableColumn prefWidth="200.0" text="logo" />
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="direccion" />
+			            </cellValueFactory>
+		        </TableColumn>	 
+
+ 				<TableColumn fx:id="logo" prefWidth="200.0" text="logo" >
  
- 				<TableColumn prefWidth="150.0" text="nombre" />
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="logo" />
+			            </cellValueFactory>
+		        </TableColumn>	 
+
+ 				<TableColumn fx:id="nombre" prefWidth="150.0" text="nombre" >
  
- 				<TableColumn prefWidth="150.0" text="telefono" />
-                           </columns>
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="nombre" />
+			            </cellValueFactory>
+		        </TableColumn>	 
+
+ 				<TableColumn fx:id="telefono" prefWidth="150.0" text="telefono" >
+ 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="telefono" />
+			            </cellValueFactory>
+		        </TableColumn>	 
+                         </columns>
                         </TableView>
                      </center>
                   </BorderPane>

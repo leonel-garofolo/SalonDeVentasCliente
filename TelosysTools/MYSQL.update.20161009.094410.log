@@ -1,0 +1,31 @@
+Update date : Sun Oct 09 09:44:10 ART 2016
+ 
+ Table 'empresa' found in repository
+ (=) table 'empresa' unchanged
+ 
+ Table 'licencias' found in repository
+ (=) table 'licencias' unchanged
+ 
+ Table 'lineadeventa' found in repository
+ (=) table 'lineadeventa' unchanged
+ 
+ Table 'precioproducto' found in repository
+ . Column 'idproducto' added
+ . Column 'fecha' : NotNull changed to false
+ . Column 'fecha' updated
+ . Column 'importe' : NotNull changed to false
+ . Column 'importe' : Size changed to 9
+ . Column 'importe' updated
+ . Foreign key 'fk_idproducto' added
+ (*) table 'precioproducto' updated : 4 change(s)
+ 
+ Table 'producto' found in repository
+ . Column 'precioproducto_idprecioproducto' deleted
+ . Foreign key 'FK_49r31y3e9yejocsyug4d2ov8l' deleted
+ (*) table 'producto' updated : 2 change(s)
+ 
+ Table 'usuario' found in repository
+ (=) table 'usuario' unchanged
+ 
+ Table 'venta' found in repository
+ (=) table 'venta' unchanged
