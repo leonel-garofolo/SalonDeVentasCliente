@@ -18,7 +18,7 @@ public class Services<T extends Serializable> {
 	protected WebResource webResource;
 	protected ClientResponse response;
 	protected Client client;	
-	private ObjectMapper mapper = new ObjectMapper();
+	protected ObjectMapper mapper = new ObjectMapper();
 	
 	@SuppressWarnings("unchecked")
 	public Services() {

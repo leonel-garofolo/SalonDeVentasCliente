@@ -1,4 +1,4 @@
-package org.salondeventas.desktop.view.cliente;
+package org.salondeventas.cliente.desktop.view;
 
 import java.io.IOException;
 
@@ -10,15 +10,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.stage.WindowEvent;		
+
+
+import org.salondeventas.cliente.desktop.view.PanelGrillaEmpresa;		
+import org.salondeventas.cliente.desktop.view.PanelGrillaProducto;		
+import org.salondeventas.cliente.desktop.view.PanelGrillaUsuario;		
+import org.salondeventas.cliente.desktop.view.PanelGrillaVenta;		
+
 
 public class Principal extends Application {
 
+	@FXML
+	private TabPane tabPane;
 	@FXML
 	private static Scene scene;
 	@FXML
@@ -83,49 +94,37 @@ public class Principal extends Application {
 	@FXML
 	private void handleItemEmpresaAction(ActionEvent event) {
 		borderPane = (BorderPane) scene.lookup("#borderPane");
-		try {
-			panelEmpresa = (Pane) FXMLLoader.load(getClass().getResource(
-					"PanelEmpresa.fxml"));
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}
-		borderPane.setCenter(panelEmpresa);		
+		Tab tab = new Tab("Empresas");
+		PanelGrillaEmpresa grilla = new PanelGrillaEmpresa(tab);
+		tab.setContent(grilla);
+		tabPane.getTabs().add(tab);	
 	}
 
 	@FXML
 	private void handleItemProductoAction(ActionEvent event) {
 		borderPane = (BorderPane) scene.lookup("#borderPane");
-		try {
-			panelProducto = (Pane) FXMLLoader.load(getClass().getResource(
-					"PanelProducto.fxml"));
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}
-		borderPane.setCenter(panelProducto);		
+		Tab tab = new Tab("Productos");
+		PanelGrillaProducto grilla = new PanelGrillaProducto(tab);
+		tab.setContent(grilla);
+		tabPane.getTabs().add(tab);	
 	}
 
 	@FXML
 	private void handleItemUsuarioAction(ActionEvent event) {
 		borderPane = (BorderPane) scene.lookup("#borderPane");
-		try {
-			panelUsuario = (Pane) FXMLLoader.load(getClass().getResource(
-					"PanelUsuario.fxml"));
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}
-		borderPane.setCenter(panelUsuario);		
+		Tab tab = new Tab("Usuarios");
+		PanelGrillaUsuario grilla = new PanelGrillaUsuario(tab);
+		tab.setContent(grilla);
+		tabPane.getTabs().add(tab);	
 	}
 
 	@FXML
 	private void handleItemVentaAction(ActionEvent event) {
 		borderPane = (BorderPane) scene.lookup("#borderPane");
-		try {
-			panelVenta = (Pane) FXMLLoader.load(getClass().getResource(
-					"PanelVenta.fxml"));
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}
-		borderPane.setCenter(panelVenta);		
+		Tab tab = new Tab("Ventas");
+		PanelGrillaVenta grilla = new PanelGrillaVenta(tab);
+		tab.setContent(grilla);
+		tabPane.getTabs().add(tab);	
 	}
 
 

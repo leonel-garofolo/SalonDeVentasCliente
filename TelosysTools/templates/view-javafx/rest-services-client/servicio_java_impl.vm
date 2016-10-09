@@ -1,4 +1,11 @@
 #set($uncapitalizedEntityName = $fn.uncapitalize(${entity.name}) )
+## ----------------------------------------------------------------------
+#if ( $entity.hasCompositePrimaryKey() )
+#set( $primaryKeyType = "${entity.name}EntityKey" )
+#else 
+#set( $primaryKeyType = $entity.keyAttributes[0].wrapperType )
+#end
+## ----------------------------------------------------------------------
 package ${target.javaPackageFromFolder($SRC)};
 
 import java.util.List;
@@ -11,15 +18,15 @@ import com.sun.jersey.api.client.ClientResponse;
 public class ${entity.name}Servicio extends Services<${entity.name}> implements I${entity.name}Servicio {	
 		
 	@Override
-	public String agregar(${entity.name} ${uncapitalizedEntityName}) throws Exception {		
+	public String insert(${entity.name} ${uncapitalizedEntityName}) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/agregar");		
-		
+		webResource = client.resource(USER_URI + "usuario/insert");		
+		String stringJson = mapper.writeValueAsString(${uncapitalizedEntityName});
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, ${uncapitalizedEntityName});
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -30,15 +37,15 @@ public class ${entity.name}Servicio extends Services<${entity.name}> implements 
 	}
 	
 	@Override
-	public String actualizar(${entity.name} ${uncapitalizedEntityName}) throws Exception {	
+	public String update(${entity.name} ${uncapitalizedEntityName}) throws Exception {	
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/actualizar");		
-		
+		webResource = client.resource(USER_URI + "usuario/update");		
+		String stringJson = mapper.writeValueAsString(${uncapitalizedEntityName});
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, ${uncapitalizedEntityName});
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -49,15 +56,15 @@ public class ${entity.name}Servicio extends Services<${entity.name}> implements 
 	}
 	
 	@Override
-	public String borrar(${entity.name} ${uncapitalizedEntityName}) throws Exception {		
+	public String delete(${entity.name} ${uncapitalizedEntityName}) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/borrar");		
-		
+		webResource = client.resource(USER_URI + "usuario/delete");		
+		String stringJson = mapper.writeValueAsString(${uncapitalizedEntityName});
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, ${uncapitalizedEntityName});
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -68,15 +75,15 @@ public class ${entity.name}Servicio extends Services<${entity.name}> implements 
 	}
 	
 	@Override
-	public ${entity.name} obtener(long id) throws Exception {		
+	public ${entity.name} load($fn.argumentsListWithType( $entity.keyAttributes )) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/obtener");		
+		webResource = client.resource(USER_URI + "usuario/load");		
 		
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, id);
+				.post(ClientResponse.class, $fn.argumentsList( $entity.keyAttributes ));
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -87,9 +94,9 @@ public class ${entity.name}Servicio extends Services<${entity.name}> implements 
 	}
 	
 	@Override
-	public List<${entity.name}> obtenerTodos() throws Exception {		
+	public List<${entity.name}> loadAll() throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/obtenertodos");		
+		webResource = client.resource(USER_URI + "usuario/loadall");		
 		
 		response = webResource
 				.queryParam("usuario", "leonel")

@@ -37,7 +37,7 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */ 
-package org.salondeventas.desktop.view.cliente;
+package org.salondeventas.cliente.desktop.view;
 
 /**
  *

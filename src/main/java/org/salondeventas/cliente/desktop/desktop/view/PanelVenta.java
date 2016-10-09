@@ -1,5 +1,5 @@
 // ENTITY_java.vm
-package org.salondeventas.desktop.view.cliente;
+package org.salondeventas.cliente.desktop.desktop.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -10,15 +10,15 @@ import com.sun.jersey.api.client.ClientResponse;
 public class PrecioproductoServicio extends Services<Precioproducto> implements IPrecioproductoServicio {	
 		
 	@Override
-	public String agregar(Precioproducto precioproducto) throws Exception {		
+	public String insert(Precioproducto precioproducto) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/agregar");		
-		
+		webResource = client.resource(USER_URI + "usuario/insert");		
+		String stringJson = mapper.writeValueAsString(precioproducto);
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, precioproducto);
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -29,15 +29,15 @@ public class PrecioproductoServicio extends Services<Precioproducto> implements 
 	}
 	
 	@Override
-	public String actualizar(Precioproducto precioproducto) throws Exception {	
+	public String update(Precioproducto precioproducto) throws Exception {	
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/actualizar");		
-		
+		webResource = client.resource(USER_URI + "usuario/update");		
+		String stringJson = mapper.writeValueAsString(precioproducto);
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, precioproducto);
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -48,15 +48,15 @@ public class PrecioproductoServicio extends Services<Precioproducto> implements 
 	}
 	
 	@Override
-	public String borrar(Precioproducto precioproducto) throws Exception {		
+	public String delete(Precioproducto precioproducto) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/borrar");		
-		
+		webResource = client.resource(USER_URI + "usuario/delete");		
+		String stringJson = mapper.writeValueAsString(precioproducto);
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, precioproducto);
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -67,15 +67,15 @@ public class PrecioproductoServicio extends Services<Precioproducto> implements 
 	}
 	
 	@Override
-	public Precioproducto obtener(long id) throws Exception {		
+	public Precioproducto load(Integer idprecioproducto) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/obtener");		
+		webResource = client.resource(USER_URI + "usuario/load");		
 		
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, id);
+				.post(ClientResponse.class, idprecioproducto);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -86,9 +86,9 @@ public class PrecioproductoServicio extends Services<Precioproducto> implements 
 	}
 	
 	@Override
-	public List<Precioproducto> obtenerTodos() throws Exception {		
+	public List<Precioproducto> loadAll() throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/obtenertodos");		
+		webResource = client.resource(USER_URI + "usuario/loadall");		
 		
 		response = webResource
 				.queryParam("usuario", "leonel")

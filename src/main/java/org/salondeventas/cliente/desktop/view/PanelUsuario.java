@@ -1,5 +1,5 @@
 // ENTITY_java.vm
-package org.salondeventas.desktop.view.cliente;
+package org.salondeventas.cliente.desktop.view;
 
 import java.io.IOException;
 import java.net.URL;
@@ -49,7 +49,7 @@ public class PanelUsuario extends BorderPane implements Initializable {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        father.getTblProducto().getSelectionModel().getSelectedIndex();
+        father.getTblUsuario().getSelectionModel().getSelectedIndex();
         this.setTop(father.generarPanelFormulario());
         this.setLeft(null);
         this.setRight(null);

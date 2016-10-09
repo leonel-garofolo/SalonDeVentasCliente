@@ -1,4 +1,4 @@
-package org.salondeventas.desktop.view.cliente;
+package org.salondeventas.cliente.desktop.view;
 
 import javafx.fxml.FXMLLoader;
 

@@ -8,22 +8,16 @@
               <children>
                   <BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
                      <center>
-                        <TableView fx:id="tbl${entity}" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="tblVenta" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                           <columns>
-#foreach($attribute in $entity.attributes)
 
-#if($attribute.type == "Integer") 
- 				<TableColumn prefWidth="50.0" text="${attribute.name}" />
+ 				<TableColumn prefWidth="50.0" text="idventa" />
 
-#else
- #if($attribute.type == "String")
-				<TableColumn prefWidth="150.0" text="${attribute.name}" />
- #else
-				<TableColumn prefWidth="200.0" text="${attribute.name}" />
- #end	
-#end	 
-#end                             
-                          </columns>
+
+ 				<TableColumn prefWidth="200.0" text="fecha" />
+ 
+ 				<TableColumn prefWidth="200.0" text="fechaPago" />
+                           </columns>
                         </TableView>
                      </center>
                   </BorderPane>

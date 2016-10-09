@@ -10,15 +10,15 @@ import com.sun.jersey.api.client.ClientResponse;
 public class UsuarioServicio extends Services<Usuario> implements IUsuarioServicio {	
 		
 	@Override
-	public String agregar(Usuario usuario) throws Exception {		
+	public String insert(Usuario usuario) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/agregar");		
-		
+		webResource = client.resource(USER_URI + "usuario/insert");		
+		String stringJson = mapper.writeValueAsString(usuario);
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, usuario);
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -29,15 +29,15 @@ public class UsuarioServicio extends Services<Usuario> implements IUsuarioServic
 	}
 	
 	@Override
-	public String actualizar(Usuario usuario) throws Exception {	
+	public String update(Usuario usuario) throws Exception {	
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/actualizar");		
-		
+		webResource = client.resource(USER_URI + "usuario/update");		
+		String stringJson = mapper.writeValueAsString(usuario);
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, usuario);
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -48,15 +48,15 @@ public class UsuarioServicio extends Services<Usuario> implements IUsuarioServic
 	}
 	
 	@Override
-	public String borrar(Usuario usuario) throws Exception {		
+	public String delete(Usuario usuario) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/borrar");		
-		
+		webResource = client.resource(USER_URI + "usuario/delete");		
+		String stringJson = mapper.writeValueAsString(usuario);
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, usuario);
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -67,15 +67,15 @@ public class UsuarioServicio extends Services<Usuario> implements IUsuarioServic
 	}
 	
 	@Override
-	public Usuario obtener(long id) throws Exception {		
+	public Usuario load(Integer idusuario) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/obtener");		
+		webResource = client.resource(USER_URI + "usuario/load");		
 		
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, id);
+				.post(ClientResponse.class, idusuario);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "
@@ -86,9 +86,9 @@ public class UsuarioServicio extends Services<Usuario> implements IUsuarioServic
 	}
 	
 	@Override
-	public List<Usuario> obtenerTodos() throws Exception {		
+	public List<Usuario> loadAll() throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/obtenertodos");		
+		webResource = client.resource(USER_URI + "usuario/loadall");		
 		
 		response = webResource
 				.queryParam("usuario", "leonel")

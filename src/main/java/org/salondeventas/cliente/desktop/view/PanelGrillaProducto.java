@@ -1,13 +1,12 @@
-// ENTITY_java.vm
-package org.salondeventas.desktop.view.cliente;
+package org.salondeventas.cliente.desktop.view;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.salondeventas.cliente.desktop.modelo.Usuario;
-import org.salondeventas.cliente.desktop.servicios.IUsuarioServicio;
-import org.salondeventas.cliente.desktop.servicios.impl.UsuarioServicio;
+import org.salondeventas.cliente.desktop.modelo.Producto;
+import org.salondeventas.cliente.desktop.servicios.IProductoServicio;
+import org.salondeventas.cliente.desktop.servicios.impl.ProductoServicio;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,8 +21,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
-public class PanelGrillaUsuario extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IUsuarioServicio> {
-	private IUsuarioServicio usuarioServicio;
+public class PanelGrillaProducto extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IProductoServicio> {
+	private IProductoServicio productoServicio;
 	private Node top;
 	private Node center;
 	private Node bottom;
@@ -35,12 +34,11 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 	private TextField txtBuscar;
 	
 	@FXML	
-	private TableView<Usuario> tblProducto;
+	private TableView<Producto> tblProducto;
 	
-	public PanelGrillaUsuario(Tab tab) {
+	public PanelGrillaProducto(Tab tab) {
 		this.tab = tab;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-        		"/org/salondeventas/desktop/view/cliente/" + this.getClass().getSimpleName() + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         
@@ -52,7 +50,7 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
     }
 
 	public void initialize(URL location, ResourceBundle resources) {
-		usuarioServicio = new UsuarioServicio();				
+		productoServicio = new ProductoServicio();				
 		loadGrilla();
 		
 		pnlBorder.setTop(generarPanel());
@@ -62,16 +60,15 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 			
 			@Override
 			public void handle(ActionEvent event) {
-				 PanelUsuario panel = new PanelUsuario(PanelGrillaUsuario.this);				
+				 PanelProducto panel = new PanelProducto(PanelGrillaProducto.this);				
 			}
 		});
-		
 	}
 	
 	public void loadGrilla(){
 		try {
-			final ObservableList<Usuario> data =
-			        FXCollections.observableArrayList(usuarioServicio.obtenerTodos());
+			final ObservableList<Producto> data =
+			        FXCollections.observableArrayList(productoServicio.loadAll());
 			tblProducto.setItems(data);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -79,12 +76,12 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 		}
 	}	
 
-	public IUsuarioServicio getUsuarioServicio() {
-		return usuarioServicio;
+	public IProductoServicio getProductoServicio() {
+		return productoServicio;
 	}
 
-	public void setUsuarioServicio(IUsuarioServicio usuarioServicio) {
-		this.usuarioServicio = usuarioServicio;
+	public void setProductoServicio(IProductoServicio productoServicio) {
+		this.productoServicio = productoServicio;
 	}
 
 	@Override
@@ -97,15 +94,15 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 	}
 
 	@Override
-	public IUsuarioServicio getServicio() {
-		return this.usuarioServicio;
+	public IProductoServicio getServicio() {
+		return this.productoServicio;
 	}
 
-	public PanelGrillaUsuario getController() {
+	public PanelGrillaProducto getController() {
 		return this;
 	}	
 
-	public TableView<Usuario> getTblProducto() {
+	public TableView<Producto> getTblProducto() {
 		return tblProducto;
 	}
 

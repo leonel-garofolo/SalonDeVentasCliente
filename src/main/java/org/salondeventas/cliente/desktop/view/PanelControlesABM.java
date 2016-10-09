@@ -1,4 +1,4 @@
-package org.salondeventas.desktop.view.cliente;
+package org.salondeventas.cliente.desktop.view;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;

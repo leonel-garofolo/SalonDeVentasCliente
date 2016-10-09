@@ -14,11 +14,11 @@ import com.sun.jersey.api.client.WebResource;
 
 public class Services<T extends Serializable> {
 	protected Class<T> persistentClass;
-	protected static String USER_URI = "http://localhost:8080/SalonDeVentasServer/";	
+	protected static String USER_URI = "http://localhost:8081/SalonDeVentasServer/";	
 	protected WebResource webResource;
 	protected ClientResponse response;
 	protected Client client;	
-	private ObjectMapper mapper = new ObjectMapper();
+	protected ObjectMapper mapper = new ObjectMapper();
 	
 	@SuppressWarnings("unchecked")
 	public Services() {

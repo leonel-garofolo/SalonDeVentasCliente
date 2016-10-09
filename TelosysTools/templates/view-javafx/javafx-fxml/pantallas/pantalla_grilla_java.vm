@@ -1,0 +1,119 @@
+#set($uncapitalizedEntityName = $fn.uncapitalize(${entity.name}) )
+package ${target.javaPackageFromFolder($SRC)};
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import ${ROOT_PKG}.modelo.${entity};
+import ${ROOT_PKG}.servicios.I${entity}Servicio;
+import ${ROOT_PKG}.servicios.impl.${entity}Servicio;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+
+public class PanelGrilla${entity} extends PanelControlesABM implements Initializable, IPanelControllerGrilla<I${entity}Servicio> {
+	private I${entity}Servicio ${uncapitalizedEntityName}Servicio;
+	private Node top;
+	private Node center;
+	private Node bottom;
+	private Tab tab;
+	@FXML
+	private BorderPane pnlBorder;
+	
+	@FXML
+	private TextField txtBuscar;
+	
+	@FXML	
+	private TableView<${entity}> tbl${entity};
+	
+	public PanelGrilla${entity}(Tab tab) {
+		this.tab = tab;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+	public void initialize(URL location, ResourceBundle resources) {
+		${uncapitalizedEntityName}Servicio = new ${entity}Servicio();				
+		loadGrilla();
+		
+		pnlBorder.setTop(generarPanel());
+		this.top = pnlBorder.getTop();
+		this.center = pnlBorder.getCenter();
+		this.btnAgregar.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				 Panel${entity} panel = new Panel${entity}(PanelGrilla${entity}.this);				
+			}
+		});
+	}
+	
+	public void loadGrilla(){
+		try {
+			final ObservableList<${entity}> data =
+			        FXCollections.observableArrayList(${uncapitalizedEntityName}Servicio.loadAll());
+			tbl${entity}.setItems(data);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}	
+
+	public I${entity}Servicio get${entity}Servicio() {
+		return ${uncapitalizedEntityName}Servicio;
+	}
+
+	public void set${entity}Servicio(I${entity}Servicio ${uncapitalizedEntityName}Servicio) {
+		this.${uncapitalizedEntityName}Servicio = ${uncapitalizedEntityName}Servicio;
+	}
+
+	@Override
+	public BorderPane getPnlBorder() {
+		return pnlBorder;
+	}
+
+	public void setPnlBorder(BorderPane pnlBorder) {
+		this.pnlBorder = pnlBorder;
+	}
+
+	@Override
+	public I${entity}Servicio getServicio() {
+		return this.${uncapitalizedEntityName}Servicio;
+	}
+
+	public PanelGrilla${entity} getController() {
+		return this;
+	}	
+
+	public TableView<${entity}> getTbl${entity}() {
+		return tbl${entity};
+	}
+
+	public Tab getTab() {
+		return tab;
+	}
+
+	@Override
+	public void reLoad() {
+		tab.setContent(this);
+		loadGrilla();
+	}
+}

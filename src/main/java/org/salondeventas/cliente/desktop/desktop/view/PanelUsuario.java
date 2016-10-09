@@ -1,5 +1,5 @@
 // ENTITY_java.vm
-package org.salondeventas.desktop.view.cliente;
+package org.salondeventas.cliente.desktop.desktop.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,19 +13,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 
 
-public class PanelProducto implements Initializable {
+public class PanelUsuario implements Initializable {
 
 	@FXML
-	private TextField txtidproducto;
+	private TextField txtidusuario;
 
 	@FXML
-	private TextField txtdetalle;
+	private TextField txtclave;
 
 	@FXML
 	private TextField txtnombre;
-
-	@FXML
-	private TextField txtprecioproductoIdprecioproducto;
 
 	public void initialize(URL location, ResourceBundle resources) {
 		

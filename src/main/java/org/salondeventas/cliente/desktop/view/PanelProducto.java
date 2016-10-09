@@ -1,5 +1,5 @@
 // ENTITY_java.vm
-package org.salondeventas.desktop.view.cliente;
+package org.salondeventas.cliente.desktop.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,23 +13,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 
 
-public class PanelEmpresa implements Initializable {
+public class PanelProducto implements Initializable {
 
 	@FXML
-	private TextField txtidempresa;
+	private TextField txtidproducto;
 
 	@FXML
-	private TextField txtdescripcion;
-
-	@FXML
-	private TextField txtdireccion;
-
+	private TextField txtdetalle;
 
 	@FXML
 	private TextField txtnombre;
 
 	@FXML
-	private TextField txttelefono;
+	private TextField txtprecioproductoIdprecioproducto;
+
+	public PanelProducto(PanelGrillaProducto panelGrillaProducto) {
+		// TODO Auto-generated constructor stub
+	}
 
 	public void initialize(URL location, ResourceBundle resources) {
 		

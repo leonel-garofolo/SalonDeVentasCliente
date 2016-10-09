@@ -12,8 +12,8 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Archivo">
                   <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleItemConfiguracionAction" text="Configuración" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleItemCerrarSessionAction" text="Cerrar Sesión" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleItemConfiguracionAction" text="Configuraciï¿½n" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleItemCerrarSessionAction" text="Cerrar Sesiï¿½n" />
 						<MenuItem mnemonicParsing="false" onAction="#handleItemSalirAction" text="Salir" />                     
                   </items>
                 </Menu>
@@ -34,6 +34,10 @@
               </menus>
             </MenuBar>
          </top>
+ 		 <center>
+            <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">             
+            </TabPane>
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>
