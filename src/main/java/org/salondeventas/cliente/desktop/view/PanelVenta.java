@@ -1,26 +1,22 @@
 package org.salondeventas.cliente.desktop.view;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-
-import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
-import org.salondeventas.cliente.desktop.modelo.Venta;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import java.time.LocalDate;
+
+
+import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
+import org.salondeventas.cliente.desktop.modelo.Venta;
 
 public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
@@ -84,18 +80,16 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
         father.btnGuardar.setOnAction(this);        
         father.btnCancelar.setOnAction(this);
         father.getTab().setContent(this);
+        
+		dprfecha.setValue(LocalDate.now());			
+		dprfechaPago.setValue(LocalDate.now());			
 	}
 
 	public void loadForm(Venta venta){
 		if(venta !=null){
 			txtidventa.setText(String.valueOf(venta.getIdventa()));
-			//dprfecha.setdateText(venta.getFecha());
-			//LocalDate local = new LocalDate();
-			//dprfecha.setValue(new Date());
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-			LocalDate localDate = LocalDate.parse("01/01/2016", formatter);
-			dprfecha.setValue(localDate);
-			//txtfechaPago.setText(venta.getFechaPago());
+			dprfecha.setValue(new java.sql.Date(venta.getFecha().getTime()).toLocalDate());		
+			dprfechaPago.setValue(new java.sql.Date(venta.getFechaPago().getTime()).toLocalDate());		
 		}
 	}
 
@@ -106,8 +100,8 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 		}catch (NumberFormatException e) {
 			unVenta.setIdventa(null);
 		}
-		//unVenta.setFecha(dprfecha.getValue().get);
-		//unVenta.setFechaPago(txtfechaPago.getText());
+		unVenta.setFecha(java.sql.Date.valueOf(dprfecha.getValue()));
+		unVenta.setFechaPago(java.sql.Date.valueOf(dprfechaPago.getValue()));
 		
 		Label label = null;	
 		vBoxMsg.getChildren().clear();

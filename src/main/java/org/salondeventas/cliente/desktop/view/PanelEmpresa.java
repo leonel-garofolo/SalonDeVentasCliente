@@ -3,19 +3,21 @@ package org.salondeventas.cliente.desktop.view;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
+import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
+import org.salondeventas.cliente.desktop.modelo.Empresa;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-
-
-import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
-import org.salondeventas.cliente.desktop.modelo.Empresa;
 
 public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
@@ -86,6 +88,7 @@ public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent
         father.btnGuardar.setOnAction(this);        
         father.btnCancelar.setOnAction(this);
         father.getTab().setContent(this);
+        
 	}
 
 	public void loadForm(Empresa empresa){
@@ -93,7 +96,6 @@ public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent
 			txtidempresa.setText(String.valueOf(empresa.getIdempresa()));
 			txtdescripcion.setText(empresa.getDescripcion());
 			txtdireccion.setText(empresa.getDireccion());
-			//txtlogo.setText(empresa.getLogo());
 			txtnombre.setText(empresa.getNombre());
 			txttelefono.setText(empresa.getTelefono());
 		}
@@ -108,7 +110,6 @@ public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent
 		}
 		unEmpresa.setDescripcion(txtdescripcion.getText());
 		unEmpresa.setDireccion(txtdireccion.getText());
-		//unEmpresa.setLogo(txtlogo.getText());
 		unEmpresa.setNombre(txtnombre.getText());
 		unEmpresa.setTelefono(txttelefono.getText());
 		

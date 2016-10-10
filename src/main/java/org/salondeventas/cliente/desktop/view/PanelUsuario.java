@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import java.time.LocalDate;
 
 
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
@@ -79,6 +80,7 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
         father.btnGuardar.setOnAction(this);        
         father.btnCancelar.setOnAction(this);
         father.getTab().setContent(this);
+        
 	}
 
 	public void loadForm(Usuario usuario){

@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import java.time.LocalDate;
 
 
 import ${ROOT_PKG}.PropertyResourceBundleMessageInterpolator;
@@ -86,6 +87,12 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
         father.btnGuardar.setOnAction(this);        
         father.btnCancelar.setOnAction(this);
         father.getTab().setContent(this);
+        
+#foreach($attribute in $entity.attributes)
+#if($attribute.isUtilDateType())
+		dpr${attribute.name}.setValue(LocalDate.now());			
+#end	
+#end
 	}
 
 	public void loadForm(${entity.name} ${uncapitalizedEntityName}){
@@ -93,9 +100,13 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 #foreach($attribute in $entity.attributes)
 #if(${attribute.isIntegerType()})
 			txt${attribute.name}.setText(String.valueOf(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})()));
-#else
+#end
+#if(${attribute.isStringType()})
 			txt${attribute.name}.setText(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})());
 #end			
+#if($attribute.isUtilDateType())			
+			dpr${attribute.name}.setValue(new java.sql.Date(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})().getTime()).toLocalDate());		
+#end	
 #end			
 		}
 	}
@@ -109,8 +120,12 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 		}catch (NumberFormatException e) {
 			un${entity.name}.set$fn.capitalize(${attribute.name})(null);
 		}
-#else
+#end
+#if(${attribute.isStringType()})
 		un${entity.name}.set$fn.capitalize(${attribute.name})(txt${attribute.name}.getText());
+#end
+#if(${attribute.isUtilDateType()})		
+		un${entity.name}.set$fn.capitalize(${attribute.name})(java.sql.Date.valueOf(dpr${attribute.name}.getValue()));
 #end
 #end
 		
