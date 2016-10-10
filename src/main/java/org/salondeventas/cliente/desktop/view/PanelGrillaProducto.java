@@ -19,9 +19,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class PanelGrillaProducto extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IProductoServicio> {
+public class PanelGrillaProducto extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IProductoServicio>, EventHandler<ActionEvent> {
 	private IProductoServicio productoServicio;
 	private Node top;
 	private Node center;
@@ -38,9 +39,10 @@ public class PanelGrillaProducto extends PanelControlesABM implements Initializa
 	
 	public PanelGrillaProducto(Tab tab) {
 		this.tab = tab;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
+       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
+		fxmlLoader.setRoot(this);
+		fxmlLoader.setController(this);
+		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
         
         try {
             fxmlLoader.load();
@@ -50,19 +52,21 @@ public class PanelGrillaProducto extends PanelControlesABM implements Initializa
     }
 
 	public void initialize(URL location, ResourceBundle resources) {
-		productoServicio = new ProductoServicio();				
-		loadGrilla();
-		
-		pnlBorder.setTop(generarPanel());
-		this.top = pnlBorder.getTop();
-		this.center = pnlBorder.getCenter();
-		this.btnAgregar.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				 PanelProducto panel = new PanelProducto(PanelGrillaProducto.this);				
-			}
+		productoServicio = new ProductoServicio();
+		tblProducto.setOnMousePressed(new EventHandler<MouseEvent>() {
+		    @Override 
+		    public void handle(MouseEvent event) {
+		        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+		        	btnEditarAction();          
+		        }
+		    }
 		});
+		loadGrilla();
+
+		pnlBorder.setTop(generarPanel());		
+		this.btnAgregar.setOnAction(this);
+		this.btnEditar.setOnAction(this);
+		this.btnEliminar.setOnAction(this);
 	}
 	
 	public void loadGrilla(){
@@ -114,5 +118,35 @@ public class PanelGrillaProducto extends PanelControlesABM implements Initializa
 	public void reLoad() {
 		tab.setContent(this);
 		loadGrilla();
+	}
+
+	@Override
+	public void handle(ActionEvent event) {
+		if (event.getSource().equals(btnAgregar)) {
+			new PanelProducto(PanelGrillaProducto.this);
+		}
+		if (event.getSource().equals(btnEditar)) {
+			btnEditarAction();					
+		}
+		if (event.getSource().equals(btnEliminar)) {
+			
+			Producto itemSelected = tblProducto.getSelectionModel().getSelectedItem();
+			if(itemSelected != null){
+				try {
+					productoServicio.delete(itemSelected);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			loadGrilla();
+		}
+	}
+	
+	private void btnEditarAction(){
+		int itemSelected = tblProducto.getSelectionModel().getSelectedItem().getIdproducto();
+		if(itemSelected > 0){
+			new PanelProducto(PanelGrillaProducto.this, itemSelected);
+		}
 	}
 }

@@ -12,15 +12,16 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Archivo">
                   <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleItemConfiguracionAction" text="Configuraci�n" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleItemCerrarSessionAction" text="Cerrar Sesi�n" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleItemConfiguracionAction" text="%pantalla.name.configuracion" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleItemCerrarSessionAction" text="%pantalla.name.cerrarsesion" />
 						<MenuItem mnemonicParsing="false" onAction="#handleItemSalirAction" text="Salir" />                     
                   </items>
                 </Menu>
 				<Menu mnemonicParsing="false" text="Pantallas">
 					<items>
 #foreach( $entity in $selectedEntities )
-					<MenuItem mnemonicParsing="false" onAction="#handleItem${entity.name}Action" text="${entity.name}" />
+#set($uncapitalizedEntityName = $fn.uncapitalize(${entity.name}) )
+					<MenuItem mnemonicParsing="false" onAction="#handleItem${entity.name}Action" text="%pantalla.name.${uncapitalizedEntityName}" />
 #end
 					</items>
 				</Menu>

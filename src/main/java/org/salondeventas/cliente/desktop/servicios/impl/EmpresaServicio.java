@@ -67,15 +67,15 @@ public class EmpresaServicio extends Services<Empresa> implements IEmpresaServic
 	}
 	
 	@Override
-	public Empresa load(Integer idempresa) throws Exception {		
+	public Empresa load(Empresa empresa) throws Exception {		
 		client = Client.create();
 		webResource = client.resource(USER_URI + "usuario/load");		
-		
+		String stringJson = mapper.writeValueAsString(empresa);
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, idempresa);
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "

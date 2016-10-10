@@ -1,4 +1,4 @@
-package org.salondeventas.cliente;
+package org.salondeventas.cliente.desktop;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -12,7 +12,7 @@ public class PropertyResourceBundleMessageInterpolator extends ResourceBundleMes
 	public static Validator getValidation(){
 		return Validation.byProvider(HibernateValidator.class)
 	      .configure()	      
-	      .messageInterpolator( new ResourceBundleMessageInterpolator(new PlatformResourceBundleLocator( "i18.ValidationMessages" )))
+	      .messageInterpolator( new ResourceBundleMessageInterpolator(new PlatformResourceBundleLocator( "i18n.ValidationMessages" )))
 	      .buildValidatorFactory().getValidator();
 	}
 }

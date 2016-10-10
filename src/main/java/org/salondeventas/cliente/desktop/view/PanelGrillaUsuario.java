@@ -15,38 +15,41 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class PanelGrillaUsuario extends PanelControlesABM
-		implements Initializable, IPanelControllerGrilla<IUsuarioServicio>, EventHandler<ActionEvent> {
+public class PanelGrillaUsuario extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IUsuarioServicio>, EventHandler<ActionEvent> {
 	private IUsuarioServicio usuarioServicio;
-	
+	private Node top;
+	private Node center;
+	private Node bottom;
 	private Tab tab;
 	@FXML
 	private BorderPane pnlBorder;
-
+	
 	@FXML
 	private TextField txtBuscar;
-
-	@FXML
+	
+	@FXML	
 	private TableView<Usuario> tblUsuario;
-
+	
 	public PanelGrillaUsuario(Tab tab) {
 		this.tab = tab;
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
+       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-
-		try {
-			fxmlLoader.load();
-		} catch (IOException exception) {
-			throw new RuntimeException(exception);
-		}
-	}
+		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
+        
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
 
 	public void initialize(URL location, ResourceBundle resources) {
 		usuarioServicio = new UsuarioServicio();
@@ -65,16 +68,17 @@ public class PanelGrillaUsuario extends PanelControlesABM
 		this.btnEditar.setOnAction(this);
 		this.btnEliminar.setOnAction(this);
 	}
-
-	public void loadGrilla() {
+	
+	public void loadGrilla(){
 		try {
-			final ObservableList<Usuario> data = FXCollections.observableArrayList(usuarioServicio.loadAll());
+			final ObservableList<Usuario> data =
+			        FXCollections.observableArrayList(usuarioServicio.loadAll());
 			tblUsuario.setItems(data);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}	
 
 	public IUsuarioServicio getUsuarioServicio() {
 		return usuarioServicio;
@@ -100,7 +104,7 @@ public class PanelGrillaUsuario extends PanelControlesABM
 
 	public PanelGrillaUsuario getController() {
 		return this;
-	}
+	}	
 
 	public TableView<Usuario> getTblUsuario() {
 		return tblUsuario;

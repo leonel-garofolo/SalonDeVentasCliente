@@ -1,17 +1,10 @@
-// ENTITY_java.vm
 package org.salondeventas.cliente.desktop.view;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import javax.validation.Validator;
-
-import org.hibernate.validator.HibernateValidator;
-import org.salondeventas.cliente.PropertyResourceBundleMessageInterpolator;
-import org.salondeventas.cliente.desktop.modelo.Usuario;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,18 +14,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
+import org.salondeventas.cliente.desktop.modelo.Usuario;
 
 public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent>{
-
-	private PanelGrillaUsuario father;	
-	
-	private FXMLLoader fxmlLoader;
-	
 	private boolean modoEdit = false;
+	private PanelGrillaUsuario father;
 	
 	@FXML
 	private VBox vBoxMsg;
-	
+
+
 	@FXML
 	private TextField txtidusuario;
 
@@ -41,26 +33,26 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
 
 	@FXML
 	private TextField txtnombre;
-	
+
 	public PanelUsuario(PanelGrillaUsuario father) {
 		this.modoEdit = false;
 		this.father = father;
 		initComponentes();
     }
-	
+
 	public PanelUsuario(PanelGrillaUsuario father, int id) {
 		this.modoEdit = true;
 		this.father = father;
 		initComponentes();
 		loadEntity(id);		
     }
-	
+
 	private void loadEntity(int id) {
 		try {
 			Usuario unUsuario = new Usuario();
 			unUsuario.setIdusuario(id);
 			unUsuario =father.getServicio().load(unUsuario);
-			setDatos(unUsuario);
+			loadForm(unUsuario);
 		} catch (Exception e) {
 			Label label = new Label();
 	    	label.setText("Se ha producido un error en el servidor. Intente mas tarde.");
@@ -70,9 +62,11 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
 	}
 
 	private void initComponentes(){
-		fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
+		fxmlLoader.setRoot(this);
+		fxmlLoader.setController(this);
+		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
+
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
@@ -85,30 +79,29 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
         father.btnGuardar.setOnAction(this);        
         father.btnCancelar.setOnAction(this);
         father.getTab().setContent(this);
-	}	
-	
-	public void setDatos(Usuario usuario){
+	}
+
+	public void loadForm(Usuario usuario){
 		if(usuario !=null){
-			txtidusuario.setText(usuario.getIdusuario().toString());
-			txtnombre.setText(usuario.getNombre());
+			txtidusuario.setText(String.valueOf(usuario.getIdusuario()));
 			txtclave.setText(usuario.getClave());
+			txtnombre.setText(usuario.getNombre());
 		}
 	}
 
 	private Usuario getUsuario() {
-		Usuario usu = new Usuario();
+		Usuario unUsuario = new Usuario();
 		try{
-			usu.setIdusuario(Integer.valueOf(txtidusuario.getText()));
+			unUsuario.setIdusuario(Integer.valueOf(txtidusuario.getText()));
 		}catch (NumberFormatException e) {
-			usu.setIdusuario(null);
+			unUsuario.setIdusuario(null);
 		}
-		
-		usu.setNombre(txtnombre.getText());
-		usu.setClave(txtclave.getText());
+		unUsuario.setClave(txtclave.getText());
+		unUsuario.setNombre(txtnombre.getText());
 		
 		Label label = null;	
 		Validator validator =PropertyResourceBundleMessageInterpolator.getValidation();
-	    Set<ConstraintViolation<Usuario>> inputErrors = validator.validate(usu); 
+	    Set<ConstraintViolation<Usuario>> inputErrors = validator.validate(unUsuario); 
 	    for(ConstraintViolation<Usuario> error: inputErrors){	    	
 	    	label = new Label();
 	    	label.setText(error.getMessage());
@@ -117,7 +110,7 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
 	    if(vBoxMsg.getChildren().size() > 0){
 	    	return null;
 	    }
-		return usu;
+		return unUsuario;
 	}
 
 	@Override

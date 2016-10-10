@@ -67,15 +67,15 @@ public class VentaServicio extends Services<Venta> implements IVentaServicio {
 	}
 	
 	@Override
-	public Venta load(Integer idventa) throws Exception {		
+	public Venta load(Venta venta) throws Exception {		
 		client = Client.create();
 		webResource = client.resource(USER_URI + "usuario/load");		
-		
+		String stringJson = mapper.writeValueAsString(venta);
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, idventa);
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "

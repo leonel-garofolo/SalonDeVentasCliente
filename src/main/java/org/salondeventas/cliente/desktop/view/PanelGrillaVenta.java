@@ -19,9 +19,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class PanelGrillaVenta extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IVentaServicio> {
+public class PanelGrillaVenta extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IVentaServicio>, EventHandler<ActionEvent> {
 	private IVentaServicio ventaServicio;
 	private Node top;
 	private Node center;
@@ -38,9 +39,10 @@ public class PanelGrillaVenta extends PanelControlesABM implements Initializable
 	
 	public PanelGrillaVenta(Tab tab) {
 		this.tab = tab;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
+       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
+		fxmlLoader.setRoot(this);
+		fxmlLoader.setController(this);
+		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
         
         try {
             fxmlLoader.load();
@@ -50,19 +52,21 @@ public class PanelGrillaVenta extends PanelControlesABM implements Initializable
     }
 
 	public void initialize(URL location, ResourceBundle resources) {
-		ventaServicio = new VentaServicio();				
-		loadGrilla();
-		
-		pnlBorder.setTop(generarPanel());
-		this.top = pnlBorder.getTop();
-		this.center = pnlBorder.getCenter();
-		this.btnAgregar.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				 PanelVenta panel = new PanelVenta(PanelGrillaVenta.this);				
-			}
+		ventaServicio = new VentaServicio();
+		tblVenta.setOnMousePressed(new EventHandler<MouseEvent>() {
+		    @Override 
+		    public void handle(MouseEvent event) {
+		        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+		        	btnEditarAction();          
+		        }
+		    }
 		});
+		loadGrilla();
+
+		pnlBorder.setTop(generarPanel());		
+		this.btnAgregar.setOnAction(this);
+		this.btnEditar.setOnAction(this);
+		this.btnEliminar.setOnAction(this);
 	}
 	
 	public void loadGrilla(){
@@ -114,5 +118,35 @@ public class PanelGrillaVenta extends PanelControlesABM implements Initializable
 	public void reLoad() {
 		tab.setContent(this);
 		loadGrilla();
+	}
+
+	@Override
+	public void handle(ActionEvent event) {
+		if (event.getSource().equals(btnAgregar)) {
+			new PanelVenta(PanelGrillaVenta.this);
+		}
+		if (event.getSource().equals(btnEditar)) {
+			btnEditarAction();					
+		}
+		if (event.getSource().equals(btnEliminar)) {
+			
+			Venta itemSelected = tblVenta.getSelectionModel().getSelectedItem();
+			if(itemSelected != null){
+				try {
+					ventaServicio.delete(itemSelected);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			loadGrilla();
+		}
+	}
+	
+	private void btnEditarAction(){
+		int itemSelected = tblVenta.getSelectionModel().getSelectedItem().getIdventa();
+		if(itemSelected > 0){
+			new PanelVenta(PanelGrillaVenta.this, itemSelected);
+		}
 	}
 }

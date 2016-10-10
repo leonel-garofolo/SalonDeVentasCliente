@@ -6,35 +6,32 @@
 <?import javafx.scene.control.cell.*?>
 
 <fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
-              <children>
-                  <BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
-                     <center>
-                        <TableView fx:id="tblVenta" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                          <columns>
-
- 				<TableColumn fx:id="idventa" prefWidth="50.0" text="idventa" >
+	<children>
+		<BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
+			<center>
+				<TableView fx:id="tblVenta" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+					<columns>
+ 						<TableColumn fx:id="idventa" prefWidth="50.0" text="%pantalla.grilla.col.idventa" >
 
  						<cellValueFactory>
 			                <PropertyValueFactory property="idventa" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-
- 				<TableColumn fx:id="fecha" prefWidth="200.0" text="fecha" >
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="fecha" prefWidth="200.0" text="%pantalla.grilla.col.fecha" >
  
  						<cellValueFactory>
 			                <PropertyValueFactory property="fecha" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-
- 				<TableColumn fx:id="fechaPago" prefWidth="200.0" text="fechaPago" >
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="fechaPago" prefWidth="200.0" text="%pantalla.grilla.col.fechaPago" >
  
  						<cellValueFactory>
 			                <PropertyValueFactory property="fechaPago" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-                         </columns>
-                        </TableView>
-                     </center>
-                  </BorderPane>
-               </children>
-		</fx:root>
+		      		    </TableColumn>	 
+					</columns>
+				</TableView>
+			</center>
+		</BorderPane>
+	</children>
+</fx:root>

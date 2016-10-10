@@ -12,17 +12,17 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Archivo">
                   <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleItemConfiguracionAction" text="Configuraci�n" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleItemCerrarSessionAction" text="Cerrar Sesi�n" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleItemConfiguracionAction" text="%pantalla.name.configuracion" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleItemCerrarSessionAction" text="%pantalla.name.cerrarsesion" />
 						<MenuItem mnemonicParsing="false" onAction="#handleItemSalirAction" text="Salir" />                     
                   </items>
                 </Menu>
 				<Menu mnemonicParsing="false" text="Pantallas">
 					<items>
-					<MenuItem mnemonicParsing="false" onAction="#handleItemEmpresaAction" text="Empresa" />
-					<MenuItem mnemonicParsing="false" onAction="#handleItemProductoAction" text="Producto" />
-					<MenuItem mnemonicParsing="false" onAction="#handleItemUsuarioAction" text="Usuario" />
-					<MenuItem mnemonicParsing="false" onAction="#handleItemVentaAction" text="Venta" />
+					<MenuItem mnemonicParsing="false" onAction="#handleItemEmpresaAction" text="%pantalla.name.empresa" />
+					<MenuItem mnemonicParsing="false" onAction="#handleItemProductoAction" text="%pantalla.name.producto" />
+					<MenuItem mnemonicParsing="false" onAction="#handleItemUsuarioAction" text="%pantalla.name.usuario" />
+					<MenuItem mnemonicParsing="false" onAction="#handleItemVentaAction" text="%pantalla.name.venta" />
 					</items>
 				</Menu>
 

@@ -67,18 +67,15 @@ public class LineadeventaServicio extends Services<Lineadeventa> implements ILin
 	}
 	
 	@Override
-	public Lineadeventa load(Integer idlineadeventa, Integer idproducto, Integer idventa) throws Exception {		
+	public Lineadeventa load(Lineadeventa lineadeventa) throws Exception {		
 		client = Client.create();
 		webResource = client.resource(USER_URI + "usuario/load");		
-		
+		String stringJson = mapper.writeValueAsString(lineadeventa);
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
-				.queryParam("idlineadeventa", String.valueOf(idlineadeventa))
-				.queryParam("idproducto", String.valueOf(idproducto))
-				.queryParam("idventa", String.valueOf(idventa))				
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class);
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "

@@ -67,15 +67,15 @@ public class LicenciasServicio extends Services<Licencias> implements ILicencias
 	}
 	
 	@Override
-	public Licencias load(Integer numero) throws Exception {		
+	public Licencias load(Licencias licencias) throws Exception {		
 		client = Client.create();
 		webResource = client.resource(USER_URI + "usuario/load");		
-		
+		String stringJson = mapper.writeValueAsString(licencias);
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, numero);
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "

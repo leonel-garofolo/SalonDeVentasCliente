@@ -1,4 +1,4 @@
-package org.salondeventas.cliente;
+package org.salondeventas.cliente.desktop;
 
 import org.salondeventas.cliente.desktop.view.Principal;
 

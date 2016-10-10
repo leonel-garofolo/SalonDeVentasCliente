@@ -6,31 +6,30 @@
 <?import javafx.scene.control.cell.*?>
 
 <fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
-              <children>
-                  <BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
-                     <center>
-                        <TableView fx:id="tbl${entity}" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                          <columns>
+	<children>
+		<BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
+			<center>
+				<TableView fx:id="tbl${entity}" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+					<columns>
 #foreach($attribute in $entity.attributes)
-
 #if($attribute.type == "Integer") 
- 				<TableColumn fx:id="${attribute.name}" prefWidth="50.0" text="${attribute.name}" >
+ 						<TableColumn fx:id="${attribute.name}" prefWidth="50.0" text="%pantalla.grilla.col.${attribute.name}" >
 #else
  #if($attribute.type == "String")
-				<TableColumn fx:id="${attribute.name}" prefWidth="150.0" text="${attribute.name}" >
+						<TableColumn fx:id="${attribute.name}" prefWidth="150.0" text="%pantalla.grilla.col.${attribute.name}" >
  #else
-				<TableColumn fx:id="${attribute.name}" prefWidth="200.0" text="${attribute.name}" >
+						<TableColumn fx:id="${attribute.name}" prefWidth="200.0" text="%pantalla.grilla.col.${attribute.name}" >
  #end	
 #end
 
  						<cellValueFactory>
 			                <PropertyValueFactory property="${attribute.name}" />
 			            </cellValueFactory>
-		        </TableColumn>	 
+		      		    </TableColumn>	 
 #end                             
-                         </columns>
-                        </TableView>
-                     </center>
-                  </BorderPane>
-               </children>
-		</fx:root>
+					</columns>
+				</TableView>
+			</center>
+		</BorderPane>
+	</children>
+</fx:root>

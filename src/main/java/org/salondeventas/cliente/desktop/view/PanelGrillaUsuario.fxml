@@ -6,35 +6,32 @@
 <?import javafx.scene.control.cell.*?>
 
 <fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
-              <children>
-                  <BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
-                     <center>
-                        <TableView fx:id="tblUsuario" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                          <columns>
-
- 				<TableColumn fx:id="idusuario" prefWidth="50.0" text="idusuario" >
+	<children>
+		<BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
+			<center>
+				<TableView fx:id="tblUsuario" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+					<columns>
+ 						<TableColumn fx:id="idusuario" prefWidth="50.0" text="%pantalla.grilla.col.idusuario" >
 
  						<cellValueFactory>
 			                <PropertyValueFactory property="idusuario" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-
- 				<TableColumn fx:id="clave" prefWidth="150.0" text="clave" >
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="clave" prefWidth="150.0" text="%pantalla.grilla.col.clave" >
  
  						<cellValueFactory>
 			                <PropertyValueFactory property="clave" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-
- 				<TableColumn fx:id="nombre" prefWidth="150.0" text="nombre" >
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="nombre" prefWidth="150.0" text="%pantalla.grilla.col.nombre" >
  
  						<cellValueFactory>
 			                <PropertyValueFactory property="nombre" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-                         </columns>
-                        </TableView>
-                     </center>
-                  </BorderPane>
-               </children>
-		</fx:root>
+		      		    </TableColumn>	 
+					</columns>
+				</TableView>
+			</center>
+		</BorderPane>
+	</children>
+</fx:root>

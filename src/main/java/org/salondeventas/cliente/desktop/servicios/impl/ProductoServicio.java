@@ -67,15 +67,15 @@ public class ProductoServicio extends Services<Producto> implements IProductoSer
 	}
 	
 	@Override
-	public Producto load(Integer idproducto) throws Exception {		
+	public Producto load(Producto producto) throws Exception {		
 		client = Client.create();
 		webResource = client.resource(USER_URI + "usuario/load");		
-		
+		String stringJson = mapper.writeValueAsString(producto);
 		response = webResource
 				.queryParam("usuario", "leonel")
 				.queryParam("clave", "123")
 				.type(MediaType.APPLICATION_JSON_TYPE)					
-				.post(ClientResponse.class, idproducto);
+				.post(ClientResponse.class, stringJson);
 		
 		if (response.getStatus() != 200) {
 			throw new Exception("Failed : HTTP error code : "

@@ -2,6 +2,5 @@ package ${target.javaPackageFromFolder($SRC)};
 
 import ${ROOT_PKG}.modelo.${entity.name};
 
-public interface I${entity.name}Servicio extends IServicio<${entity.name}, java.lang.Long>{
-	public ${entity.name} load($fn.argumentsListWithType( $entity.keyAttributes )) throws Exception;	
+public interface I${entity.name}Servicio extends IServicio<${entity.name}, java.lang.Long>{	
 }

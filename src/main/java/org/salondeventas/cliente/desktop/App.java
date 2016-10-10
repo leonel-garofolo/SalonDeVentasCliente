@@ -1,4 +1,4 @@
-package org.salondeventas.cliente;
+package org.salondeventas.cliente.desktop;
 
 public class App {
 	private void iniciar(){

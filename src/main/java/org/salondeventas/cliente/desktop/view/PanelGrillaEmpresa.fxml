@@ -6,56 +6,50 @@
 <?import javafx.scene.control.cell.*?>
 
 <fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
-              <children>
-                  <BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
-                     <center>
-                        <TableView fx:id="tblEmpresa" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                          <columns>
-
- 				<TableColumn fx:id="idempresa" prefWidth="50.0" text="idempresa" >
+	<children>
+		<BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
+			<center>
+				<TableView fx:id="tblEmpresa" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+					<columns>
+ 						<TableColumn fx:id="idempresa" prefWidth="50.0" text="%pantalla.grilla.col.idempresa" >
 
  						<cellValueFactory>
 			                <PropertyValueFactory property="idempresa" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-
- 				<TableColumn fx:id="descripcion" prefWidth="150.0" text="descripcion" >
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="descripcion" prefWidth="150.0" text="%pantalla.grilla.col.descripcion" >
  
  						<cellValueFactory>
 			                <PropertyValueFactory property="descripcion" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-
- 				<TableColumn fx:id="direccion" prefWidth="150.0" text="direccion" >
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="direccion" prefWidth="150.0" text="%pantalla.grilla.col.direccion" >
  
  						<cellValueFactory>
 			                <PropertyValueFactory property="direccion" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-
- 				<TableColumn fx:id="logo" prefWidth="200.0" text="logo" >
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="logo" prefWidth="200.0" text="%pantalla.grilla.col.logo" >
  
  						<cellValueFactory>
 			                <PropertyValueFactory property="logo" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-
- 				<TableColumn fx:id="nombre" prefWidth="150.0" text="nombre" >
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="nombre" prefWidth="150.0" text="%pantalla.grilla.col.nombre" >
  
  						<cellValueFactory>
 			                <PropertyValueFactory property="nombre" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-
- 				<TableColumn fx:id="telefono" prefWidth="150.0" text="telefono" >
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="telefono" prefWidth="150.0" text="%pantalla.grilla.col.telefono" >
  
  						<cellValueFactory>
 			                <PropertyValueFactory property="telefono" />
 			            </cellValueFactory>
-		        </TableColumn>	 
-                         </columns>
-                        </TableView>
-                     </center>
-                  </BorderPane>
-               </children>
-		</fx:root>
+		      		    </TableColumn>	 
+					</columns>
+				</TableView>
+			</center>
+		</BorderPane>
+	</children>
+</fx:root>
