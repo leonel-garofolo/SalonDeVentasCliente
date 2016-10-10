@@ -10,10 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+
 
 import ${ROOT_PKG}.PropertyResourceBundleMessageInterpolator;
 import ${ROOT_PKG}.modelo.${entity.name};
@@ -27,13 +27,17 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 
 #foreach($attribute in $entity.attributes)
 
-#if($attribute.type == "Integer")
+#if($attribute.isIntegerType())
 	@FXML
 	private TextField txt${attribute.name};
 #end
-#if($attribute.type == "String")
+#if($attribute.isStringType())
 	@FXML
 	private TextField txt${attribute.name};
+#end
+#if($attribute.isUtilDateType())
+	@FXML
+	private DatePicker dpr${attribute.name};
 #end	    
 #end
 
@@ -111,6 +115,7 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 #end
 		
 		Label label = null;	
+		vBoxMsg.getChildren().clear();
 		Validator validator =PropertyResourceBundleMessageInterpolator.getValidation();
 	    Set<ConstraintViolation<${entity.name}>> inputErrors = validator.validate(un${entity.name}); 
 	    for(ConstraintViolation<${entity.name}> error: inputErrors){	    	

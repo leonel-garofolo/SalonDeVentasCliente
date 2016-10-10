@@ -9,10 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+
 
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
 import org.salondeventas.cliente.desktop.modelo.Usuario;
@@ -100,6 +100,7 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
 		unUsuario.setNombre(txtnombre.getText());
 		
 		Label label = null;	
+		vBoxMsg.getChildren().clear();
 		Validator validator =PropertyResourceBundleMessageInterpolator.getValidation();
 	    Set<ConstraintViolation<Usuario>> inputErrors = validator.validate(unUsuario); 
 	    for(ConstraintViolation<Usuario> error: inputErrors){	    	

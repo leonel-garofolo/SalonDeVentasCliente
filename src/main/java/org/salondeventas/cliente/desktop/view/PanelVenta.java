@@ -1,21 +1,26 @@
 package org.salondeventas.cliente.desktop.view;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
+import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
+import org.salondeventas.cliente.desktop.modelo.Venta;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-
-import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
-import org.salondeventas.cliente.desktop.modelo.Venta;
 
 public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
@@ -28,7 +33,11 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	@FXML
 	private TextField txtidventa;
 
+	@FXML
+	private DatePicker dprfecha;
 
+	@FXML
+	private DatePicker dprfechaPago;
 
 	public PanelVenta(PanelGrillaVenta father) {
 		this.modoEdit = false;
@@ -80,7 +89,12 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	public void loadForm(Venta venta){
 		if(venta !=null){
 			txtidventa.setText(String.valueOf(venta.getIdventa()));
-			//txtfecha.setText(venta.getFecha());
+			//dprfecha.setdateText(venta.getFecha());
+			//LocalDate local = new LocalDate();
+			//dprfecha.setValue(new Date());
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDate localDate = LocalDate.parse("01/01/2016", formatter);
+			dprfecha.setValue(localDate);
 			//txtfechaPago.setText(venta.getFechaPago());
 		}
 	}
@@ -92,10 +106,11 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 		}catch (NumberFormatException e) {
 			unVenta.setIdventa(null);
 		}
-		//unVenta.setFecha(txtfecha.getText());
+		//unVenta.setFecha(dprfecha.getValue().get);
 		//unVenta.setFechaPago(txtfechaPago.getText());
 		
 		Label label = null;	
+		vBoxMsg.getChildren().clear();
 		Validator validator =PropertyResourceBundleMessageInterpolator.getValidation();
 	    Set<ConstraintViolation<Venta>> inputErrors = validator.validate(unVenta); 
 	    for(ConstraintViolation<Venta> error: inputErrors){	    	

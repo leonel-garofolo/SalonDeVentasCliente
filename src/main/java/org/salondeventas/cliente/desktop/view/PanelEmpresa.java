@@ -9,10 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+
 
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
 import org.salondeventas.cliente.desktop.modelo.Empresa;
@@ -113,6 +113,7 @@ public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent
 		unEmpresa.setTelefono(txttelefono.getText());
 		
 		Label label = null;	
+		vBoxMsg.getChildren().clear();
 		Validator validator =PropertyResourceBundleMessageInterpolator.getValidation();
 	    Set<ConstraintViolation<Empresa>> inputErrors = validator.validate(unEmpresa); 
 	    for(ConstraintViolation<Empresa> error: inputErrors){	    	

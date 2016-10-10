@@ -18,16 +18,15 @@
 			<GridPane>
 				<padding><Insets top="25" right="25" bottom="10" left="25"/></padding>   
 #foreach($attribute in $entity.attributes)
-				<Label text="%pantalla.panel.field.${attribute.name}"
-  			      GridPane.columnIndex="0" GridPane.rowIndex="$foreach.count"/>   
-#if($attribute.type == "Integer")
-				<TextField fx:id="txt${attribute.name}" maxWidth="100"
- 			       GridPane.columnIndex="1" GridPane.rowIndex="$foreach.count"/>
+				<Label text="%pantalla.panel.field.${attribute.name}" GridPane.columnIndex="0" GridPane.rowIndex="$foreach.count"/>   
+#if($attribute.isIntegerType())
+				<TextField fx:id="txt${attribute.name}" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="$foreach.count"/>
 #end
-
-#if($attribute.type == "String")
- 				<TextField fx:id="txt${attribute.name}"  maxWidth="200"
-   			     GridPane.columnIndex="1" GridPane.rowIndex="$foreach.count"/>       
+#if($attribute.isStringType())
+ 				<TextField fx:id="txt${attribute.name}"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="$foreach.count"/>       
+#end	
+#if($attribute.isUtilDateType())
+ 				<DatePicker fx:id="dpr${attribute.name}" GridPane.columnIndex="1" GridPane.rowIndex="$foreach.count"/>       
 #end		 
 #end   
 			</GridPane>
