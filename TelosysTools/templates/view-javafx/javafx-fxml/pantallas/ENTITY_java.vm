@@ -13,7 +13,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+#foreach($attribute in $entity.attributes)
+#if($attribute.isUtilDateType())
 import java.time.LocalDate;
+#end
+#if($attribute.type == "byte[]")
+import javafx.scene.image.ImageView;
+#end
+#end
+
 
 
 import ${ROOT_PKG}.PropertyResourceBundleMessageInterpolator;
@@ -40,6 +48,10 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 	@FXML
 	private DatePicker dpr${attribute.name};
 #end	    
+#if($attribute.type == "byte[]")
+	@FXML
+	private ImageView byt${attribute.name};
+#end
 #end
 
 	public Panel${entity.name}(PanelGrilla${entity.name} father) {

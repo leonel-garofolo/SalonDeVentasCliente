@@ -16,6 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -36,6 +38,8 @@ public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent
 	@FXML
 	private TextField txtdireccion;
 
+	@FXML
+	private ImageView bytlogo;
 
 	@FXML
 	private TextField txtnombre;
@@ -88,6 +92,11 @@ public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent
         father.btnGuardar.setOnAction(this);        
         father.btnCancelar.setOnAction(this);
         father.getTab().setContent(this);
+        
+        bytlogo.setOnMouseClicked( ( MouseEvent event ) ->
+        {
+           System.out.println("mouse clicket");
+        } );       
         
 	}
 

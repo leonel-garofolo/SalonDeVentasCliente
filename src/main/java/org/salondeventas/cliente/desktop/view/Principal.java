@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
@@ -18,13 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;			
-
-
-import org.salondeventas.cliente.desktop.view.PanelGrillaEmpresa;		
-import org.salondeventas.cliente.desktop.view.PanelGrillaProducto;		
-import org.salondeventas.cliente.desktop.view.PanelGrillaUsuario;		
-import org.salondeventas.cliente.desktop.view.PanelGrillaVenta;		
+import javafx.stage.WindowEvent;		
 
 
 public class Principal extends Application {
@@ -95,6 +90,13 @@ public class Principal extends Application {
 	@FXML
 	private void handleItemEmpresaAction(ActionEvent event) {
 		borderPane = (BorderPane) scene.lookup("#borderPane");
+		for(Tab unTab: tabPane.getTabs()){
+			if(unTab.getText().equals("Empresas")){
+				tabPane.getSelectionModel().select(unTab);				
+				return;
+			}			
+		}
+		
 		Tab tab = new Tab("Empresas");
 		PanelGrillaEmpresa grilla = new PanelGrillaEmpresa(tab);
 		tab.setContent(grilla);
@@ -106,8 +108,10 @@ public class Principal extends Application {
 		borderPane = (BorderPane) scene.lookup("#borderPane");
 		Tab tab = new Tab("Productos");
 		PanelGrillaProducto grilla = new PanelGrillaProducto(tab);
-		tab.setContent(grilla);
+		tab.setContent(grilla);		
 		tabPane.getTabs().add(tab);	
+		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(tab);
 	}
 
 	@FXML
@@ -117,6 +121,8 @@ public class Principal extends Application {
 		PanelGrillaUsuario grilla = new PanelGrillaUsuario(tab);
 		tab.setContent(grilla);
 		tabPane.getTabs().add(tab);	
+		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(tab);
 	}
 
 	@FXML

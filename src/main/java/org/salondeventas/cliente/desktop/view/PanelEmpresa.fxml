@@ -6,30 +6,46 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
 
-
-<fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
+<fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
 	<center>
-	 <BorderPane BorderPane.alignment="CENTER" >
+	 <BorderPane BorderPane.alignment="CENTER">
 	  	<top>
-            <VBox fx:id="vBoxMsg"  BorderPane.alignment="CENTER" />
+            <VBox fx:id="vBoxMsg" BorderPane.alignment="CENTER" />
         </top>
 	 	<center>
 			<GridPane>
-				<padding><Insets top="25" right="25" bottom="10" left="25"/></padding>   
-				<Label text="%pantalla.panel.field.idempresa" GridPane.columnIndex="0" GridPane.rowIndex="1"/>   
-				<TextField fx:id="txtidempresa" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-				<Label text="%pantalla.panel.field.descripcion" GridPane.columnIndex="0" GridPane.rowIndex="2"/>   
- 				<TextField fx:id="txtdescripcion"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2"/>       
-				<Label text="%pantalla.panel.field.direccion" GridPane.columnIndex="0" GridPane.rowIndex="3"/>   
- 				<TextField fx:id="txtdireccion"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3"/>       
-				<Label text="%pantalla.panel.field.logo" GridPane.columnIndex="0" GridPane.rowIndex="4"/>   
-				<Label text="%pantalla.panel.field.nombre" GridPane.columnIndex="0" GridPane.rowIndex="5"/>   
- 				<TextField fx:id="txtnombre"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="5"/>       
-				<Label text="%pantalla.panel.field.telefono" GridPane.columnIndex="0" GridPane.rowIndex="6"/>   
- 				<TextField fx:id="txttelefono"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="6"/>       
+				<padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
+   <children>   
+   				<Label text="%pantalla.panel.field.idempresa" GridPane.columnIndex="0" GridPane.rowIndex="1" />   
+   				<TextField fx:id="txtidempresa" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   				<Label text="%pantalla.panel.field.descripcion" GridPane.columnIndex="0" GridPane.rowIndex="2" />   
+    				<TextField fx:id="txtdescripcion" maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2" />       
+   				<Label text="%pantalla.panel.field.direccion" GridPane.columnIndex="0" GridPane.rowIndex="3" />   
+    				<TextField fx:id="txtdireccion" maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3" />       
+   				<Label text="%pantalla.panel.field.logo" GridPane.columnIndex="0" GridPane.rowIndex="4" />   
+   				<ImageView fx:id="bytlogo" fitHeight="30.0" fitWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   				<Label text="%pantalla.panel.field.nombre" GridPane.columnIndex="0" GridPane.rowIndex="5" />   
+    				<TextField fx:id="txtnombre" maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="5" />       
+   				<Label text="%pantalla.panel.field.telefono" GridPane.columnIndex="0" GridPane.rowIndex="6" />   
+    				<TextField fx:id="txttelefono" maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+   </children>
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>       
 			</GridPane>
        </center>
 	 </BorderPane>	
 	</center>
-</fx:root> 
+</fx:root>

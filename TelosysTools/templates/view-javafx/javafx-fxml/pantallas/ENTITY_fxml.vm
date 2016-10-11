@@ -27,7 +27,10 @@
 #end	
 #if($attribute.isUtilDateType())
  				<DatePicker fx:id="dpr${attribute.name}" GridPane.columnIndex="1" GridPane.rowIndex="$foreach.count"/>       
-#end		 
+#end	
+#if($attribute.type == "byte[]")
+				<ImageView fx:id="byt${attribute.name}" fitHeight="20.0" fitWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="$foreach.count"/>
+#end
 #end   
 			</GridPane>
        </center>
