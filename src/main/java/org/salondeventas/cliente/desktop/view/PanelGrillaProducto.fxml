@@ -4,34 +4,71 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.*?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.Button?>
+<?import org.salondeventas.cliente.desktop.view.control.NumberField?>
 
-<fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
+
+<fx:root prefHeight="431.0" prefWidth="546.0" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
-			<center>
-				<TableView fx:id="tblProducto" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-					<columns>
- 						<TableColumn fx:id="idproducto" prefWidth="50.0" text="%pantalla.grilla.col.idproducto" >
-
- 						<cellValueFactory>
-			                <PropertyValueFactory property="idproducto" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
- 						<TableColumn fx:id="detalle" prefWidth="150.0" text="%pantalla.grilla.col.detalle" >
- 
- 						<cellValueFactory>
-			                <PropertyValueFactory property="detalle" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
- 						<TableColumn fx:id="nombre" prefWidth="150.0" text="%pantalla.grilla.col.nombre" >
- 
- 						<cellValueFactory>
-			                <PropertyValueFactory property="nombre" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
-					</columns>
-				</TableView>
-			</center>
-		</BorderPane>
+      <VBox fx:id="pnlBotones" prefHeight="431.0" prefWidth="546.0">
+         <children>
+      		<BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0" style="padding-top: 2cm">      			                  
+      			<top>
+      				<HBox fx:id="hButtonFilter" BorderPane.alignment="CENTER">
+                     <children>
+      					 	<NumberField fx:id="txtidproducto" promptText="ID" maxWidth="50" >
+      					 		<tooltip><Tooltip text="ID"></Tooltip></tooltip>      					 		
+      					 	</NumberField>			 				     
+      					 </children>
+      					 <children>
+      					 	<TextField fx:id="txtdetalle" promptText="Detalle" maxWidth="150" >
+      					 		<tooltip><Tooltip text="Detalle"></Tooltip></tooltip>
+      					 	</TextField>      					 	       			 				
+      					 </children>
+      					  <children>
+      					 	<Button  fx:id="btnBuscar" text="Buscar" maxWidth="60" />      					 		      					 	       			 			
+      					 </children>
+      					 <children>
+      					 	<Button  fx:id="btnLimpiar" text="Limpiar" maxWidth="60" />      					 		      					 	       			 			
+      					 </children>
+      				</HBox>
+               </top>
+      			<center>
+      				<TableView fx:id="tblProducto" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      					<columns>
+       						<TableColumn fx:id="idproducto" prefWidth="50.0" text="%pantalla.grilla.col.idproducto">
+       						<cellValueFactory>
+      			                <PropertyValueFactory property="idproducto" />
+      			            </cellValueFactory>
+      		      		    </TableColumn>	 
+      						<TableColumn fx:id="detalle" prefWidth="150.0" text="%pantalla.grilla.col.detalle">
+       						<cellValueFactory>
+      			                <PropertyValueFactory property="detalle" />
+      			            </cellValueFactory>
+      		      		    </TableColumn>	 
+      						<TableColumn fx:id="nombre" prefWidth="150.0" text="%pantalla.grilla.col.nombre">
+       						<cellValueFactory>
+      			                <PropertyValueFactory property="nombre" />
+      			            </cellValueFactory>
+      		      		    </TableColumn>	 
+      						<TableColumn fx:id="codbarras" prefWidth="150.0" text="%pantalla.grilla.col.codbarras">
+       						<cellValueFactory>
+      			                <PropertyValueFactory property="codbarras" />
+      			            </cellValueFactory>
+      		      		    </TableColumn>	 
+      						<TableColumn fx:id="precio" prefWidth="50.0" text="%pantalla.grilla.col.precio">
+       						<cellValueFactory>
+      			                <PropertyValueFactory property="precio" />
+      			            </cellValueFactory>
+      		      		    </TableColumn>	 
+      					</columns>
+      				</TableView>
+      			</center>
+               
+      		</BorderPane>
+         </children>
+      </VBox>
 	</children>
 </fx:root>

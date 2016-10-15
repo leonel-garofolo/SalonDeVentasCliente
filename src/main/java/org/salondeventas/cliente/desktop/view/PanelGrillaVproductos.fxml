@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
+
+<fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
+	<children>
+		<BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
+			<center>
+				<TableView fx:id="tblVproductos" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+					<columns>
+ 						<TableColumn fx:id="idproducto" prefWidth="50.0" text="%pantalla.grilla.col.idproducto" >
+
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="idproducto" />
+			            </cellValueFactory>
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="nombre" prefWidth="150.0" text="%pantalla.grilla.col.nombre" >
+ 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="nombre" />
+			            </cellValueFactory>
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="detalle" prefWidth="150.0" text="%pantalla.grilla.col.detalle" >
+ 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="detalle" />
+			            </cellValueFactory>
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="fecha" prefWidth="200.0" text="%pantalla.grilla.col.fecha" >
+ 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="fecha" />
+			            </cellValueFactory>
+		      		    </TableColumn>	 
+ 						<TableColumn fx:id="importe" prefWidth="200.0" text="%pantalla.grilla.col.importe" >
+ 
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="importe" />
+			            </cellValueFactory>
+		      		    </TableColumn>	 
+					</columns>
+				</TableView>
+			</center>
+		</BorderPane>
+	</children>
+</fx:root>

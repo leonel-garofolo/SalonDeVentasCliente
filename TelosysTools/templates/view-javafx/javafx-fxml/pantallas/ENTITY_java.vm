@@ -36,7 +36,7 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 
 #foreach($attribute in $entity.attributes)
 
-#if($attribute.isIntegerType())
+#if($attribute.isIntegerType() || $attribute.type == "BigDecimal")
 	@FXML
 	private TextField txt${attribute.name};
 #end

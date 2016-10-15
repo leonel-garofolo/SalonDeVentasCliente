@@ -6,6 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import org.salondeventas.cliente.desktop.view.control.DecimalField?>
 
 
 <fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
@@ -23,6 +24,10 @@
  				<TextField fx:id="txtdetalle"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2"/>       
 				<Label text="%pantalla.panel.field.nombre" GridPane.columnIndex="0" GridPane.rowIndex="3"/>   
  				<TextField fx:id="txtnombre"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3"/>       
+				<Label text="%pantalla.panel.field.codbarras" GridPane.columnIndex="0" GridPane.rowIndex="4"/>   
+ 				<TextField fx:id="txtcodbarras"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="4"/>       
+				<Label text="%pantalla.panel.field.precio" GridPane.columnIndex="0" GridPane.rowIndex="5"/>   
+				<DecimalField fx:id="txtprecio" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="5"/>				
 			</GridPane>
        </center>
 	 </BorderPane>	

@@ -12,7 +12,7 @@ public class LineadeventaServicio extends Services<Lineadeventa> implements ILin
 	@Override
 	public String insert(Lineadeventa lineadeventa) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/insert");		
+		webResource = client.resource(USER_URI + "lineadeventa/insert");		
 		String stringJson = mapper.writeValueAsString(lineadeventa);
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -31,7 +31,7 @@ public class LineadeventaServicio extends Services<Lineadeventa> implements ILin
 	@Override
 	public String update(Lineadeventa lineadeventa) throws Exception {	
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/update");		
+		webResource = client.resource(USER_URI + "lineadeventa/update");		
 		String stringJson = mapper.writeValueAsString(lineadeventa);
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -50,7 +50,7 @@ public class LineadeventaServicio extends Services<Lineadeventa> implements ILin
 	@Override
 	public String delete(Lineadeventa lineadeventa) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/delete");		
+		webResource = client.resource(USER_URI + "lineadeventa/delete");		
 		String stringJson = mapper.writeValueAsString(lineadeventa);
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -69,7 +69,7 @@ public class LineadeventaServicio extends Services<Lineadeventa> implements ILin
 	@Override
 	public Lineadeventa load(Lineadeventa lineadeventa) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/load");		
+		webResource = client.resource(USER_URI + "lineadeventa/load");		
 		String stringJson = mapper.writeValueAsString(lineadeventa);
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -88,7 +88,7 @@ public class LineadeventaServicio extends Services<Lineadeventa> implements ILin
 	@Override
 	public List<Lineadeventa> loadAll() throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/loadall");		
+		webResource = client.resource(USER_URI + "lineadeventa/loadall");		
 		
 		response = webResource
 				.queryParam("usuario", "leonel")

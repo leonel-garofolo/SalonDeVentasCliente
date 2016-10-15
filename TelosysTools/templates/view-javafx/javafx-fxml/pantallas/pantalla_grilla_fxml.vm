@@ -12,16 +12,15 @@
 				<TableView fx:id="tbl${entity}" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
 					<columns>
 #foreach($attribute in $entity.attributes)
-#if($attribute.type == "Integer") 
+#if($attribute.isIntegerType()) 
  						<TableColumn fx:id="${attribute.name}" prefWidth="50.0" text="%pantalla.grilla.col.${attribute.name}" >
-#else
- #if($attribute.type == "String")
-						<TableColumn fx:id="${attribute.name}" prefWidth="150.0" text="%pantalla.grilla.col.${attribute.name}" >
- #else
-						<TableColumn fx:id="${attribute.name}" prefWidth="200.0" text="%pantalla.grilla.col.${attribute.name}" >
- #end	
 #end
-
+#if($attribute.isStringType())
+						<TableColumn fx:id="${attribute.name}" prefWidth="150.0" text="%pantalla.grilla.col.${attribute.name}" >
+#end
+#if($attribute.type == "BigDecimal")
+						<TableColumn fx:id="${attribute.name}" prefWidth="50.0" text="%pantalla.grilla.col.${attribute.name}" >
+#end
  						<cellValueFactory>
 			                <PropertyValueFactory property="${attribute.name}" />
 			            </cellValueFactory>

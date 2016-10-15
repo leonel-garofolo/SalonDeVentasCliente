@@ -19,6 +19,7 @@
 <column dbComment="" dbDefaultValue="" dbName="idlineadeventa" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="idlineadeventa" javaType="java.lang.Integer" jdbcTypeCode="4" label="Idlineadeventa" notNull="true" selected="true"/>
 <column dbComment="" dbDefaultValue="" dbForeignKey="true" dbName="idproducto" dbNotNull="true" dbPosition="2" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="idproducto" javaType="java.lang.Integer" jdbcTypeCode="4" label="Idproducto" notNull="true" selected="true"/>
 <column dbComment="" dbDefaultValue="" dbForeignKey="true" dbName="idVenta" dbNotNull="true" dbPosition="3" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="idventa" javaType="java.lang.Integer" jdbcTypeCode="4" label="Idventa" notNull="true" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="precio" dbNotNull="false" dbPosition="4" dbSize="9" dbTypeName="DECIMAL" inputType="number" javaName="precio" javaType="java.math.BigDecimal" jdbcTypeCode="3" label="Precio" notNull="false" selected="true"/>
 <fk name="FK_eo3c0wa1wk1nxhyxyla63n3px">
 <fkcol colname="idproducto" colref="idProducto" deferrable="7" deleterule="3" sequence="1" tablename="lineadeventa" tableref="producto" updaterule="3"/>
 </fk>
@@ -36,25 +37,12 @@
 </joinColumns>
 </link>
 </table>
-<table catalog="salon_de_ventas" databaseType="TABLE" javaBean="Precioproducto" name="precioproducto" schema="">
-<column dbAutoIncremented="true" dbComment="" dbDefaultValue="" dbName="idprecioproducto" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="idprecioproducto" javaType="java.lang.Integer" jdbcTypeCode="4" label="Idprecioproducto" notNull="true" selected="true"/>
-<column dateType="DT" dbComment="" dbDefaultValue="" dbName="fecha" dbNotNull="false" dbPosition="2" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="fecha" javaType="java.util.Date" jdbcTypeCode="93" label="Fecha" notNull="true" selected="true"/>
-<column dbComment="" dbDefaultValue="" dbForeignKey="true" dbName="idproducto" dbNotNull="true" dbPosition="2" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="idproducto" javaType="java.lang.Integer" jdbcTypeCode="4" label="Idproducto" notNull="true" selected="true"/>
-<column dbComment="" dbDefaultValue="" dbName="importe" dbNotNull="false" dbPosition="3" dbSize="9" dbTypeName="DECIMAL" inputType="number" javaName="importe" javaType="java.math.BigDecimal" jdbcTypeCode="3" label="Importe" notNull="true" selected="true"/>
-<fk name="fk_idproducto">
-<fkcol colname="idproducto" colref="idProducto" deferrable="7" deleterule="3" sequence="1" tablename="precioproducto" tableref="producto" updaterule="3"/>
-</fk>
-<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="fk_idproducto" id="LINK_FK_fk_idproducto_O" inverseSideOf="" javaName="producto" javaType="Producto" joinTableName="" mappedBy="" optional="UNDEFINED" owningSide="true" sourceTableName="precioproducto" targetEntity="Producto" targetTableName="producto" used="true">
-<joinColumns>
-<joinColumn insertable="false" name="idproducto" nullable="true" referencedColumnName="idProducto" unique="false" updatable="false"/>
-</joinColumns>
-</link>
-</table>
 <table catalog="salon_de_ventas" databaseType="TABLE" javaBean="Producto" name="producto" schema="">
 <column dbAutoIncremented="true" dbComment="" dbDefaultValue="" dbName="idProducto" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="idproducto" javaType="java.lang.Integer" jdbcTypeCode="4" label="Idproducto" notNull="true" selected="true"/>
 <column dbComment="" dbDefaultValue="" dbName="detalle" dbNotNull="false" dbPosition="2" dbSize="255" dbTypeName="VARCHAR" inputType="text" javaName="detalle" javaType="java.lang.String" jdbcTypeCode="12" label="Detalle" maxLength="255" notNull="false" selected="true"/>
 <column dbComment="" dbDefaultValue="" dbName="nombre" dbNotNull="true" dbPosition="3" dbSize="90" dbTypeName="VARCHAR" inputType="text" javaName="nombre" javaType="java.lang.String" jdbcTypeCode="12" label="Nombre" maxLength="90" notNull="false" selected="true"/>
-<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="fk_idproducto" id="LINK_FK_fk_idproducto_I" inverseSideOf="LINK_FK_fk_idproducto_O" javaName="listOfPrecioproducto" javaType="java.util.List" joinTableName="" mappedBy="producto" optional="UNDEFINED" owningSide="false" sourceTableName="producto" targetEntity="Precioproducto" targetTableName="precioproducto" used="true"/>
+<column dbComment="" dbDefaultValue="" dbName="codBarras" dbNotNull="false" dbPosition="4" dbSize="90" dbTypeName="VARCHAR" inputType="text" javaName="codbarras" javaType="java.lang.String" jdbcTypeCode="12" label="Codbarras" maxLength="90" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="precio" dbNotNull="false" dbPosition="5" dbSize="9" dbTypeName="DECIMAL" inputType="number" javaName="precio" javaType="java.math.BigDecimal" jdbcTypeCode="3" label="Precio" notNull="false" selected="true"/>
 <link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="FK_eo3c0wa1wk1nxhyxyla63n3px" id="LINK_FK_FK_eo3c0wa1wk1nxhyxyla63n3px_I" inverseSideOf="LINK_FK_FK_eo3c0wa1wk1nxhyxyla63n3px_O" javaName="listOfLineadeventa" javaType="java.util.List" joinTableName="" mappedBy="producto" optional="UNDEFINED" owningSide="false" sourceTableName="producto" targetEntity="Lineadeventa" targetTableName="lineadeventa" used="true"/>
 </table>
 <table catalog="salon_de_ventas" databaseType="TABLE" javaBean="Usuario" name="usuario" schema="">
@@ -66,6 +54,7 @@
 <column dbAutoIncremented="true" dbComment="" dbDefaultValue="" dbName="idVenta" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="idventa" javaType="java.lang.Integer" jdbcTypeCode="4" label="Idventa" notNull="true" selected="true"/>
 <column dateType="DT" dbComment="" dbDefaultValue="" dbName="fecha" dbNotNull="true" dbPosition="2" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="fecha" javaType="java.util.Date" jdbcTypeCode="93" label="Fecha" notNull="false" selected="true"/>
 <column dateType="DT" dbComment="" dbDefaultValue="" dbName="fecha_pago" dbNotNull="false" dbPosition="3" dbSize="19" dbTypeName="DATETIME" inputType="" javaName="fechaPago" javaType="java.util.Date" jdbcTypeCode="93" label="Fecha pago" notNull="false" selected="true"/>
+<column dbComment="" dbDefaultValue="" dbName="total" dbNotNull="false" dbPosition="4" dbSize="9" dbTypeName="DECIMAL" inputType="number" javaName="total" javaType="java.math.BigDecimal" jdbcTypeCode="3" label="Total" notNull="false" selected="true"/>
 <link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="FK_i0ndewg8cbfxk0fm6rje1cn4w" id="LINK_FK_FK_i0ndewg8cbfxk0fm6rje1cn4w_I" inverseSideOf="LINK_FK_FK_i0ndewg8cbfxk0fm6rje1cn4w_O" javaName="listOfLineadeventa" javaType="java.util.List" joinTableName="" mappedBy="venta" optional="UNDEFINED" owningSide="false" sourceTableName="venta" targetEntity="Lineadeventa" targetTableName="lineadeventa" used="true"/>
 </table>
 </tableList>

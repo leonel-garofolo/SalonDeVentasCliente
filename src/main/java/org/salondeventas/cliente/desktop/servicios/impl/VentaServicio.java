@@ -12,7 +12,7 @@ public class VentaServicio extends Services<Venta> implements IVentaServicio {
 	@Override
 	public String insert(Venta venta) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/insert");		
+		webResource = client.resource(USER_URI + "venta/insert");		
 		String stringJson = mapper.writeValueAsString(venta);
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -31,7 +31,7 @@ public class VentaServicio extends Services<Venta> implements IVentaServicio {
 	@Override
 	public String update(Venta venta) throws Exception {	
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/update");		
+		webResource = client.resource(USER_URI + "venta/update");		
 		String stringJson = mapper.writeValueAsString(venta);
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -50,7 +50,7 @@ public class VentaServicio extends Services<Venta> implements IVentaServicio {
 	@Override
 	public String delete(Venta venta) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/delete");		
+		webResource = client.resource(USER_URI + "venta/delete");		
 		String stringJson = mapper.writeValueAsString(venta);
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -69,7 +69,7 @@ public class VentaServicio extends Services<Venta> implements IVentaServicio {
 	@Override
 	public Venta load(Venta venta) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/load");		
+		webResource = client.resource(USER_URI + "venta/load");		
 		String stringJson = mapper.writeValueAsString(venta);
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -88,7 +88,7 @@ public class VentaServicio extends Services<Venta> implements IVentaServicio {
 	@Override
 	public List<Venta> loadAll() throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/loadall");		
+		webResource = client.resource(USER_URI + "venta/loadall");		
 		
 		response = webResource
 				.queryParam("usuario", "leonel")

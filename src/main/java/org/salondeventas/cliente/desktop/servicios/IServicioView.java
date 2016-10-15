@@ -1,0 +1,10 @@
+package org.salondeventas.cliente.desktop.servicios;
+
+import java.io.Serializable;
+import java.util.List;
+
+public interface IServicioView<T, ID extends Serializable> {
+		
+	public T load(T entity) throws Exception;			
+	public List<T> loadAll() throws Exception;
+}

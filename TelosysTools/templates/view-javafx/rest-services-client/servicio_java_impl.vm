@@ -20,7 +20,7 @@ public class ${entity.name}Servicio extends Services<${entity.name}> implements 
 	@Override
 	public String insert(${entity.name} ${uncapitalizedEntityName}) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/insert");		
+		webResource = client.resource(USER_URI + "${uncapitalizedEntityName}/insert");		
 		String stringJson = mapper.writeValueAsString(${uncapitalizedEntityName});
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -39,7 +39,7 @@ public class ${entity.name}Servicio extends Services<${entity.name}> implements 
 	@Override
 	public String update(${entity.name} ${uncapitalizedEntityName}) throws Exception {	
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/update");		
+		webResource = client.resource(USER_URI + "${uncapitalizedEntityName}/update");		
 		String stringJson = mapper.writeValueAsString(${uncapitalizedEntityName});
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -58,7 +58,7 @@ public class ${entity.name}Servicio extends Services<${entity.name}> implements 
 	@Override
 	public String delete(${entity.name} ${uncapitalizedEntityName}) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/delete");		
+		webResource = client.resource(USER_URI + "${uncapitalizedEntityName}/delete");		
 		String stringJson = mapper.writeValueAsString(${uncapitalizedEntityName});
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -77,7 +77,7 @@ public class ${entity.name}Servicio extends Services<${entity.name}> implements 
 	@Override
 	public ${entity.name} load(${entity.name} ${uncapitalizedEntityName}) throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/load");		
+		webResource = client.resource(USER_URI + "${uncapitalizedEntityName}/load");		
 		String stringJson = mapper.writeValueAsString(${uncapitalizedEntityName});
 		response = webResource
 				.queryParam("usuario", "leonel")
@@ -96,7 +96,7 @@ public class ${entity.name}Servicio extends Services<${entity.name}> implements 
 	@Override
 	public List<${entity.name}> loadAll() throws Exception {		
 		client = Client.create();
-		webResource = client.resource(USER_URI + "usuario/loadall");		
+		webResource = client.resource(USER_URI + "${uncapitalizedEntityName}/loadall");		
 		
 		response = webResource
 				.queryParam("usuario", "leonel")
