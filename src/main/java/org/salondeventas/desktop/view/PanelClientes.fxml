@@ -17,6 +17,7 @@
 <Label text="nombre:"
         GridPane.columnIndex="0" GridPane.rowIndex="2"/>   
 
+
  	<TextField fx:id="txtnombre"  maxWidth="200"
         GridPane.columnIndex="1" GridPane.rowIndex="2"/>
        
