@@ -110,15 +110,17 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 	public void loadForm(${entity.name} ${uncapitalizedEntityName}){
 		if(${uncapitalizedEntityName} !=null){
 #foreach($attribute in $entity.attributes)
-#if(${attribute.isIntegerType()})
-			txt${attribute.name}.setText(String.valueOf(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})()));
+			if(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})() != null){
+#if(${attribute.isIntegerType()} || $attribute.type == "BigDecimal")
+				txt${attribute.name}.setText(String.valueOf(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})()));
 #end
 #if(${attribute.isStringType()})
-			txt${attribute.name}.setText(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})());
+				txt${attribute.name}.setText(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})());
 #end			
 #if($attribute.isUtilDateType())			
-			dpr${attribute.name}.setValue(new java.sql.Date(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})().getTime()).toLocalDate());		
+				dpr${attribute.name}.setValue(new java.sql.Date(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})().getTime()).toLocalDate());		
 #end	
+			}
 #end			
 		}
 	}

@@ -17,10 +17,10 @@ pantalla.name.${uncapitalizedEntityName}=${entity.name}s
 #Pantalla de ${entity.name}
 #Grilla
 #foreach($attribute in $entity.attributes)
-pantalla.grilla.col.${attribute.name}=$fn.capitalize(${attribute.name})
+${entity.name}.grilla.col.${attribute.name}=$fn.capitalize(${attribute.name})
 #end
 #foreach($attribute in $entity.attributes)
-pantalla.panel.field.${attribute.name}=$fn.capitalize(${attribute.name}):
+${entity.name}.panel.field.${attribute.name}=$fn.capitalize(${attribute.name}):
 #end
 #end
 

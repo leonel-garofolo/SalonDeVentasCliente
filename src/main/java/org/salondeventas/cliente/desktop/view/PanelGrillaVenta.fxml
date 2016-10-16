@@ -4,34 +4,62 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.*?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.Button?>
+<?import org.salondeventas.cliente.desktop.view.control.NumberField?>
 
-<fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
+
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
-			<center>
-				<TableView fx:id="tblVenta" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-					<columns>
- 						<TableColumn fx:id="idventa" prefWidth="50.0" text="%pantalla.grilla.col.idventa" >
-
+      <VBox fx:id="pnlBotones">
+         <children>
+      		<BorderPane fx:id="pnlBorder" style="padding-top: 2cm">      			                  
+      			<top>
+      				<HBox fx:id="hButtonFilter" BorderPane.alignment="CENTER">
+                     
+						<children>
+      					 	<NumberField fx:id="txtidventa" promptText="%Venta.grilla.col.idventa" maxWidth="50" >
+      					 		<tooltip><Tooltip text="%Venta.grilla.col.idventa"></Tooltip></tooltip>      					 		
+      					 	</NumberField>			 				     
+      					 </children>
+						 <children>
+      					 	<Button  fx:id="btnBuscar" text="Buscar" maxWidth="60" />      					 		      					 	       			 			
+      					 </children>
+      					 <children>
+      					 	<Button  fx:id="btnLimpiar" text="Limpiar" maxWidth="60" />      					 		      					 	       			 			
+      					 </children>
+      				</HBox>
+               </top>
+      		   <center>
+				  <TableView fx:id="tblVenta" BorderPane.alignment="CENTER">
+				  	 <columns>
+ 						<TableColumn fx:id="idventa" prefWidth="50.0" text="%Venta.grilla.col.idventa" >
  						<cellValueFactory>
 			                <PropertyValueFactory property="idventa" />
 			            </cellValueFactory>
 		      		    </TableColumn>	 
- 						<TableColumn fx:id="fecha" prefWidth="200.0" text="%pantalla.grilla.col.fecha" >
- 
+						<TableColumn fx:id="fecha" prefWidth="150.0" text="%Venta.grilla.col.fecha" >
  						<cellValueFactory>
 			                <PropertyValueFactory property="fecha" />
 			            </cellValueFactory>
 		      		    </TableColumn>	 
- 						<TableColumn fx:id="fechaPago" prefWidth="200.0" text="%pantalla.grilla.col.fechaPago" >
- 
+						<TableColumn fx:id="fechaPago" prefWidth="150.0" text="%Venta.grilla.col.fechaPago" >
  						<cellValueFactory>
 			                <PropertyValueFactory property="fechaPago" />
+			            </cellValueFactory>
+		      		    </TableColumn>	 
+						<TableColumn fx:id="total" prefWidth="50.0" text="%Venta.grilla.col.total" >
+ 						<cellValueFactory>
+			                <PropertyValueFactory property="total" />
 			            </cellValueFactory>
 		      		    </TableColumn>	 
 					</columns>
 				</TableView>
 			</center>
-		</BorderPane>
+               
+      		</BorderPane>
+         </children>
+      </VBox>
 	</children>
 </fx:root>

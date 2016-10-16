@@ -1,4 +1,5 @@
 #set($uncapitalizedEntityName = $fn.uncapitalize(${entity.name}) )
+#set( $dataFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.NOT_IN_SELECTED_LINKS ) )
 package ${target.javaPackageFromFolder($SRC)};
 
 import java.io.IOException;
@@ -11,17 +12,22 @@ import ${ROOT_PKG}.servicios.impl.${entity}Servicio;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class PanelGrilla${entity} extends PanelControlesABM implements Initializable, IPanelControllerGrilla<I${entity}Servicio>, EventHandler<ActionEvent> {
 	private I${entity}Servicio ${uncapitalizedEntityName}Servicio;
@@ -29,14 +35,37 @@ public class PanelGrilla${entity} extends PanelControlesABM implements Initializ
 	private Node center;
 	private Node bottom;
 	private Tab tab;
+
 	@FXML
-	private BorderPane pnlBorder;
+	VBox pnlBotones;
+
+	@FXML
+	HBox hButtonFilter;
+
+	@FXML
+	private BorderPane pnlBorder;	
+
+	@FXML
+	private Button btnBuscar;
 	
 	@FXML
-	private TextField txtBuscar;
+	private Button btnLimpiar;
+
+	private ObservableList<${entity}> data;
 	
 	@FXML	
 	private TableView<${entity}> tbl${entity};
+
+#foreach($attribute in $entity.attributes)
+#if($attribute.isIntegerType())
+	@FXML
+	private TextField txt${attribute.name};
+#end
+#if($attribute.isStringType())
+	@FXML
+	private TextField txt${attribute.name};
+#end
+#end
 	
 	public PanelGrilla${entity}(Tab tab) {
 		this.tab = tab;
@@ -64,16 +93,18 @@ public class PanelGrilla${entity} extends PanelControlesABM implements Initializ
 		});
 		loadGrilla();
 
-		pnlBorder.setTop(generarPanel());		
+		pnlBotones.getChildren().add(0, generarPanel());
+		pnlBorder.setPadding(new Insets(10, 0, 0, 0));	
 		this.btnAgregar.setOnAction(this);
 		this.btnEditar.setOnAction(this);
 		this.btnEliminar.setOnAction(this);
+		this.btnBuscar.setOnAction(this);
+		this.btnLimpiar.setOnAction(this);
 	}
 	
 	public void loadGrilla(){
 		try {
-			final ObservableList<${entity}> data =
-			        FXCollections.observableArrayList(${uncapitalizedEntityName}Servicio.loadAll());
+			data = FXCollections.observableArrayList(${uncapitalizedEntityName}Servicio.loadAll());
 			tbl${entity}.setItems(data);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -123,6 +154,45 @@ public class PanelGrilla${entity} extends PanelControlesABM implements Initializ
 
 	@Override
 	public void handle(ActionEvent event) {
+		if (event.getSource().equals(btnBuscar)) {	
+			loadGrilla();
+			
+			ObservableList<${entity}> filter= data;
+
+#foreach( $field in $entity.keyAttributes )
+#if($field.isIntegerType() || $field.isStringType())
+			if(!txt${field.name}.getText().trim().equals("")){
+#if($field.isIntegerType())
+				filter=filter.filtered(p -> p.${field.getter}() != null && p.${field.getter}() == Integer.valueOf(txt${field.name}.getText()));
+#else
+				filter= filter.filtered(p -> p.${field.getter}() != null && p.${field.getter}().contains(txt${field.name}.getText()));
+#end
+			}
+#end
+#end   
+#foreach( $field in $dataFields )	
+#if($field.isIntegerType() || $field.isStringType())
+			if(!txt${field.name}.getText().trim().equals("")){
+#if($field.isIntegerType())
+				filter=filter.filtered(p -> p.${field.getter}() != null && p.${field.getter}() == Integer.valueOf(txt${field.name}.getText()));
+#else
+				filter= filter.filtered(p -> p.${field.getter}() != null && p.${field.getter}().contains(txt${field.name}.getText()));
+#end
+			}
+#end
+#end		
+			tbl${entity}.setItems(new SortedList<>(filter));							
+		}
+		
+		if (event.getSource().equals(btnLimpiar)) {			
+			for(Node node: hButtonFilter.getChildren()){
+				if(node instanceof TextField){
+					((TextField)node).setText("");
+				}								
+			}		
+			tbl${entity}.setItems(data);							
+		}
+
 		if (event.getSource().equals(btnAgregar)) {
 			new Panel${entity}(PanelGrilla${entity}.this);
 		}

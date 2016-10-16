@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import java.time.LocalDate;
+
 
 
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
@@ -85,9 +85,15 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
 
 	public void loadForm(Usuario usuario){
 		if(usuario !=null){
-			txtidusuario.setText(String.valueOf(usuario.getIdusuario()));
-			txtclave.setText(usuario.getClave());
-			txtnombre.setText(usuario.getNombre());
+			if(usuario.getIdusuario() != null){
+				txtidusuario.setText(String.valueOf(usuario.getIdusuario()));
+			}
+			if(usuario.getClave() != null){
+				txtclave.setText(usuario.getClave());
+			}
+			if(usuario.getNombre() != null){
+				txtnombre.setText(usuario.getNombre());
+			}
 		}
 	}
 

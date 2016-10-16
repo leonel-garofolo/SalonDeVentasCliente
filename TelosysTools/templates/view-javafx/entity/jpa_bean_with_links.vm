@@ -58,13 +58,13 @@ public class ${entity.name} implements Serializable {
     // ENTITY DATA FIELDS 
     //----------------------------------------------------------------------    
 #foreach( $field in $dataFields )
-	#if($field.isNotNull())
+#if($field.isNotNull())
 	@NotNull
-	#end
-	#if($field.isStringType())
 	@NotBlank
+#end
+#if($field.isStringType())	
 	@Size(max = $field.maxLength)
-	#end
+#end
     private $field.formattedType(10) $field.formattedName(12) #if($field.hasInitialValue())= ${field.initialValue} #end;
 #end
 #foreach( $field in $linkFields )

@@ -4,27 +4,57 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.*?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.Button?>
+<?import org.salondeventas.cliente.desktop.view.control.NumberField?>
 
-<fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
+
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
-			<center>
-				<TableView fx:id="tblUsuario" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-					<columns>
- 						<TableColumn fx:id="idusuario" prefWidth="50.0" text="%pantalla.grilla.col.idusuario" >
-
+      <VBox fx:id="pnlBotones">
+         <children>
+      		<BorderPane fx:id="pnlBorder" style="padding-top: 2cm">      			                  
+      			<top>
+      				<HBox fx:id="hButtonFilter" BorderPane.alignment="CENTER">
+                     
+						<children>
+      					 	<NumberField fx:id="txtidusuario" promptText="%Usuario.grilla.col.idusuario" maxWidth="50" >
+      					 		<tooltip><Tooltip text="%Usuario.grilla.col.idusuario"></Tooltip></tooltip>      					 		
+      					 	</NumberField>			 				     
+      					 </children>
+      					 <children>
+      					 	<TextField fx:id="txtclave" promptText="%Usuario.grilla.col.clave" maxWidth="150" >
+      					 		<tooltip><Tooltip text="%Usuario.grilla.col.clave"></Tooltip></tooltip>
+      					 	</TextField>      					 	       			 				
+      					 </children>
+      					 <children>
+      					 	<TextField fx:id="txtnombre" promptText="%Usuario.grilla.col.nombre" maxWidth="150" >
+      					 		<tooltip><Tooltip text="%Usuario.grilla.col.nombre"></Tooltip></tooltip>
+      					 	</TextField>      					 	       			 				
+      					 </children>
+						 <children>
+      					 	<Button  fx:id="btnBuscar" text="Buscar" maxWidth="60" />      					 		      					 	       			 			
+      					 </children>
+      					 <children>
+      					 	<Button  fx:id="btnLimpiar" text="Limpiar" maxWidth="60" />      					 		      					 	       			 			
+      					 </children>
+      				</HBox>
+               </top>
+      		   <center>
+				  <TableView fx:id="tblUsuario" BorderPane.alignment="CENTER">
+				  	 <columns>
+ 						<TableColumn fx:id="idusuario" prefWidth="50.0" text="%Usuario.grilla.col.idusuario" >
  						<cellValueFactory>
 			                <PropertyValueFactory property="idusuario" />
 			            </cellValueFactory>
 		      		    </TableColumn>	 
- 						<TableColumn fx:id="clave" prefWidth="150.0" text="%pantalla.grilla.col.clave" >
- 
+						<TableColumn fx:id="clave" prefWidth="150.0" text="%Usuario.grilla.col.clave" >
  						<cellValueFactory>
 			                <PropertyValueFactory property="clave" />
 			            </cellValueFactory>
 		      		    </TableColumn>	 
- 						<TableColumn fx:id="nombre" prefWidth="150.0" text="%pantalla.grilla.col.nombre" >
- 
+						<TableColumn fx:id="nombre" prefWidth="150.0" text="%Usuario.grilla.col.nombre" >
  						<cellValueFactory>
 			                <PropertyValueFactory property="nombre" />
 			            </cellValueFactory>
@@ -32,6 +62,9 @@
 					</columns>
 				</TableView>
 			</center>
-		</BorderPane>
+               
+      		</BorderPane>
+         </children>
+      </VBox>
 	</children>
 </fx:root>

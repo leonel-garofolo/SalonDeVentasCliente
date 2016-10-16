@@ -3,23 +3,21 @@ package org.salondeventas.cliente.desktop.view;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-
-import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
-import org.salondeventas.cliente.desktop.modelo.Empresa;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.ImageView;
+
+
+
+import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
+import org.salondeventas.cliente.desktop.modelo.Empresa;
 
 public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
@@ -93,20 +91,27 @@ public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent
         father.btnCancelar.setOnAction(this);
         father.getTab().setContent(this);
         
-        bytlogo.setOnMouseClicked( ( MouseEvent event ) ->
-        {
-           System.out.println("mouse clicket");
-        } );       
-        
 	}
 
 	public void loadForm(Empresa empresa){
 		if(empresa !=null){
-			txtidempresa.setText(String.valueOf(empresa.getIdempresa()));
-			txtdescripcion.setText(empresa.getDescripcion());
-			txtdireccion.setText(empresa.getDireccion());
-			txtnombre.setText(empresa.getNombre());
-			txttelefono.setText(empresa.getTelefono());
+			if(empresa.getIdempresa() != null){
+				txtidempresa.setText(String.valueOf(empresa.getIdempresa()));
+			}
+			if(empresa.getDescripcion() != null){
+				txtdescripcion.setText(empresa.getDescripcion());
+			}
+			if(empresa.getDireccion() != null){
+				txtdireccion.setText(empresa.getDireccion());
+			}
+			if(empresa.getLogo() != null){
+			}
+			if(empresa.getNombre() != null){
+				txtnombre.setText(empresa.getNombre());
+			}
+			if(empresa.getTelefono() != null){
+				txttelefono.setText(empresa.getTelefono());
+			}
 		}
 	}
 

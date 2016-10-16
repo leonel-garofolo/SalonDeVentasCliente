@@ -10,17 +10,22 @@ import org.salondeventas.cliente.desktop.servicios.impl.VentaServicio;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class PanelGrillaVenta extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IVentaServicio>, EventHandler<ActionEvent> {
 	private IVentaServicio ventaServicio;
@@ -28,14 +33,29 @@ public class PanelGrillaVenta extends PanelControlesABM implements Initializable
 	private Node center;
 	private Node bottom;
 	private Tab tab;
+
 	@FXML
-	private BorderPane pnlBorder;
+	VBox pnlBotones;
+
+	@FXML
+	HBox hButtonFilter;
+
+	@FXML
+	private BorderPane pnlBorder;	
+
+	@FXML
+	private Button btnBuscar;
 	
 	@FXML
-	private TextField txtBuscar;
+	private Button btnLimpiar;
+
+	private ObservableList<Venta> data;
 	
 	@FXML	
 	private TableView<Venta> tblVenta;
+
+	@FXML
+	private TextField txtidventa;
 	
 	public PanelGrillaVenta(Tab tab) {
 		this.tab = tab;
@@ -63,16 +83,18 @@ public class PanelGrillaVenta extends PanelControlesABM implements Initializable
 		});
 		loadGrilla();
 
-		pnlBorder.setTop(generarPanel());		
+		pnlBotones.getChildren().add(0, generarPanel());
+		pnlBorder.setPadding(new Insets(10, 0, 0, 0));	
 		this.btnAgregar.setOnAction(this);
 		this.btnEditar.setOnAction(this);
 		this.btnEliminar.setOnAction(this);
+		this.btnBuscar.setOnAction(this);
+		this.btnLimpiar.setOnAction(this);
 	}
 	
 	public void loadGrilla(){
 		try {
-			final ObservableList<Venta> data =
-			        FXCollections.observableArrayList(ventaServicio.loadAll());
+			data = FXCollections.observableArrayList(ventaServicio.loadAll());
 			tblVenta.setItems(data);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -122,6 +144,26 @@ public class PanelGrillaVenta extends PanelControlesABM implements Initializable
 
 	@Override
 	public void handle(ActionEvent event) {
+		if (event.getSource().equals(btnBuscar)) {	
+			loadGrilla();
+			
+			ObservableList<Venta> filter= data;
+
+			if(!txtidventa.getText().trim().equals("")){
+				filter=filter.filtered(p -> p.getIdventa() != null && p.getIdventa() == Integer.valueOf(txtidventa.getText()));
+			}
+			tblVenta.setItems(new SortedList<>(filter));							
+		}
+		
+		if (event.getSource().equals(btnLimpiar)) {			
+			for(Node node: hButtonFilter.getChildren()){
+				if(node instanceof TextField){
+					((TextField)node).setText("");
+				}								
+			}		
+			tblVenta.setItems(data);							
+		}
+
 		if (event.getSource().equals(btnAgregar)) {
 			new PanelVenta(PanelGrillaVenta.this);
 		}

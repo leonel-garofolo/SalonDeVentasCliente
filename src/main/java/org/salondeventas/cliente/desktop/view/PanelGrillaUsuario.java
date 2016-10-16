@@ -10,17 +10,22 @@ import org.salondeventas.cliente.desktop.servicios.impl.UsuarioServicio;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class PanelGrillaUsuario extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IUsuarioServicio>, EventHandler<ActionEvent> {
 	private IUsuarioServicio usuarioServicio;
@@ -28,14 +33,33 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 	private Node center;
 	private Node bottom;
 	private Tab tab;
+
 	@FXML
-	private BorderPane pnlBorder;
+	VBox pnlBotones;
+
+	@FXML
+	HBox hButtonFilter;
+
+	@FXML
+	private BorderPane pnlBorder;	
+
+	@FXML
+	private Button btnBuscar;
 	
 	@FXML
-	private TextField txtBuscar;
+	private Button btnLimpiar;
+
+	private ObservableList<Usuario> data;
 	
 	@FXML	
 	private TableView<Usuario> tblUsuario;
+
+	@FXML
+	private TextField txtidusuario;
+	@FXML
+	private TextField txtclave;
+	@FXML
+	private TextField txtnombre;
 	
 	public PanelGrillaUsuario(Tab tab) {
 		this.tab = tab;
@@ -63,16 +87,18 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 		});
 		loadGrilla();
 
-		pnlBorder.setTop(generarPanel());		
+		pnlBotones.getChildren().add(0, generarPanel());
+		pnlBorder.setPadding(new Insets(10, 0, 0, 0));	
 		this.btnAgregar.setOnAction(this);
 		this.btnEditar.setOnAction(this);
 		this.btnEliminar.setOnAction(this);
+		this.btnBuscar.setOnAction(this);
+		this.btnLimpiar.setOnAction(this);
 	}
 	
 	public void loadGrilla(){
 		try {
-			final ObservableList<Usuario> data =
-			        FXCollections.observableArrayList(usuarioServicio.loadAll());
+			data = FXCollections.observableArrayList(usuarioServicio.loadAll());
 			tblUsuario.setItems(data);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -122,6 +148,32 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 
 	@Override
 	public void handle(ActionEvent event) {
+		if (event.getSource().equals(btnBuscar)) {	
+			loadGrilla();
+			
+			ObservableList<Usuario> filter= data;
+
+			if(!txtidusuario.getText().trim().equals("")){
+				filter=filter.filtered(p -> p.getIdusuario() != null && p.getIdusuario() == Integer.valueOf(txtidusuario.getText()));
+			}
+			if(!txtclave.getText().trim().equals("")){
+				filter= filter.filtered(p -> p.getClave() != null && p.getClave().contains(txtclave.getText()));
+			}
+			if(!txtnombre.getText().trim().equals("")){
+				filter= filter.filtered(p -> p.getNombre() != null && p.getNombre().contains(txtnombre.getText()));
+			}
+			tblUsuario.setItems(new SortedList<>(filter));							
+		}
+		
+		if (event.getSource().equals(btnLimpiar)) {			
+			for(Node node: hButtonFilter.getChildren()){
+				if(node instanceof TextField){
+					((TextField)node).setText("");
+				}								
+			}		
+			tblUsuario.setItems(data);							
+		}
+
 		if (event.getSource().equals(btnAgregar)) {
 			new PanelUsuario(PanelGrillaUsuario.this);
 		}

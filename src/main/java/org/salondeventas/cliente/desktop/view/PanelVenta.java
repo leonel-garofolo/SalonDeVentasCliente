@@ -1,26 +1,42 @@
 package org.salondeventas.cliente.desktop.view;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
+import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
+import org.salondeventas.cliente.desktop.modelo.Lineadeventa;
+import org.salondeventas.cliente.desktop.modelo.Producto;
+import org.salondeventas.cliente.desktop.modelo.Venta;
+import org.salondeventas.cliente.desktop.servicios.IProductoServicio;
+import org.salondeventas.cliente.desktop.servicios.impl.ProductoServicio;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import java.time.LocalDate;
-
-
-import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
-import org.salondeventas.cliente.desktop.modelo.Venta;
 
 public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
-	private PanelGrillaVenta father;
+	private PanelGrillaVenta father;	
+	private IProductoServicio productoServicio;
 	
 	@FXML
 	private VBox vBoxMsg;
@@ -34,6 +50,23 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 
 	@FXML
 	private DatePicker dprfechaPago;
+
+	@FXML
+	private TextField txttotal;
+	
+	@FXML
+	private TableView<Lineadeventa> tblLineaDeVentas;
+	
+	@FXML
+	private TableColumn colProducto;
+	
+	@FXML
+	private TableColumn colImporte;
+	
+	@FXML
+	private Button btnAgregar;
+	
+	private ObservableList<Lineadeventa> data ;
 
 	public PanelVenta(PanelGrillaVenta father) {
 		this.modoEdit = false;
@@ -73,6 +106,7 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        productoServicio = new ProductoServicio();    
         
         this.setTop(father.generarPanelFormulario());
         this.setLeft(null);
@@ -80,16 +114,54 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
         father.btnGuardar.setOnAction(this);        
         father.btnCancelar.setOnAction(this);
         father.getTab().setContent(this);
+        btnAgregar.setOnAction(this);
         
 		dprfecha.setValue(LocalDate.now());			
 		dprfechaPago.setValue(LocalDate.now());			
 	}
 
+	@SuppressWarnings("unchecked")
 	public void loadForm(Venta venta){
 		if(venta !=null){
-			txtidventa.setText(String.valueOf(venta.getIdventa()));
-			dprfecha.setValue(new java.sql.Date(venta.getFecha().getTime()).toLocalDate());		
-			dprfechaPago.setValue(new java.sql.Date(venta.getFechaPago().getTime()).toLocalDate());		
+			if(venta.getIdventa() != null){
+				txtidventa.setText(String.valueOf(venta.getIdventa()));
+			}
+			if(venta.getFecha() != null){
+				dprfecha.setValue(new java.sql.Date(venta.getFecha().getTime()).toLocalDate());		
+			}
+			if(venta.getFechaPago() != null){
+				dprfechaPago.setValue(new java.sql.Date(venta.getFechaPago().getTime()).toLocalDate());		
+			}
+			if(venta.getTotal() != null){
+				txttotal.setText(String.valueOf(venta.getTotal()));
+			}
+			
+							
+			data = FXCollections.observableArrayList(venta.getListOfLineadeventa());
+			tblLineaDeVentas.setItems(data);											
+			ObservableList<Producto> productos = null;
+			try {
+				productos = FXCollections.observableArrayList (productoServicio.loadAll());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+						  
+			if(productos != null){
+				colProducto.setCellFactory(ComboBoxTableCell.forTableColumn(productos));
+				
+				colProducto.setOnEditCommit(
+				    new EventHandler<CellEditEvent<Producto, String>>() {			      
+
+						@Override
+						public void handle(CellEditEvent<Producto, String> t) {
+							//((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setIdproducto(t.getNewValue());
+							//System.out.println(((Producto)t.getNewValue()).getNombre());
+						};
+				    }
+				);
+			}	
+			colImporte.setCellFactory(TextFieldTableCell.forTableColumn());
 		}
 	}
 
@@ -141,6 +213,10 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 		}
 		if(event.getSource().equals(father.btnCancelar)){
 			father.reLoad();    
+		}
+		
+		if(event.getSource().equals(btnAgregar)){
+			data.add(new Lineadeventa());			
 		}
 	}
 }

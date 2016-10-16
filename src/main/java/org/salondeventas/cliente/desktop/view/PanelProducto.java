@@ -1,25 +1,22 @@
 package org.salondeventas.cliente.desktop.view;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-
-import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
-import org.salondeventas.cliente.desktop.modelo.Producto;
-import org.salondeventas.cliente.desktop.view.control.DecimalField;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+
+
+
+import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
+import org.salondeventas.cliente.desktop.modelo.Producto;
 
 public class PanelProducto extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
@@ -33,16 +30,16 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 	private TextField txtidproducto;
 
 	@FXML
-	private TextField txtdetalle;
-
-	@FXML
 	private TextField txtnombre;
 
 	@FXML
 	private TextField txtcodbarras;
 
 	@FXML
-	private DecimalField txtprecio;			
+	private TextField txtmininventario;
+
+	@FXML
+	private TextField txtprecio;
 
 	public PanelProducto(PanelGrillaProducto father) {
 		this.modoEdit = false;
@@ -89,17 +86,26 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
         father.btnGuardar.setOnAction(this);        
         father.btnCancelar.setOnAction(this);
         father.getTab().setContent(this);
-     
-       
+        
 	}
 
 	public void loadForm(Producto producto){
 		if(producto !=null){
-			txtidproducto.setText(String.valueOf(producto.getIdproducto()));
-			txtdetalle.setText(producto.getDetalle());
-			txtnombre.setText(producto.getNombre());
-			txtcodbarras.setText(producto.getCodbarras());
-			txtprecio.setText(producto.getPrecio().toString());
+			if(producto.getIdproducto() != null){
+				txtidproducto.setText(String.valueOf(producto.getIdproducto()));
+			}
+			if(producto.getNombre() != null){
+				txtnombre.setText(producto.getNombre());
+			}
+			if(producto.getCodbarras() != null){
+				txtcodbarras.setText(producto.getCodbarras());
+			}
+			if(producto.getMininventario() != null){
+				txtmininventario.setText(String.valueOf(producto.getMininventario()));
+			}
+			if(producto.getPrecio() != null){
+				txtprecio.setText(String.valueOf(producto.getPrecio()));
+			}
 		}
 	}
 
@@ -110,10 +116,13 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 		}catch (NumberFormatException e) {
 			unProducto.setIdproducto(null);
 		}
-		unProducto.setDetalle(txtdetalle.getText());
 		unProducto.setNombre(txtnombre.getText());
 		unProducto.setCodbarras(txtcodbarras.getText());
-		unProducto.setPrecio(new BigDecimal(txtprecio.getText()));
+		try{
+			unProducto.setMininventario(Integer.valueOf(txtmininventario.getText()));
+		}catch (NumberFormatException e) {
+			unProducto.setMininventario(null);
+		}
 		
 		Label label = null;	
 		vBoxMsg.getChildren().clear();

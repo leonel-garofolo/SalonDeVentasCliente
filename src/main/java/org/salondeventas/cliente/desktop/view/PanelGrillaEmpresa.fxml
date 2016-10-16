@@ -4,45 +4,77 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.*?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.Button?>
+<?import org.salondeventas.cliente.desktop.view.control.NumberField?>
 
-<fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
+
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<BorderPane fx:id="pnlBorder" prefHeight="370.0" prefWidth="600.0">                  
-			<center>
-				<TableView fx:id="tblEmpresa" prefHeight="238.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-					<columns>
- 						<TableColumn fx:id="idempresa" prefWidth="50.0" text="%pantalla.grilla.col.idempresa" >
-
+      <VBox fx:id="pnlBotones">
+         <children>
+      		<BorderPane fx:id="pnlBorder" style="padding-top: 2cm">      			                  
+      			<top>
+      				<HBox fx:id="hButtonFilter" BorderPane.alignment="CENTER">
+                     
+						<children>
+      					 	<NumberField fx:id="txtidempresa" promptText="%Empresa.grilla.col.idempresa" maxWidth="50" >
+      					 		<tooltip><Tooltip text="%Empresa.grilla.col.idempresa"></Tooltip></tooltip>      					 		
+      					 	</NumberField>			 				     
+      					 </children>
+      					 <children>
+      					 	<TextField fx:id="txtdescripcion" promptText="%Empresa.grilla.col.descripcion" maxWidth="150" >
+      					 		<tooltip><Tooltip text="%Empresa.grilla.col.descripcion"></Tooltip></tooltip>
+      					 	</TextField>      					 	       			 				
+      					 </children>
+      					 <children>
+      					 	<TextField fx:id="txtdireccion" promptText="%Empresa.grilla.col.direccion" maxWidth="150" >
+      					 		<tooltip><Tooltip text="%Empresa.grilla.col.direccion"></Tooltip></tooltip>
+      					 	</TextField>      					 	       			 				
+      					 </children>
+      					 <children>
+      					 	<TextField fx:id="txtnombre" promptText="%Empresa.grilla.col.nombre" maxWidth="150" >
+      					 		<tooltip><Tooltip text="%Empresa.grilla.col.nombre"></Tooltip></tooltip>
+      					 	</TextField>      					 	       			 				
+      					 </children>
+      					 <children>
+      					 	<TextField fx:id="txttelefono" promptText="%Empresa.grilla.col.telefono" maxWidth="150" >
+      					 		<tooltip><Tooltip text="%Empresa.grilla.col.telefono"></Tooltip></tooltip>
+      					 	</TextField>      					 	       			 				
+      					 </children>
+						 <children>
+      					 	<Button  fx:id="btnBuscar" text="Buscar" maxWidth="60" />      					 		      					 	       			 			
+      					 </children>
+      					 <children>
+      					 	<Button  fx:id="btnLimpiar" text="Limpiar" maxWidth="60" />      					 		      					 	       			 			
+      					 </children>
+      				</HBox>
+               </top>
+      		   <center>
+				  <TableView fx:id="tblEmpresa" BorderPane.alignment="CENTER">
+				  	 <columns>
+ 						<TableColumn fx:id="idempresa" prefWidth="50.0" text="%Empresa.grilla.col.idempresa" >
  						<cellValueFactory>
 			                <PropertyValueFactory property="idempresa" />
 			            </cellValueFactory>
 		      		    </TableColumn>	 
- 						<TableColumn fx:id="descripcion" prefWidth="150.0" text="%pantalla.grilla.col.descripcion" >
- 
+						<TableColumn fx:id="descripcion" prefWidth="150.0" text="%Empresa.grilla.col.descripcion" >
  						<cellValueFactory>
 			                <PropertyValueFactory property="descripcion" />
 			            </cellValueFactory>
 		      		    </TableColumn>	 
- 						<TableColumn fx:id="direccion" prefWidth="150.0" text="%pantalla.grilla.col.direccion" >
- 
+						<TableColumn fx:id="direccion" prefWidth="150.0" text="%Empresa.grilla.col.direccion" >
  						<cellValueFactory>
 			                <PropertyValueFactory property="direccion" />
 			            </cellValueFactory>
-		      		    </TableColumn>	 
- 						<TableColumn fx:id="logo" prefWidth="200.0" text="%pantalla.grilla.col.logo" >
- 
- 						<cellValueFactory>
-			                <PropertyValueFactory property="logo" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
- 						<TableColumn fx:id="nombre" prefWidth="150.0" text="%pantalla.grilla.col.nombre" >
- 
+		      		    </TableColumn>	  						
+						<TableColumn fx:id="nombre" prefWidth="150.0" text="%Empresa.grilla.col.nombre" >
  						<cellValueFactory>
 			                <PropertyValueFactory property="nombre" />
 			            </cellValueFactory>
 		      		    </TableColumn>	 
- 						<TableColumn fx:id="telefono" prefWidth="150.0" text="%pantalla.grilla.col.telefono" >
- 
+						<TableColumn fx:id="telefono" prefWidth="150.0" text="%Empresa.grilla.col.telefono" >
  						<cellValueFactory>
 			                <PropertyValueFactory property="telefono" />
 			            </cellValueFactory>
@@ -50,6 +82,9 @@
 					</columns>
 				</TableView>
 			</center>
-		</BorderPane>
+               
+      		</BorderPane>
+         </children>
+      </VBox>
 	</children>
 </fx:root>
