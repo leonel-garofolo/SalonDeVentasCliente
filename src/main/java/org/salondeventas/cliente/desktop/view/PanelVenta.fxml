@@ -35,9 +35,21 @@
       				</GridPane>
                   <TableView fx:id="tblLineaDeVentas" editable="true" maxWidth="800" >
                     <columns>
-                      <TableColumn prefWidth="75.0" text="idProducto" visible="false" />
-                      <TableColumn fx:id="colProducto" prefWidth="300" text="Producto"/>
-                      <TableColumn fx:id="colImporte" prefWidth="75.0" text="Importe" />
+                      <TableColumn prefWidth="75.0" text="idProducto" visible="false" >
+                      <cellValueFactory>
+			                <PropertyValueFactory property="idProducto" />
+			            </cellValueFactory>
+			            </TableColumn>
+                      <TableColumn fx:id="colProducto" prefWidth="300" text="Producto">
+                      <cellValueFactory>
+			                <PropertyValueFactory property="producto" />
+			            </cellValueFactory>
+                      </TableColumn>
+                      <TableColumn fx:id="colImporte" prefWidth="75.0" text="Importe" >
+                      <cellValueFactory>
+			                <PropertyValueFactory property="precio" />
+			            </cellValueFactory>
+                      </TableColumn>
                     </columns>
                   </TableView>
                </children>

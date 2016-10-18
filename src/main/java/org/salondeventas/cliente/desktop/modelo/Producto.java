@@ -112,12 +112,14 @@ public class Producto implements Serializable {
         sb.append(idproducto);
         sb.append("]:"); 
         sb.append(nombre);
+        /*
         sb.append("|");
         sb.append(codbarras);
         sb.append("|");
         sb.append(mininventario);
         sb.append("|");
         sb.append(precio);
+        */
         return sb.toString(); 
     } 
 
