@@ -2,7 +2,6 @@ package org.salondeventas.cliente.desktop.view;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -11,6 +10,7 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
+import org.javafx.controls.customs.ComboBoxAutoComplete;
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
 import org.salondeventas.cliente.desktop.modelo.Lineadeventa;
 import org.salondeventas.cliente.desktop.modelo.Producto;
@@ -23,22 +23,17 @@ import org.salondeventas.cliente.desktop.servicios.impl.ProductoServicio;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
@@ -72,7 +67,7 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	private TableColumn colImporte;
 	
 	@FXML
-	private Button btnAgregar;
+	private ComboBoxAutoComplete<Producto> cbxAgregarProducto;
 	
 	private ObservableList<Lineadeventa> data ;
 
@@ -122,8 +117,7 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
         this.setRight(null);
         father.btnGuardar.setOnAction(this);        
         father.btnCancelar.setOnAction(this);
-        father.getTab().setContent(this);
-        btnAgregar.setOnAction(this);
+        father.getTab().setContent(this);       
         
 		dprfecha.setValue(LocalDate.now());			
 		dprfechaPago.setValue(LocalDate.now());			
@@ -148,57 +142,32 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 			 							
 			data = FXCollections.observableArrayList(venta.getListOfLineadeventa());
 			tblLineaDeVentas.setItems(data);
-			
-			ObservableList<Producto> productos = null;
+					
 			try {
-				productos = FXCollections.observableArrayList (productoServicio.loadAll());
+				ObservableList<Producto> productos = FXCollections.observableArrayList (productoServicio.loadAll());
+				cbxAgregarProducto.setItems(productos);
+				cbxAgregarProducto.reload();				 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-						  
-			if(productos != null){
-				colProducto.setCellFactory(ComboBoxTableCell.forTableColumn(null,productos));
-				
-				colProducto.setOnEditCommit(
-				    new EventHandler<CellEditEvent<Lineadeventa, Producto>>() {			      
+						
+						
+			colProducto.setOnEditCommit(
+			    new EventHandler<CellEditEvent<Lineadeventa, Producto>>() {			      
 
-						@Override
-						public void handle(CellEditEvent<Lineadeventa, Producto> t) {
-							Producto prodSelected = t.getNewValue();							
-							((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setIdventa(Integer.valueOf(txtidventa.getText()));
-							((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setIdproducto(prodSelected.getIdproducto());							
-							((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPrecio(prodSelected.getPrecio());
-							((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setProducto(prodSelected);
-							
-							tblLineaDeVentas.getItems().get(t.getTablePosition().getRow()).setPrecio(prodSelected.getPrecio());
-						};
-				    }
-				);
-				
-			}	
-			/*
-			colImporte.setCellFactory(column -> {
-			    return new TableCell<String, Lineadeventa>() {
-			        @Override
-			        protected void updateItem(Lineadeventa item, boolean empty) {
-			            super.updateItem(item, empty);
-
-			            if (item == null || empty) {
-			                setText(null);
-			                setStyle("");
-			            } else {
-			                // Format date.
-			                setText(String.valueOf(item.getPrecio()));
-
-			                    setTextFill(Color.CHOCOLATE);
-			                    setStyle("-fx-background-color: yellow");
-			              
-			            }
-			        }
-			    };
-			});
-			*/
+					@Override
+					public void handle(CellEditEvent<Lineadeventa, Producto> t) {
+						Producto prodSelected = t.getNewValue();							
+						((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setIdventa(Integer.valueOf(txtidventa.getText()));
+						((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setIdproducto(prodSelected.getIdproducto());							
+						((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPrecio(prodSelected.getPrecio());
+						((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setProducto(prodSelected);
+						
+						t.getTableView().refresh();						
+					};
+			    }
+			);					
 		}
 	}
 
@@ -276,10 +245,6 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 		}
 		if(event.getSource().equals(father.btnCancelar)){
 			father.reLoad();    
-		}
-		
-		if(event.getSource().equals(btnAgregar)){
-			data.add(new Lineadeventa());			
-		}
+		}	
 	}
 }

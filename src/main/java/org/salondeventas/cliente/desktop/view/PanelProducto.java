@@ -3,20 +3,22 @@ package org.salondeventas.cliente.desktop.view;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
+import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
+import org.salondeventas.cliente.desktop.modelo.Producto;
+import org.salondeventas.cliente.desktop.view.control.NumberField;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-
-
-
-import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
-import org.salondeventas.cliente.desktop.modelo.Producto;
 
 public class PanelProducto extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
@@ -36,7 +38,7 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 	private TextField txtcodbarras;
 
 	@FXML
-	private TextField txtmininventario;
+	private NumberField txtmininventario;
 
 	@FXML
 	private TextField txtprecio;

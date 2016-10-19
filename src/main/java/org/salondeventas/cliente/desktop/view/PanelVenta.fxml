@@ -7,6 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import org.javafx.controls.customs.ComboBoxAutoComplete?>
 
 <fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<center>
@@ -30,7 +31,7 @@
       						<DatePicker fx:id="dprfechaPago" GridPane.columnIndex="5" GridPane.rowIndex="1" />
       						<Label text="%Venta.panel.field.total" GridPane.columnIndex="6" GridPane.rowIndex="1" />
       						<TextField fx:id="txttotal" maxWidth="100" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-      						<Button fx:id="btnAgregar" text="Agregar" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+      						<ComboBoxAutoComplete fx:id="cbxAgregarProducto" GridPane.columnIndex="0" GridPane.rowIndex="2" />
       					</children>                     			
       				</GridPane>
                   <TableView fx:id="tblLineaDeVentas" editable="true" maxWidth="800" >

@@ -18,6 +18,7 @@
 					<source>${compileSource}</source>
 					<target>${compileSource}</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
+					<executable>C:\Program Files\Java\jdk1.8.0_101\bin\javac.exe</executable>
 				</configuration>
 			</plugin>
 		</plugins>

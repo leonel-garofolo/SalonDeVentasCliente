@@ -125,7 +125,7 @@ public class TableViewSample extends Application {
                 addEmail.clear();
             }
         });
- 
+		
         hb.getChildren().addAll(addFirstName, addLastName, addEmail, addButton);
         hb.setSpacing(3);
  
@@ -138,9 +138,9 @@ public class TableViewSample extends Application {
  
         stage.setScene(scene);
         stage.show();
-    }
- 
-    public static class Person {
+    }   
+
+	public static class Person {
  
         private final SimpleStringProperty firstName;
         private final SimpleStringProperty lastName;
