@@ -8,6 +8,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import org.javafx.controls.customs.ComboBoxAutoComplete?>
+<?import org.javafx.controls.customs.StringField?>
+<?import org.javafx.controls.customs.NumberField?>
+<?import javafx.scene.layout.HBox?>
 
 <fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<center>
@@ -24,16 +27,25 @@
       					</padding>
       					<children>
       						<Label text="%Venta.panel.field.idventa" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-      						<TextField fx:id="txtidventa" disable="true" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      						<NumberField fx:id="txtidventa" disable="true" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       						<Label text="%Venta.panel.field.fecha" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       						<DatePicker fx:id="dprfecha" GridPane.columnIndex="3" GridPane.rowIndex="1" />
       						<Label text="%Venta.panel.field.fechaPago" GridPane.columnIndex="4" GridPane.rowIndex="1" />
       						<DatePicker fx:id="dprfechaPago" GridPane.columnIndex="5" GridPane.rowIndex="1" />
       						<Label text="%Venta.panel.field.total" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-      						<TextField fx:id="txttotal" maxWidth="100" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-      						<ComboBoxAutoComplete fx:id="cbxAgregarProducto" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+      						<NumberField fx:id="txttotal" maxWidth="100" GridPane.columnIndex="7" GridPane.rowIndex="1" />      						
       					</children>                     			
       				</GridPane>
+      			</children>
+      			<children>
+      			<HBox spacing="5">
+      			
+      				<Label text="%Venta.panel.field.cargar_producto"  />      	
+      				<ComboBoxAutoComplete fx:id="cbxAgregarProducto" prefWidth="300"  />
+      			
+      			</HBox>      				
+      			</children>
+                <children>
                   <TableView fx:id="tblLineaDeVentas" editable="true" maxWidth="800" >
                     <columns>
                       <TableColumn prefWidth="75.0" text="idProducto" visible="false" >

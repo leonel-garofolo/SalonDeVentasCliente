@@ -4,10 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.*?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.Button?>
-<?import org.salondeventas.cliente.desktop.view.control.NumberField?>
+<?import org.javafx.controls.customs.StringField?>
+<?import org.javafx.controls.customs.NumberField?>
 
 
 <fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -24,17 +24,17 @@
       					 	</NumberField>			 				     
       					 </children>
       					 <children>
-      					 	<TextField fx:id="txtnombre" promptText="%Producto.grilla.col.nombre" maxWidth="150" >
+      					 	<StringField  fx:id="txtnombre" promptText="%Producto.grilla.col.nombre" maxWidth="150" >
       					 		<tooltip><Tooltip text="%Producto.grilla.col.nombre"></Tooltip></tooltip>
-      					 	</TextField>      					 	       			 				
+      					 	</StringField>      					 	       			 				
       					 </children>
       					 <children>
-      					 	<TextField fx:id="txtcodbarras" promptText="%Producto.grilla.col.codbarras" maxWidth="150" >
+      					 	<StringField fx:id="txtcodbarras" promptText="%Producto.grilla.col.codbarras" maxWidth="150" >
       					 		<tooltip><Tooltip text="%Producto.grilla.col.codbarras"></Tooltip></tooltip>
-      					 	</TextField>      					 	       			 				
+      					 	</StringField>      					 	       			 				
       					 </children>
 						<children>
-      					 	<NumberField fx:id="txtmininventario" promptText="%Producto.grilla.col.mininventario" maxWidth="50" >
+      					 	<NumberField  fx:id="txtmininventario" promptText="%Producto.grilla.col.mininventario" maxWidth="50" >
       					 		<tooltip><Tooltip text="%Producto.grilla.col.mininventario"></Tooltip></tooltip>      					 		
       					 	</NumberField>			 				     
       					 </children>

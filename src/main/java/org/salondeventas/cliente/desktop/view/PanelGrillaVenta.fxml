@@ -7,7 +7,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.Button?>
-<?import org.salondeventas.cliente.desktop.view.control.NumberField?>
+<?import org.javafx.controls.customs.NumberField?>
+
 
 
 <fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -19,7 +20,7 @@
       				<HBox fx:id="hButtonFilter" BorderPane.alignment="CENTER">
                      
 						<children>
-      					 	<NumberField fx:id="txtidventa" promptText="%Venta.grilla.col.idventa" maxWidth="50" >
+      					 	<NumberField  fx:id="txtidventa" promptText="%Venta.grilla.col.idventa" maxWidth="50" >
       					 		<tooltip><Tooltip text="%Venta.grilla.col.idventa"></Tooltip></tooltip>      					 		
       					 	</NumberField>			 				     
       					 </children>

@@ -7,16 +7,16 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
+import org.javafx.controls.customs.NumberField;
+import org.javafx.controls.customs.StringField;
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
 import org.salondeventas.cliente.desktop.modelo.Producto;
-import org.salondeventas.cliente.desktop.view.control.NumberField;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -29,19 +29,19 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 
 
 	@FXML
-	private TextField txtidproducto;
+	private StringField txtidproducto;
 
 	@FXML
-	private TextField txtnombre;
+	private StringField txtnombre;
 
 	@FXML
-	private TextField txtcodbarras;
+	private StringField txtcodbarras;
 
 	@FXML
 	private NumberField txtmininventario;
 
 	@FXML
-	private TextField txtprecio;
+	private StringField txtprecio;
 
 	public PanelProducto(PanelGrillaProducto father) {
 		this.modoEdit = false;

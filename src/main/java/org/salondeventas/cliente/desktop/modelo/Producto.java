@@ -108,9 +108,8 @@ public class Producto implements Serializable {
     //----------------------------------------------------------------------
     public String toString() { 
         StringBuffer sb = new StringBuffer(); 
-        sb.append("["); 
         sb.append(idproducto);
-        sb.append("]:"); 
+        sb.append("|"); 
         sb.append(nombre);
         /*
         sb.append("|");

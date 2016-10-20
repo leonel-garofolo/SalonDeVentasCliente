@@ -11,6 +11,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.javafx.controls.customs.ComboBoxAutoComplete;
+import org.javafx.controls.customs.NumberField;
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
 import org.salondeventas.cliente.desktop.modelo.Lineadeventa;
 import org.salondeventas.cliente.desktop.modelo.Producto;
@@ -20,20 +21,25 @@ import org.salondeventas.cliente.desktop.servicios.IProductoServicio;
 import org.salondeventas.cliente.desktop.servicios.impl.LineadeventaServicio;
 import org.salondeventas.cliente.desktop.servicios.impl.ProductoServicio;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
@@ -46,7 +52,7 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 
 
 	@FXML
-	private TextField txtidventa;
+	private NumberField txtidventa;
 
 	@FXML
 	private DatePicker dprfecha;
@@ -55,7 +61,7 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	private DatePicker dprfechaPago;
 
 	@FXML
-	private TextField txttotal;
+	private NumberField txttotal;
 	
 	@FXML
 	private TableView<Lineadeventa> tblLineaDeVentas;
@@ -120,7 +126,65 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
         father.getTab().setContent(this);       
         
 		dprfecha.setValue(LocalDate.now());			
-		dprfechaPago.setValue(LocalDate.now());			
+		dprfechaPago.setValue(LocalDate.now());	
+		cbxAgregarProducto.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent event) {				
+				if(event.getCode() == KeyCode.ENTER){
+					Producto prodSelected = cbxAgregarProducto.getItems().get(cbxAgregarProducto.getSelectionModel().getSelectedIndex());
+					if(prodSelected != null){
+						Lineadeventa nuevaLinea = new Lineadeventa();												
+						nuevaLinea.setIdproducto(prodSelected.getIdproducto());
+						nuevaLinea.setProducto(prodSelected);
+						nuevaLinea.setPrecio(prodSelected.getPrecio());
+						tblLineaDeVentas.getItems().add(nuevaLinea);
+						cbxAgregarProducto.setValue(null);
+					}	
+				}										
+			}
+		});	
+		
+		try {
+			ObservableList<Producto> productos = FXCollections.observableArrayList (productoServicio.loadAll());
+			cbxAgregarProducto.setItems(productos);
+			cbxAgregarProducto.reload();				 				
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+		tblLineaDeVentas.setRowFactory(new Callback<TableView<Lineadeventa>, TableRow<Lineadeventa>>() {  
+            @Override  
+            public TableRow<Lineadeventa> call(TableView<Lineadeventa> tableView) {  
+                final TableRow<Lineadeventa> row = new TableRow<>();  
+                final ContextMenu contextMenu = new ContextMenu();  
+                final MenuItem removeMenuItem = new MenuItem("Eliminar");  
+                removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {  
+                    @Override  
+                    public void handle(ActionEvent event) {  
+                    	Lineadeventa linea = row.getItem();
+                		if(linea.getIdventa() != null){
+                			try {
+    							iLineadeventaServicio.delete(linea);
+    							tblLineaDeVentas.getItems().remove(linea);  
+    						} catch (Exception e) {
+    							// TODO Auto-generated catch block
+    							e.printStackTrace();
+    						}
+                		}else{
+                			tblLineaDeVentas.getItems().remove(linea);  
+                		}
+                    }  
+                });  
+                contextMenu.getItems().add(removeMenuItem);  
+               // Set context menu on row, but use a binding to make it only show for non-empty rows:  
+                row.contextMenuProperty().bind(  
+                        Bindings.when(row.emptyProperty())  
+                        .then((ContextMenu)null)  
+                        .otherwise(contextMenu)  
+                );  
+                return row ;  
+            }  
+}); 
 	}
 
 	@SuppressWarnings("unchecked")
@@ -141,33 +205,7 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 			
 			 							
 			data = FXCollections.observableArrayList(venta.getListOfLineadeventa());
-			tblLineaDeVentas.setItems(data);
-					
-			try {
-				ObservableList<Producto> productos = FXCollections.observableArrayList (productoServicio.loadAll());
-				cbxAgregarProducto.setItems(productos);
-				cbxAgregarProducto.reload();				 				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-						
-						
-			colProducto.setOnEditCommit(
-			    new EventHandler<CellEditEvent<Lineadeventa, Producto>>() {			      
-
-					@Override
-					public void handle(CellEditEvent<Lineadeventa, Producto> t) {
-						Producto prodSelected = t.getNewValue();							
-						((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setIdventa(Integer.valueOf(txtidventa.getText()));
-						((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setIdproducto(prodSelected.getIdproducto());							
-						((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPrecio(prodSelected.getPrecio());
-						((Lineadeventa) t.getTableView().getItems().get(t.getTablePosition().getRow())).setProducto(prodSelected);
-						
-						t.getTableView().refresh();						
-					};
-			    }
-			);					
+			tblLineaDeVentas.setItems(data);															
 		}
 	}
 
@@ -226,11 +264,12 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 					if(modoEdit){
 						father.getServicio().update(unVenta);
 					}else{
-						father.getServicio().insert(unVenta);
+						unVenta.setIdventa(Integer.valueOf(father.getServicio().insert(unVenta)));
 					}
 					
 					List<Lineadeventa> lineas=getLineasDeVentas(unVenta);
 					for(Lineadeventa linea: lineas){
+						linea.setIdventa(unVenta.getIdventa());
 						iLineadeventaServicio.insert(linea);
 					}
 					
@@ -245,6 +284,6 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 		}
 		if(event.getSource().equals(father.btnCancelar)){
 			father.reLoad();    
-		}	
+		}			
 	}
 }

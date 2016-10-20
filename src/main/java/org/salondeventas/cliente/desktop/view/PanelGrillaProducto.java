@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.javafx.controls.customs.NumberField;
+import org.javafx.controls.customs.StringField;
 import org.salondeventas.cliente.desktop.modelo.Producto;
 import org.salondeventas.cliente.desktop.servicios.IProductoServicio;
 import org.salondeventas.cliente.desktop.servicios.impl.ProductoServicio;
@@ -55,13 +57,13 @@ public class PanelGrillaProducto extends PanelControlesABM implements Initializa
 	private TableView<Producto> tblProducto;
 
 	@FXML
-	private TextField txtidproducto;
+	private NumberField txtidproducto;
 	@FXML
-	private TextField txtnombre;
+	private StringField txtnombre;
 	@FXML
-	private TextField txtcodbarras;
+	private StringField txtcodbarras;
 	@FXML
-	private TextField txtmininventario;
+	private NumberField txtmininventario;
 	
 	public PanelGrillaProducto(Tab tab) {
 		this.tab = tab;

@@ -6,8 +6,8 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-<?import org.salondeventas.cliente.desktop.view.control.*?>
-
+<?import org.javafx.controls.customs.StringField?>
+<?import org.javafx.controls.customs.NumberField?>
 
 <fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
 	<center>
@@ -19,15 +19,15 @@
 			<GridPane vgap="5" hgap="5">
 				<padding><Insets top="25" right="25" bottom="10" left="25"/></padding>   
 				<Label text="%Producto.panel.field.idproducto" GridPane.columnIndex="0" GridPane.rowIndex="1"/>   
-				<TextField fx:id="txtidproducto" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+				<StringField  fx:id="txtidproducto" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 				<Label text="%Producto.panel.field.nombre" GridPane.columnIndex="0" GridPane.rowIndex="2"/>   
- 				<TextField fx:id="txtnombre"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2"/>       
+ 				<StringField fx:id="txtnombre"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2"/>       
 				<Label text="%Producto.panel.field.codbarras" GridPane.columnIndex="0" GridPane.rowIndex="3"/>   
- 				<TextField fx:id="txtcodbarras"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3"/>       
+ 				<StringField fx:id="txtcodbarras"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3"/>       
 				<Label text="%Producto.panel.field.mininventario" GridPane.columnIndex="0" GridPane.rowIndex="4"/>   
-				<NumberField fx:id="txtmininventario" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+				<NumberField  fx:id="txtmininventario" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 				<Label text="%Producto.panel.field.precio" GridPane.columnIndex="0" GridPane.rowIndex="5"/>   
-				<TextField fx:id="txtprecio" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+				<StringField fx:id="txtprecio" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 			</GridPane>
        </center>
 	 </BorderPane>	
