@@ -18,7 +18,7 @@
 	 	<center>
 			<GridPane vgap="5" hgap="5">
 				<padding><Insets top="25" right="25" bottom="10" left="25"/></padding>   
-				<Label text="%Producto.panel.field.idproducto" GridPane.columnIndex="0" GridPane.rowIndex="1"/>   
+				<Label text="%Producto.panel.field.idproducto" GridPane.columnIndex="0" GridPane.rowIndex="1" />   
 				<StringField  fx:id="txtidproducto" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 				<Label text="%Producto.panel.field.nombre" GridPane.columnIndex="0" GridPane.rowIndex="2"/>   
  				<StringField fx:id="txtnombre"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2"/>       

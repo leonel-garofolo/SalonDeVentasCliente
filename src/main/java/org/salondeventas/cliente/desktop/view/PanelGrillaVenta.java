@@ -63,12 +63,12 @@ public class PanelGrillaVenta extends PanelControlesABM implements Initializable
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
-        
+		
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
-        }
+        }      
     }
 
 	public void initialize(URL location, ResourceBundle resources) {

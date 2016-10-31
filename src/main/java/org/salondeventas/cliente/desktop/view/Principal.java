@@ -3,35 +3,34 @@ package org.salondeventas.cliente.desktop.view;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;		
+import javafx.scene.layout.Pane;		
 
 
-public class Principal extends Application {
+public class Principal extends AnchorPane {
 
 	@FXML
 	private TabPane tabPane;
+	
+	@FXML
+	private MenuBar menuBar;
+	
 	@FXML
 	private static Scene scene;
 	@FXML
 	private BorderPane borderPane;
 	@FXML
-	private AnchorPane myPane;
+	private AnchorPane anchorPane;
 	@FXML 
 	private Button closeButton;
 	@FXML
@@ -45,35 +44,28 @@ public class Principal extends Application {
 	private Pane panelUsuario;
 	@FXML
 	private Pane panelVenta;
+	private Pane panelLogin;
+	
+	public Principal() {		
+		initComponentes();
+    }
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("Principal");
-		
-		Screen screen = Screen.getPrimary();
-		Rectangle2D bounds = screen.getVisualBounds();
+	private void initComponentes(){		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
+		fxmlLoader.setRoot(this);
+		fxmlLoader.setController(this);
+		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
 
-		primaryStage.setX(bounds.getMinX());
-		primaryStage.setY(bounds.getMinY());
-		primaryStage.setWidth(bounds.getWidth());
-		primaryStage.setHeight(bounds.getHeight());
-
-		loadPage();			
-		primaryStage.setScene(scene);
-		primaryStage.resizableProperty().set(false);
-		primaryStage.show();
-		
-		primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
-
-            public void handle(WindowEvent event) {
-            	System.exit(0);
-            }
-        });
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        } 
+        anchorPane.getStylesheets().add(getClass().getResource("css/login.css").toExternalForm());	            
 	}
 
 	@FXML
 	private void handleItemConfiguracionAction(ActionEvent event) {
-		borderPane = (BorderPane) scene.lookup("#borderPane");
 		try {
 			panelConfiguracion = (Pane) FXMLLoader.load(getClass().getResource(
 					"PanelConfiguracion.fxml"));
@@ -84,12 +76,19 @@ public class Principal extends Application {
 	}
 	
 	@FXML
-	private void handleItemCerrarSessionAction(ActionEvent event) {		
+	private void handleItemCerrarSessionAction(ActionEvent event) {
+		try {
+			panelLogin = (Pane) FXMLLoader.load(getClass().getResource(
+					"login.fxml"));
+		} catch (IOException e) {			
+			e.printStackTrace();
+		}		
+			
+       
 	}	
 
 	@FXML
 	private void handleItemEmpresaAction(ActionEvent event) {
-		borderPane = (BorderPane) scene.lookup("#borderPane");
 		for(Tab unTab: tabPane.getTabs()){
 			if(unTab.getText().equals("Empresas")){
 				tabPane.getSelectionModel().select(unTab);				
@@ -105,7 +104,6 @@ public class Principal extends Application {
 
 	@FXML
 	private void handleItemProductoAction(ActionEvent event) {
-		borderPane = (BorderPane) scene.lookup("#borderPane");
 		Tab tab = new Tab("Productos");
 		PanelGrillaProducto grilla = new PanelGrillaProducto(tab);
 		tab.setContent(grilla);		
@@ -116,7 +114,6 @@ public class Principal extends Application {
 
 	@FXML
 	private void handleItemUsuarioAction(ActionEvent event) {
-		borderPane = (BorderPane) scene.lookup("#borderPane");
 		Tab tab = new Tab("Usuarios");
 		PanelGrillaUsuario grilla = new PanelGrillaUsuario(tab);
 		tab.setContent(grilla);
@@ -127,7 +124,6 @@ public class Principal extends Application {
 
 	@FXML
 	private void handleItemVentaAction(ActionEvent event) {
-		borderPane = (BorderPane) scene.lookup("#borderPane");
 		Tab tab = new Tab("Ventas");
 		PanelGrillaVenta grilla = new PanelGrillaVenta(tab);
 		tab.setContent(grilla);
@@ -143,14 +139,6 @@ public class Principal extends Application {
 	@FXML
 	private void handleItemSalirAction(ActionEvent event) {
 		System.exit(0);
-	}
-
-	@SuppressWarnings("static-access")
-	private void loadPage() throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
-		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));			
-		this.myPane = (AnchorPane) fxmlLoader.load();					
-		this.scene = new Scene(myPane);
 	}
 
 	public Pane getPanelConfiguracion() {
@@ -193,27 +181,15 @@ public class Principal extends Application {
 	
 
 	public AnchorPane getMyPane() {
-		return myPane;
+		return anchorPane;
 	}
 
 	public void setMyPane(AnchorPane myPane) {
-		this.myPane = myPane;
+		this.anchorPane = myPane;
 	}
-
-	public Scene getScene() {
-		return scene;
-	}
+	
 
 	public void setScene(Scene scene) {
 		this.scene = scene;
-	}
-	
-	public static void iniciar(){
-		String[] args = {};
-		launch(args);
-	}
-
-	public static void main(String[] args) {
-		Principal.iniciar();
-	}
+	}		
 }

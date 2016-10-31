@@ -39,10 +39,10 @@
       					 	</NumberField>			 				     
       					 </children>
 						 <children>
-      					 	<Button  fx:id="btnBuscar" text="Buscar" maxWidth="60" />      					 		      					 	       			 			
+      					 	<Button  fx:id="btnBuscar" text="Buscar" maxWidth="100" styleClass=".btn"/>      					 		      					 	       			 			
       					 </children>
       					 <children>
-      					 	<Button  fx:id="btnLimpiar" text="Limpiar" maxWidth="60" />      					 		      					 	       			 			
+      					 	<Button  fx:id="btnLimpiar" text="Limpiar" maxWidth="100" />      					 		      					 	       			 			
       					 </children>
       				</HBox>
                </top>

@@ -4,11 +4,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.salondeventas.cliente.desktop.view.Principal">
+<fx:root fx:id = "anchorPane" type="javafx.scene.layout.AnchorPane" style="-fx-border-color: #2b579a; -fx-background-color: #EFF5FB;" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane id="borderPane" layoutX="21.0" layoutY="11.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <MenuBar BorderPane.alignment="CENTER">
+            <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
               <menus>
                 <Menu mnemonicParsing="false" text="Archivo">
                   <items>
@@ -40,4 +40,4 @@
          </center>
       </BorderPane>
    </children>
-</AnchorPane>
+</fx:root>
