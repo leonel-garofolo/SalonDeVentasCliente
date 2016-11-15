@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.Button?>
+<?import org.javafx.controls.customs.*?>
+<?import org.javafx.controls.panels.PanelControlesABM?>
+
+<fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<top>
+         <VBox fx:id="vTop">
+          <children>
+          	<PanelControlesABM fx:id="panelControlesABM"></PanelControlesABM>
+          </children>
+          <children>
+        	 <HBox fx:id="hButtonFilter" >                     
+						<children>
+      					 	<NumberField fx:id="txtidperfiles" promptText="%Perfiles.grilla.col.idperfiles" maxWidth="50" >
+      					 		<tooltip><Tooltip text="%Perfiles.grilla.col.idperfiles"></Tooltip></tooltip>      					 		
+      					 	</NumberField>			 				     
+      					 </children>
+      					 <children>
+      					 	<TextField fx:id="txtnombre" promptText="%Perfiles.grilla.col.nombre" maxWidth="150" >
+      					 		<tooltip><Tooltip text="%Perfiles.grilla.col.nombre"></Tooltip></tooltip>
+      					 	</TextField>      					 	       			 				
+      					 </children>
+						 <children>
+      					 	<Button  fx:id="btnBuscar" text="Buscar" maxWidth="60" />      					 		      					 	       			 			
+      					 </children>
+      					 <children>
+      					 	<Button  fx:id="btnLimpiar" text="Limpiar" maxWidth="60" />      					 		      					 	       			 			
+      					 </children>
+				</HBox>
+ 			</children>
+		</VBox>
+	</top>
+	<center>
+		<TableView fx:id="tblPerfiles" BorderPane.alignment="CENTER">
+			<columns>
+				<TableColumn fx:id="idperfiles" prefWidth="50.0" text="%Perfiles.grilla.col.idperfiles" >
+					<cellValueFactory>
+						<PropertyValueFactory property="idperfiles" />
+					</cellValueFactory>
+				</TableColumn>	 
+				<TableColumn fx:id="nombre" prefWidth="150.0" text="%Perfiles.grilla.col.nombre" >
+					<cellValueFactory>
+						<PropertyValueFactory property="nombre" />
+					</cellValueFactory>
+				</TableColumn>	 
+			</columns>
+		</TableView>
+	</center>                     		
+</fx:root>

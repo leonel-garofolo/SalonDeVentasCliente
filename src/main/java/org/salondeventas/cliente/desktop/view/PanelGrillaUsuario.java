@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import org.salondeventas.cliente.desktop.modelo.Usuario;
 import org.salondeventas.cliente.desktop.servicios.IUsuarioServicio;
 import org.salondeventas.cliente.desktop.servicios.impl.UsuarioServicio;
+import org.javafx.controls.panels.PanelControlesABM;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +17,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -27,21 +27,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class PanelGrillaUsuario extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IUsuarioServicio>, EventHandler<ActionEvent> {
+public class PanelGrillaUsuario extends BorderPane implements Initializable, IPanelControllerGrilla<IUsuarioServicio>, EventHandler<ActionEvent> {
 	private IUsuarioServicio usuarioServicio;
-	private Node top;
-	private Node center;
-	private Node bottom;
 	private Tab tab;
 
 	@FXML
-	VBox pnlBotones;
+	private PanelControlesABM panelControlesABM;
+
+	@FXML
+	VBox vTop;
 
 	@FXML
 	HBox hButtonFilter;
-
-	@FXML
-	private BorderPane pnlBorder;	
 
 	@FXML
 	private Button btnBuscar;
@@ -86,12 +83,11 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 		    }
 		});
 		loadGrilla();
+		this.autosize();
 
-		pnlBotones.getChildren().add(0, generarPanel());
-		pnlBorder.setPadding(new Insets(10, 0, 0, 0));	
-		this.btnAgregar.setOnAction(this);
-		this.btnEditar.setOnAction(this);
-		this.btnEliminar.setOnAction(this);
+		panelControlesABM.getBtnAgregar().setOnAction(this);
+		panelControlesABM.getBtnEditar().setOnAction(this);
+		panelControlesABM.getBtnEliminar().setOnAction(this);
 		this.btnBuscar.setOnAction(this);
 		this.btnLimpiar.setOnAction(this);
 	}
@@ -112,16 +108,7 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 
 	public void setUsuarioServicio(IUsuarioServicio usuarioServicio) {
 		this.usuarioServicio = usuarioServicio;
-	}
-
-	@Override
-	public BorderPane getPnlBorder() {
-		return pnlBorder;
-	}
-
-	public void setPnlBorder(BorderPane pnlBorder) {
-		this.pnlBorder = pnlBorder;
-	}
+	}	
 
 	@Override
 	public IUsuarioServicio getServicio() {
@@ -174,13 +161,13 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 			tblUsuario.setItems(data);							
 		}
 
-		if (event.getSource().equals(btnAgregar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnAgregar())) {
 			new PanelUsuario(PanelGrillaUsuario.this);
 		}
-		if (event.getSource().equals(btnEditar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnEditar())) {
 			btnEditarAction();					
 		}
-		if (event.getSource().equals(btnEliminar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnEliminar())) {
 			
 			Usuario itemSelected = tblUsuario.getSelectionModel().getSelectedItem();
 			if(itemSelected != null){
@@ -196,7 +183,7 @@ public class PanelGrillaUsuario extends PanelControlesABM implements Initializab
 	}
 	
 	private void btnEditarAction(){
-		int itemSelected = tblUsuario.getSelectionModel().getSelectedItem().getIdusuario();
+		int itemSelected = tblUsuario.getSelectionModel().getSelectedIndex();
 		if(itemSelected > 0){
 			new PanelUsuario(PanelGrillaUsuario.this, itemSelected);
 		}

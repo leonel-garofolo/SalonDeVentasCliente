@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import org.javafx.controls.panels.PanelControlesEdit;
 import javafx.scene.image.ImageView;
 
 
@@ -22,6 +23,9 @@ import org.salondeventas.cliente.desktop.modelo.Empresa;
 public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
 	private PanelGrillaEmpresa father;
+
+	@FXML
+	private PanelControlesEdit panelControlesEdit;
 	
 	@FXML
 	private VBox vBoxMsg;
@@ -83,12 +87,11 @@ public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        
-        this.setTop(father.generarPanelFormulario());
+                
         this.setLeft(null);
         this.setRight(null);
-        father.btnGuardar.setOnAction(this);        
-        father.btnCancelar.setOnAction(this);
+        panelControlesEdit.getBtnGuardar().setOnAction(this);        
+        panelControlesEdit.getBtnCancelar().setOnAction(this);
         father.getTab().setContent(this);
         
 	}
@@ -144,7 +147,7 @@ public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(event.getSource().equals(father.btnGuardar)){
+		if(event.getSource().equals(panelControlesEdit.getBtnGuardar())){
 			Empresa unEmpresa = getEmpresa();
 			if(unEmpresa != null){
 				try {
@@ -163,7 +166,7 @@ public class PanelEmpresa extends BorderPane implements EventHandler<ActionEvent
 				}
 			}		
 		}
-		if(event.getSource().equals(father.btnCancelar)){
+		if(event.getSource().equals(panelControlesEdit.getBtnCancelar())){
 			father.reLoad();    
 		}
 	}

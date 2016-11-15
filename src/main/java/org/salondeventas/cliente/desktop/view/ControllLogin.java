@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -44,6 +45,11 @@ import javafx.stage.WindowEvent;
  */
 public class ControllLogin extends Application implements Initializable {
 	private Stage primaryStage;
+	
+	private Scene primaryLogin;
+	
+	private Scene primaryPrincipal;		
+	
 	@FXML
 	private AnchorPane anchorPane;
 
@@ -62,14 +68,9 @@ public class ControllLogin extends Application implements Initializable {
 	@FXML
 	private Button btnLogin;
 	@FXML
-	private Text lblRudyCom;
+	private Hyperlink lblRudyCom;
 	@FXML
 	private Label lblClose;
-	@FXML
-	private static Scene scene;
-
-	Stage stage;
-
 	/**
 	 * Initializes the controller class.
 	 * 
@@ -78,7 +79,6 @@ public class ControllLogin extends Application implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		anchorPane.getStylesheets().add(getClass().getResource("css/login.css").toExternalForm());
 		Platform.runLater(() -> {
 			new FadeInRightTransition(lblUserLogin).play();
 			new FadeInLeftTransition(lblWelcome).play();
@@ -92,7 +92,13 @@ public class ControllLogin extends Application implements Initializable {
 				System.exit(0);
 			});
 		});
-		// TODO
+		lblRudyCom.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				getHostServices().showDocument(lblRudyCom.getText());				
+			}
+		});
 	}
 
 	@FXML
@@ -113,28 +119,31 @@ public class ControllLogin extends Application implements Initializable {
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
-		fxmlLoader.setController(this);
-		Parent root = fxmlLoader.load();
-		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
-		fxmlLoader.setRoot(root);
-
-		fxmlLoader.setRoot(root);
-		this.scene = new Scene(root);
-		anchorPane.getStylesheets().add(getClass().getResource("css/login.css").toExternalForm());
-		primaryStage.setScene(scene);
+	public void start(Stage primaryStage) throws Exception {		
+		this.primaryStage = primaryStage;
 		primaryStage.resizableProperty().set(false);
 		primaryStage.initStyle(StageStyle.UNDECORATED);
-		primaryStage.show();
 		primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
 
 			public void handle(WindowEvent event) {
 				System.exit(0);
 			}
 		});
+		
+		preparedSceneLogin();				
+		showLogin();
+		primaryStage.show();
+	}
+	
+	private void preparedSceneLogin() throws IOException{
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
+		fxmlLoader.setController(this);
+		Parent root = fxmlLoader.load();
+		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));		
 
+		fxmlLoader.setRoot(root);
+		this.primaryLogin = new Scene(root);		
+		
 		Platform.runLater(() -> {
 			new FadeInRightTransition(lblUserLogin).play();
 			new FadeInLeftTransition(lblWelcome).play();
@@ -147,40 +156,44 @@ public class ControllLogin extends Application implements Initializable {
 				Platform.exit();
 				System.exit(0);
 			});
-		});
-
+		});	
+	}
+	
+	public void showLogin() throws IOException{
+		preparedSceneLogin();
+		primaryStage.setScene(primaryLogin);		
+		primaryStage.setX(400.0);
+		primaryStage.setY(200.0);
+		primaryStage.setWidth(493.0);
+		primaryStage.setHeight(327.0);										
+	}
+	
+	private void preparedScenePrincipal(){		
+		Principal pri= new Principal(this);
+		primaryPrincipal = new Scene(pri);				
+	}
+	
+	private void showPrincipal(){
+		Screen screen = Screen.getPrimary();
+		Rectangle2D bounds = screen.getVisualBounds();
+		primaryStage.setScene(primaryPrincipal);
+		primaryStage.setX(bounds.getMinX());
+		primaryStage.setY(bounds.getMinY());
+		primaryStage.setWidth(bounds.getWidth());
+		primaryStage.setHeight(bounds.getHeight());		
+		primaryStage.show();			
 	}
 
 	@FXML
 	private void login(ActionEvent event) {
 		if (txtUsername.getText().equals("admin") && txtPassword.getText().equals("123")) {
 			anchorPane.setVisible(false);
-			Stage stage = new Stage();
-			Principal pri= new Principal();
-			Scene scene = new Scene(pri);
-			anchorPane.getStylesheets().add(getClass().getResource("css/login.css").toExternalForm());
-			stage.setScene(scene);
-			stage.resizableProperty().set(false);
-			Screen screen = Screen.getPrimary();
-			Rectangle2D bounds = screen.getVisualBounds();
-
-			stage.setX(bounds.getMinX());
-			stage.setY(bounds.getMinY());
-			stage.setWidth(bounds.getWidth());
-			stage.setHeight(bounds.getHeight());		
-			stage.initStyle(StageStyle.UNDECORATED);
-			stage.show();
-			stage.setOnHiding(new EventHandler<WindowEvent>() {
-
-				public void handle(WindowEvent event) {
-					System.exit(0);
-				}
-			});
+			preparedScenePrincipal();
+			showPrincipal();
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);		
 			alert.setHeaderText("Error Login, Please Chek Username And Password.");				
 			alert.showAndWait();			
 		}
-	}
-
+	}		
 }

@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import org.javafx.controls.panels.PanelControlesEdit;
 
 
 
@@ -21,6 +22,9 @@ import org.salondeventas.cliente.desktop.modelo.Usuario;
 public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
 	private PanelGrillaUsuario father;
+
+	@FXML
+	private PanelControlesEdit panelControlesEdit;
 	
 	@FXML
 	private VBox vBoxMsg;
@@ -73,12 +77,11 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        
-        this.setTop(father.generarPanelFormulario());
+                
         this.setLeft(null);
         this.setRight(null);
-        father.btnGuardar.setOnAction(this);        
-        father.btnCancelar.setOnAction(this);
+        panelControlesEdit.getBtnGuardar().setOnAction(this);        
+        panelControlesEdit.getBtnCancelar().setOnAction(this);
         father.getTab().setContent(this);
         
 	}
@@ -124,7 +127,7 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(event.getSource().equals(father.btnGuardar)){
+		if(event.getSource().equals(panelControlesEdit.getBtnGuardar())){
 			Usuario unUsuario = getUsuario();
 			if(unUsuario != null){
 				try {
@@ -143,7 +146,7 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
 				}
 			}		
 		}
-		if(event.getSource().equals(father.btnCancelar)){
+		if(event.getSource().equals(panelControlesEdit.getBtnCancelar())){
 			father.reLoad();    
 		}
 	}

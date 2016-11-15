@@ -3,9 +3,12 @@ package org.salondeventas.cliente.desktop.view;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import org.salondeventas.desktop.view.TableViewColumnResizePolicyDemoApp;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
@@ -14,7 +17,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;		
+import javafx.scene.layout.Pane;
+import javafx.stage.Screen;		
 
 
 public class Principal extends AnchorPane {
@@ -44,24 +48,33 @@ public class Principal extends AnchorPane {
 	private Pane panelUsuario;
 	@FXML
 	private Pane panelVenta;
-	private Pane panelLogin;
+	
+	private ControllLogin controllLogin;
 	
 	public Principal() {		
 		initComponentes();
     }
 
+	public Principal(ControllLogin controllLogin) {
+		this.controllLogin = controllLogin;
+		initComponentes();
+	}
+
 	private void initComponentes(){		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
-
+		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));		
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
-        } 
-        anchorPane.getStylesheets().add(getClass().getResource("css/login.css").toExternalForm());	            
+        }         
+        
+        Screen screen = Screen.getPrimary();
+		Rectangle2D bounds = screen.getVisualBounds();	
+		this.setWidth(bounds.getWidth());
+		this.setHeight(bounds.getHeight());
 	}
 
 	@FXML
@@ -76,15 +89,9 @@ public class Principal extends AnchorPane {
 	}
 	
 	@FXML
-	private void handleItemCerrarSessionAction(ActionEvent event) {
-		try {
-			panelLogin = (Pane) FXMLLoader.load(getClass().getResource(
-					"login.fxml"));
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}		
-			
-       
+	private void handleItemCerrarSessionAction(ActionEvent event) throws IOException {
+		this.setVisible(false);
+		controllLogin.showLogin();				
 	}	
 
 	@FXML
@@ -115,11 +122,19 @@ public class Principal extends AnchorPane {
 	@FXML
 	private void handleItemUsuarioAction(ActionEvent event) {
 		Tab tab = new Tab("Usuarios");
+		TableViewColumnResizePolicyDemoApp grilla = new TableViewColumnResizePolicyDemoApp();
+		grilla.configureTable();
+		/*
 		PanelGrillaUsuario grilla = new PanelGrillaUsuario(tab);
 		tab.setContent(grilla);
 		tabPane.getTabs().add(tab);	
 		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
 		selectionModel.select(tab);
+		*/
+		tab.setContent(grilla);
+		tabPane.getTabs().add(tab);	
+		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(tab);		
 	}
 
 	@FXML

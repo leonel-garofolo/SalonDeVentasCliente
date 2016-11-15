@@ -11,51 +11,60 @@
 <?import org.javafx.controls.customs.StringField?>
 <?import org.javafx.controls.customs.NumberField?>
 <?import javafx.scene.layout.HBox?>
+<?import org.javafx.controls.panels.PanelControlesEdit?>
 
 <fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<center>
 		<BorderPane BorderPane.alignment="CENTER">
 			<top>
-				<VBox fx:id="vBoxMsg" BorderPane.alignment="CENTER" />
-			</top>
-         <center>
-            <VBox prefHeight="324.0" prefWidth="1096.0" BorderPane.alignment="CENTER">
-               <children>
-      				<GridPane hgap="5" vgap="5">
-      					<padding>
-      						<Insets bottom="10" left="25" right="25" top="25" />
-      					</padding>
-      					<children>
-      						<Label text="%Venta.panel.field.idventa" GridPane.columnIndex="0" GridPane.rowIndex="1"  />
-      						<NumberField fx:id="txtidventa" disable="true" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      						<Label text="%Venta.panel.field.fecha" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      						<DatePicker fx:id="dprfecha" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      						<Label text="%Venta.panel.field.fechaPago" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-      						<DatePicker fx:id="dprfechaPago" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-      						<Label text="%Venta.panel.field.total" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-      						<NumberField fx:id="txttotal" maxWidth="100" GridPane.columnIndex="7" GridPane.rowIndex="1" />      						
-      					</children>                     			
-      				</GridPane>
-      			</children>
-      			<children>
-      			<HBox spacing="5">
-      			
-      				<Label text="%Venta.panel.field.cargar_producto"  />      	
-      				<ComboBoxAutoComplete fx:id="cbxAgregarProducto" prefWidth="300"  />
-      			
-      			</HBox>      				
-      			</children>
-                <children>
-                  <TableView fx:id="tblLineaDeVentas" editable="true" maxWidth="800" >
+			<VBox fx:id="vTop">
+	  			<children>
+	  				<PanelControlesEdit fx:id="panelControlesEdit" />
+	  			</children>
+	  			<children>
+	  				<VBox fx:id="vBoxMsg"  BorderPane.alignment="CENTER" />
+	  			</children>
+	  			<VBox BorderPane.alignment="CENTER">
+	               <children>
+	      				<GridPane hgap="5" vgap="5">
+	      					<padding>
+	      						<Insets bottom="10" left="25" right="25" top="25" />
+	      					</padding>
+	      					<children>
+	      						<Label text="%Venta.panel.field.idventa" GridPane.columnIndex="0" GridPane.rowIndex="1"  />
+	      						<NumberField fx:id="txtidventa" disable="true" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+	      						<Label text="%Venta.panel.field.fecha" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+	      						<DatePicker fx:id="dprfecha" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+	      						<Label text="%Venta.panel.field.fechaPago" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+	      						<DatePicker fx:id="dprfechaPago" GridPane.columnIndex="5" GridPane.rowIndex="1" />	      						      						
+	      					</children>                     			
+	      				</GridPane>
+	      			</children>
+	      			<children>
+		      			<HBox spacing="5">	      			
+		      				<Label text="%Venta.panel.field.cargar_producto"  />      	
+		      				<ComboBoxAutoComplete fx:id="cbxAgregarProducto" prefWidth="300"  />	      			
+		      			</HBox>      				
+      				</children>              
+           		 </VBox>
+	  		</VBox>            
+        </top>
+         <center>            
+             <TableView fx:id="tblLineaDeVentas" editable="true">
                     <columns>
                       <TableColumn prefWidth="75.0" text="idProducto" visible="false" >
                       <cellValueFactory>
 			                <PropertyValueFactory property="idProducto" />
 			            </cellValueFactory>
 			            </TableColumn>
-                      <TableColumn fx:id="colProducto" prefWidth="300" text="Producto">
+                      <TableColumn fx:id="colProducto" prefWidth="550" text="Producto">
                       <cellValueFactory>
 			                <PropertyValueFactory property="producto" />
+			            </cellValueFactory>
+                      </TableColumn>
+                      <TableColumn fx:id="colCantidad" prefWidth="100" text="Cantidad" editable="true">
+                      <cellValueFactory>
+			                <PropertyValueFactory property="cantidad" />
 			            </cellValueFactory>
                       </TableColumn>
                       <TableColumn fx:id="colImporte" prefWidth="75.0" text="Importe" >
@@ -65,9 +74,15 @@
                       </TableColumn>
                     </columns>
                   </TableView>
-               </children>
-            </VBox>
          </center>
+         <bottom>
+         	<HBox alignment="BASELINE_CENTER"  >
+         		<children>
+         			<Label style="-fx-font-size: 18px; -fx-font-weight: bold;-fx-text-fill: black;" text="%Venta.panel.field.total" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+	      			<NumberField style="-fx-font-size: 14px; -fx-font-weight: bold;-fx-text-fill: black;" fx:id="txttotal" editable="false" maxWidth="100" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+         		</children>         	
+	      	</HBox>
+         </bottom>
 		</BorderPane>
 	</center>
 </fx:root>

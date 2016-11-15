@@ -7,17 +7,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.Button?>
-<?import org.salondeventas.cliente.desktop.view.control.NumberField?>
+<?import org.javafx.controls.customs.*?>
+<?import org.javafx.controls.panels.PanelControlesABM?>
 
-
-<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-	<children>
-      <VBox fx:id="pnlBotones">
-         <children>
-      		<BorderPane fx:id="pnlBorder" style="padding-top: 2cm">      			                  
-      			<top>
-      				<HBox fx:id="hButtonFilter" BorderPane.alignment="CENTER">
-                     
+<fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<top>
+         <VBox fx:id="vTop">
+          <children>
+          	<PanelControlesABM fx:id="panelControlesABM"></PanelControlesABM>
+          </children>
+          <children>
+        	 <HBox fx:id="hButtonFilter" >                     
 						<children>
       					 	<NumberField fx:id="txtidusuario" promptText="%Usuario.grilla.col.idusuario" maxWidth="50" >
       					 		<tooltip><Tooltip text="%Usuario.grilla.col.idusuario"></Tooltip></tooltip>      					 		
@@ -39,32 +39,29 @@
       					 <children>
       					 	<Button  fx:id="btnLimpiar" text="Limpiar" maxWidth="60" />      					 		      					 	       			 			
       					 </children>
-      				</HBox>
-               </top>
-      		   <center>
-				  <TableView fx:id="tblUsuario" BorderPane.alignment="CENTER">
-				  	 <columns>
- 						<TableColumn fx:id="idusuario" prefWidth="50.0" text="%Usuario.grilla.col.idusuario" >
- 						<cellValueFactory>
-			                <PropertyValueFactory property="idusuario" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
-						<TableColumn fx:id="clave" prefWidth="150.0" text="%Usuario.grilla.col.clave" >
- 						<cellValueFactory>
-			                <PropertyValueFactory property="clave" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
-						<TableColumn fx:id="nombre" prefWidth="150.0" text="%Usuario.grilla.col.nombre" >
- 						<cellValueFactory>
-			                <PropertyValueFactory property="nombre" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
-					</columns>
-				</TableView>
-			</center>
-               
-      		</BorderPane>
-         </children>
-      </VBox>
-	</children>
+				</HBox>
+ 			</children>
+		</VBox>
+	</top>
+	<center>
+		<TableView fx:id="tblUsuario" BorderPane.alignment="CENTER">
+			<columns>
+				<TableColumn fx:id="idusuario" prefWidth="50.0" text="%Usuario.grilla.col.idusuario" >
+					<cellValueFactory>
+						<PropertyValueFactory property="idusuario" />
+					</cellValueFactory>
+				</TableColumn>	 
+				<TableColumn fx:id="clave" prefWidth="150.0" text="%Usuario.grilla.col.clave" >
+					<cellValueFactory>
+						<PropertyValueFactory property="clave" />
+					</cellValueFactory>
+				</TableColumn>	 
+				<TableColumn fx:id="nombre" prefWidth="150.0" text="%Usuario.grilla.col.nombre" >
+					<cellValueFactory>
+						<PropertyValueFactory property="nombre" />
+					</cellValueFactory>
+				</TableColumn>	 
+			</columns>
+		</TableView>
+	</center>                     		
 </fx:root>

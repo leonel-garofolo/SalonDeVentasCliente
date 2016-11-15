@@ -4,82 +4,79 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.*?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.Button?>
-<?import org.javafx.controls.customs.StringField?>
-<?import org.javafx.controls.customs.NumberField?>
+<?import org.javafx.controls.customs.*?>
+<?import org.javafx.controls.panels.PanelControlesABM?>
 
-
-<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-	<children>
-      <VBox fx:id="pnlBotones">
-         <children>
-      		<BorderPane fx:id="pnlBorder" style="padding-top: 2cm">      			                  
-      			<top>
-      				<HBox fx:id="hButtonFilter" BorderPane.alignment="CENTER">
-                     
+<fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<top>
+         <VBox fx:id="vTop">
+          <children>
+          	<PanelControlesABM fx:id="panelControlesABM"></PanelControlesABM>
+          </children>
+          <children>
+        	 <HBox fx:id="hButtonFilter" >                     
 						<children>
       					 	<NumberField fx:id="txtidproducto" promptText="%Producto.grilla.col.idproducto" maxWidth="50" >
       					 		<tooltip><Tooltip text="%Producto.grilla.col.idproducto"></Tooltip></tooltip>      					 		
       					 	</NumberField>			 				     
       					 </children>
       					 <children>
-      					 	<StringField  fx:id="txtnombre" promptText="%Producto.grilla.col.nombre" maxWidth="150" >
+      					 	<TextField fx:id="txtnombre" promptText="%Producto.grilla.col.nombre" maxWidth="150" >
       					 		<tooltip><Tooltip text="%Producto.grilla.col.nombre"></Tooltip></tooltip>
-      					 	</StringField>      					 	       			 				
+      					 	</TextField>      					 	       			 				
       					 </children>
       					 <children>
-      					 	<StringField fx:id="txtcodbarras" promptText="%Producto.grilla.col.codbarras" maxWidth="150" >
+      					 	<TextField fx:id="txtcodbarras" promptText="%Producto.grilla.col.codbarras" maxWidth="150" >
       					 		<tooltip><Tooltip text="%Producto.grilla.col.codbarras"></Tooltip></tooltip>
-      					 	</StringField>      					 	       			 				
+      					 	</TextField>      					 	       			 				
       					 </children>
 						<children>
-      					 	<NumberField  fx:id="txtmininventario" promptText="%Producto.grilla.col.mininventario" maxWidth="50" >
+      					 	<NumberField fx:id="txtmininventario" promptText="%Producto.grilla.col.mininventario" maxWidth="50" >
       					 		<tooltip><Tooltip text="%Producto.grilla.col.mininventario"></Tooltip></tooltip>      					 		
       					 	</NumberField>			 				     
       					 </children>
 						 <children>
-      					 	<Button  fx:id="btnBuscar" text="Buscar" maxWidth="100" styleClass=".btn"/>      					 		      					 	       			 			
+      					 	<Button  fx:id="btnBuscar" text="Buscar" maxWidth="60" />      					 		      					 	       			 			
       					 </children>
       					 <children>
-      					 	<Button  fx:id="btnLimpiar" text="Limpiar" maxWidth="100" />      					 		      					 	       			 			
+      					 	<Button  fx:id="btnLimpiar" text="Limpiar" maxWidth="60" />      					 		      					 	       			 			
       					 </children>
-      				</HBox>
-               </top>
-      		   <center>
-				  <TableView fx:id="tblProducto" BorderPane.alignment="CENTER">
-				  	 <columns>
- 						<TableColumn fx:id="idproducto" prefWidth="50.0" text="%Producto.grilla.col.idproducto" >
- 						<cellValueFactory>
-			                <PropertyValueFactory property="idproducto" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
-						<TableColumn fx:id="nombre" prefWidth="150.0" text="%Producto.grilla.col.nombre" >
- 						<cellValueFactory>
-			                <PropertyValueFactory property="nombre" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
-						<TableColumn fx:id="codbarras" prefWidth="150.0" text="%Producto.grilla.col.codbarras" >
- 						<cellValueFactory>
-			                <PropertyValueFactory property="codbarras" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
- 						<TableColumn fx:id="mininventario" prefWidth="50.0" text="%Producto.grilla.col.mininventario" >
- 						<cellValueFactory>
-			                <PropertyValueFactory property="mininventario" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
-						<TableColumn fx:id="precio" prefWidth="50.0" text="%Producto.grilla.col.precio" >
- 						<cellValueFactory>
-			                <PropertyValueFactory property="precio" />
-			            </cellValueFactory>
-		      		    </TableColumn>	 
-					</columns>
-				</TableView>
-			</center>
-               
-      		</BorderPane>
-         </children>
-      </VBox>
-	</children>
+				</HBox>
+ 			</children>
+		</VBox>
+	</top>
+	<center>
+		<TableView fx:id="tblProducto" BorderPane.alignment="CENTER">
+			<columns>
+				<TableColumn fx:id="idproducto" prefWidth="50.0" text="%Producto.grilla.col.idproducto" >
+					<cellValueFactory>
+						<PropertyValueFactory property="idproducto" />
+					</cellValueFactory>
+				</TableColumn>	 
+				<TableColumn fx:id="nombre" prefWidth="150.0" text="%Producto.grilla.col.nombre" >
+					<cellValueFactory>
+						<PropertyValueFactory property="nombre" />
+					</cellValueFactory>
+				</TableColumn>	 
+				<TableColumn fx:id="codbarras" prefWidth="150.0" text="%Producto.grilla.col.codbarras" >
+					<cellValueFactory>
+						<PropertyValueFactory property="codbarras" />
+					</cellValueFactory>
+				</TableColumn>	 
+				<TableColumn fx:id="mininventario" prefWidth="50.0" text="%Producto.grilla.col.mininventario" >
+					<cellValueFactory>
+						<PropertyValueFactory property="mininventario" />
+					</cellValueFactory>
+				</TableColumn>	 
+				<TableColumn fx:id="precio" prefWidth="50.0" text="%Producto.grilla.col.precio" >
+					<cellValueFactory>
+						<PropertyValueFactory property="precio" />
+					</cellValueFactory>
+				</TableColumn>	 
+			</columns>
+		</TableView>
+	</center>                     		
 </fx:root>

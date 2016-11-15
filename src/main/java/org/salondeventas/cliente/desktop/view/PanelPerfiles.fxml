@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import org.javafx.controls.customs.*?>
+<?import org.javafx.controls.panels.PanelControlesEdit?>
+
+<fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
+	<center>
+	 <BorderPane BorderPane.alignment="CENTER" >
+	  	<top>
+			<VBox fx:id="vTop">
+	  			<children>
+	  				<PanelControlesEdit fx:id="panelControlesEdit" />
+	  			</children>
+	  			<children>
+	  				<VBox fx:id="vBoxMsg"  BorderPane.alignment="CENTER" />
+	  			</children>
+	  		</VBox>            
+        </top>
+	 	<center>
+			<GridPane vgap="5" hgap="5">
+				<padding><Insets top="25" right="25" bottom="10" left="25"/></padding>   
+				<Label text="%Perfiles.panel.field.idperfiles" GridPane.columnIndex="0" GridPane.rowIndex="1"/>   
+				<NumberField fx:id="txtidperfiles" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+				<Label text="%Perfiles.panel.field.nombre" GridPane.columnIndex="0" GridPane.rowIndex="2"/>   
+ 				<StringField fx:id="txtnombre"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2"/>       
+			</GridPane>
+       </center>
+	 </BorderPane>	
+	</center>
+</fx:root> 

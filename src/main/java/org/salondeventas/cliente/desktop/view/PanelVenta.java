@@ -12,6 +12,7 @@ import javax.validation.Validator;
 
 import org.javafx.controls.customs.ComboBoxAutoComplete;
 import org.javafx.controls.customs.NumberField;
+import org.javafx.controls.panels.PanelControlesEdit;
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
 import org.salondeventas.cliente.desktop.modelo.Lineadeventa;
 import org.salondeventas.cliente.desktop.modelo.Producto;
@@ -28,6 +29,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -46,6 +49,9 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	private PanelGrillaVenta father;	
 	private IProductoServicio productoServicio;
 	private ILineadeventaServicio iLineadeventaServicio;
+	
+	@FXML
+	private PanelControlesEdit panelControlesEdit;
 	
 	@FXML
 	private VBox vBoxMsg;
@@ -68,6 +74,9 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	
 	@FXML
 	private TableColumn colProducto;
+	
+	@FXML
+	private TableColumn colCantidad;
 	
 	@FXML
 	private TableColumn colImporte;
@@ -117,31 +126,23 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
         }
         productoServicio = new ProductoServicio();   
         iLineadeventaServicio = new LineadeventaServicio();
-        
-        this.setTop(father.generarPanelFormulario());
+               
         this.setLeft(null);
         this.setRight(null);
-        father.btnGuardar.setOnAction(this);        
-        father.btnCancelar.setOnAction(this);
+        panelControlesEdit.getBtnGuardar().setOnAction(this);        
+        panelControlesEdit.getBtnCancelar().setOnAction(this);
         father.getTab().setContent(this);       
         
 		dprfecha.setValue(LocalDate.now());			
 		dprfechaPago.setValue(LocalDate.now());	
+		
 		cbxAgregarProducto.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent event) {				
+			public void handle(KeyEvent event) {	
 				if(event.getCode() == KeyCode.ENTER){
-					Producto prodSelected = cbxAgregarProducto.getItems().get(cbxAgregarProducto.getSelectionModel().getSelectedIndex());
-					if(prodSelected != null){
-						Lineadeventa nuevaLinea = new Lineadeventa();												
-						nuevaLinea.setIdproducto(prodSelected.getIdproducto());
-						nuevaLinea.setProducto(prodSelected);
-						nuevaLinea.setPrecio(prodSelected.getPrecio());
-						tblLineaDeVentas.getItems().add(nuevaLinea);
-						cbxAgregarProducto.setValue(null);
-					}	
+					addProducto();
 				}										
 			}
-		});	
+		});					
 		
 		try {
 			ObservableList<Producto> productos = FXCollections.observableArrayList (productoServicio.loadAll());
@@ -184,10 +185,34 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
                 );  
                 return row ;  
             }  
-}); 
+		}); 
+	}
+	
+	private void addProducto(){		
+		int indexProducto = cbxAgregarProducto.getSelectionModel().getSelectedIndex();
+		if(indexProducto >= 0){
+			Producto prodSelected = cbxAgregarProducto.getItems().get(indexProducto);
+			if(prodSelected != null){
+				for(Lineadeventa linea: tblLineaDeVentas.getItems()){
+					if(linea.getProducto().getIdproducto() == prodSelected.getIdproducto()){
+						Alert alert = new Alert(AlertType.INFORMATION);		
+						alert.setHeaderText("El producto ya se encuentra ingresado.");				
+						alert.showAndWait();
+						cbxAgregarProducto.getEditor().setText("");
+						return;
+					}
+				}				
+				
+				Lineadeventa nuevaLinea = new Lineadeventa();												
+				nuevaLinea.setIdproducto(prodSelected.getIdproducto());
+				nuevaLinea.setProducto(prodSelected);
+				nuevaLinea.setPrecio(prodSelected.getPrecio());
+				tblLineaDeVentas.getItems().add(nuevaLinea);
+				cbxAgregarProducto.setValue(null);
+			}
+		}		
 	}
 
-	@SuppressWarnings("unchecked")
 	public void loadForm(Venta venta){
 		if(venta !=null){
 			if(venta.getIdventa() != null){
@@ -257,7 +282,7 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(event.getSource().equals(father.btnGuardar)){
+		if(event.getSource().equals(panelControlesEdit.getBtnGuardar())){
 			Venta unVenta = getVenta();
 			if(unVenta != null){
 				try {
@@ -282,7 +307,7 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 				}
 			}		
 		}
-		if(event.getSource().equals(father.btnCancelar)){
+		if(event.getSource().equals(panelControlesEdit.getBtnCancelar())){
 			father.reLoad();    
 		}			
 	}

@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import ${ROOT_PKG}.modelo.${entity};
 import ${ROOT_PKG}.servicios.I${entity}Servicio;
 import ${ROOT_PKG}.servicios.impl.${entity}Servicio;
+import org.javafx.controls.panels.PanelControlesABM;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +19,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -29,21 +29,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class PanelGrilla${entity} extends PanelControlesABM implements Initializable, IPanelControllerGrilla<I${entity}Servicio>, EventHandler<ActionEvent> {
+public class PanelGrilla${entity} extends BorderPane implements Initializable, IPanelControllerGrilla<I${entity}Servicio>, EventHandler<ActionEvent> {
 	private I${entity}Servicio ${uncapitalizedEntityName}Servicio;
-	private Node top;
-	private Node center;
-	private Node bottom;
 	private Tab tab;
 
 	@FXML
-	VBox pnlBotones;
+	private PanelControlesABM panelControlesABM;
+
+	@FXML
+	VBox vTop;
 
 	@FXML
 	HBox hButtonFilter;
-
-	@FXML
-	private BorderPane pnlBorder;	
 
 	@FXML
 	private Button btnBuscar;
@@ -92,12 +89,11 @@ public class PanelGrilla${entity} extends PanelControlesABM implements Initializ
 		    }
 		});
 		loadGrilla();
+		this.autosize();
 
-		pnlBotones.getChildren().add(0, generarPanel());
-		pnlBorder.setPadding(new Insets(10, 0, 0, 0));	
-		this.btnAgregar.setOnAction(this);
-		this.btnEditar.setOnAction(this);
-		this.btnEliminar.setOnAction(this);
+		panelControlesABM.getBtnAgregar().setOnAction(this);
+		panelControlesABM.getBtnEditar().setOnAction(this);
+		panelControlesABM.getBtnEliminar().setOnAction(this);
 		this.btnBuscar.setOnAction(this);
 		this.btnLimpiar.setOnAction(this);
 	}
@@ -118,16 +114,7 @@ public class PanelGrilla${entity} extends PanelControlesABM implements Initializ
 
 	public void set${entity}Servicio(I${entity}Servicio ${uncapitalizedEntityName}Servicio) {
 		this.${uncapitalizedEntityName}Servicio = ${uncapitalizedEntityName}Servicio;
-	}
-
-	@Override
-	public BorderPane getPnlBorder() {
-		return pnlBorder;
-	}
-
-	public void setPnlBorder(BorderPane pnlBorder) {
-		this.pnlBorder = pnlBorder;
-	}
+	}	
 
 	@Override
 	public I${entity}Servicio getServicio() {
@@ -193,13 +180,13 @@ public class PanelGrilla${entity} extends PanelControlesABM implements Initializ
 			tbl${entity}.setItems(data);							
 		}
 
-		if (event.getSource().equals(btnAgregar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnAgregar())) {
 			new Panel${entity}(PanelGrilla${entity}.this);
 		}
-		if (event.getSource().equals(btnEditar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnEditar())) {
 			btnEditarAction();					
 		}
-		if (event.getSource().equals(btnEliminar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnEliminar())) {
 			
 			${entity} itemSelected = tbl${entity}.getSelectionModel().getSelectedItem();
 			if(itemSelected != null){
@@ -215,7 +202,7 @@ public class PanelGrilla${entity} extends PanelControlesABM implements Initializ
 	}
 	
 	private void btnEditarAction(){
-		int itemSelected = tbl${entity}.getSelectionModel().getSelectedItem().getId${uncapitalizedEntityName}();
+		int itemSelected = tbl${entity}.getSelectionModel().getSelectedIndex();
 		if(itemSelected > 0){
 			new Panel${entity}(PanelGrilla${entity}.this, itemSelected);
 		}

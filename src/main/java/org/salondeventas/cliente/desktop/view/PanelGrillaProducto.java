@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.javafx.controls.customs.NumberField;
-import org.javafx.controls.customs.StringField;
 import org.salondeventas.cliente.desktop.modelo.Producto;
 import org.salondeventas.cliente.desktop.servicios.IProductoServicio;
 import org.salondeventas.cliente.desktop.servicios.impl.ProductoServicio;
+import org.javafx.controls.panels.PanelControlesABM;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +17,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -29,21 +27,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class PanelGrillaProducto extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IProductoServicio>, EventHandler<ActionEvent> {
+public class PanelGrillaProducto extends BorderPane implements Initializable, IPanelControllerGrilla<IProductoServicio>, EventHandler<ActionEvent> {
 	private IProductoServicio productoServicio;
-	private Node top;
-	private Node center;
-	private Node bottom;
 	private Tab tab;
 
 	@FXML
-	VBox pnlBotones;
+	private PanelControlesABM panelControlesABM;
+
+	@FXML
+	VBox vTop;
 
 	@FXML
 	HBox hButtonFilter;
-
-	@FXML
-	private BorderPane pnlBorder;	
 
 	@FXML
 	private Button btnBuscar;
@@ -57,13 +52,13 @@ public class PanelGrillaProducto extends PanelControlesABM implements Initializa
 	private TableView<Producto> tblProducto;
 
 	@FXML
-	private NumberField txtidproducto;
+	private TextField txtidproducto;
 	@FXML
-	private StringField txtnombre;
+	private TextField txtnombre;
 	@FXML
-	private StringField txtcodbarras;
+	private TextField txtcodbarras;
 	@FXML
-	private NumberField txtmininventario;
+	private TextField txtmininventario;
 	
 	public PanelGrillaProducto(Tab tab) {
 		this.tab = tab;
@@ -90,12 +85,11 @@ public class PanelGrillaProducto extends PanelControlesABM implements Initializa
 		    }
 		});
 		loadGrilla();
+		this.autosize();
 
-		pnlBotones.getChildren().add(0, generarPanel());
-		pnlBorder.setPadding(new Insets(10, 0, 0, 0));	
-		this.btnAgregar.setOnAction(this);
-		this.btnEditar.setOnAction(this);
-		this.btnEliminar.setOnAction(this);
+		panelControlesABM.getBtnAgregar().setOnAction(this);
+		panelControlesABM.getBtnEditar().setOnAction(this);
+		panelControlesABM.getBtnEliminar().setOnAction(this);
 		this.btnBuscar.setOnAction(this);
 		this.btnLimpiar.setOnAction(this);
 	}
@@ -116,16 +110,7 @@ public class PanelGrillaProducto extends PanelControlesABM implements Initializa
 
 	public void setProductoServicio(IProductoServicio productoServicio) {
 		this.productoServicio = productoServicio;
-	}
-
-	@Override
-	public BorderPane getPnlBorder() {
-		return pnlBorder;
-	}
-
-	public void setPnlBorder(BorderPane pnlBorder) {
-		this.pnlBorder = pnlBorder;
-	}
+	}	
 
 	@Override
 	public IProductoServicio getServicio() {
@@ -181,13 +166,13 @@ public class PanelGrillaProducto extends PanelControlesABM implements Initializa
 			tblProducto.setItems(data);							
 		}
 
-		if (event.getSource().equals(btnAgregar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnAgregar())) {
 			new PanelProducto(PanelGrillaProducto.this);
 		}
-		if (event.getSource().equals(btnEditar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnEditar())) {
 			btnEditarAction();					
 		}
-		if (event.getSource().equals(btnEliminar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnEliminar())) {
 			
 			Producto itemSelected = tblProducto.getSelectionModel().getSelectedItem();
 			if(itemSelected != null){

@@ -27,11 +27,9 @@ public class TextFieldWithButtonSkin extends TextFieldSkin{
         this.textField = textField;
 
         rightButton = new StackPane();
-        rightButton.getStyleClass().setAll("right-button");
         rightButton.setFocusTraversable(false);
 
         rightButtonGraphic = new Region();
-        rightButtonGraphic.getStyleClass().setAll("right-button-graphic");
         rightButtonGraphic.setFocusTraversable(false);
 
         rightButtonGraphic.setMaxWidth(Region.USE_PREF_SIZE);

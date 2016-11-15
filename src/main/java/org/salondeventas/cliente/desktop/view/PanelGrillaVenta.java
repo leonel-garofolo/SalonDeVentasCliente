@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import org.salondeventas.cliente.desktop.modelo.Venta;
 import org.salondeventas.cliente.desktop.servicios.IVentaServicio;
 import org.salondeventas.cliente.desktop.servicios.impl.VentaServicio;
+import org.javafx.controls.panels.PanelControlesABM;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +17,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -27,21 +27,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class PanelGrillaVenta extends PanelControlesABM implements Initializable, IPanelControllerGrilla<IVentaServicio>, EventHandler<ActionEvent> {
+public class PanelGrillaVenta extends BorderPane implements Initializable, IPanelControllerGrilla<IVentaServicio>, EventHandler<ActionEvent> {
 	private IVentaServicio ventaServicio;
-	private Node top;
-	private Node center;
-	private Node bottom;
 	private Tab tab;
 
 	@FXML
-	VBox pnlBotones;
+	private PanelControlesABM panelControlesABM;
+
+	@FXML
+	VBox vTop;
 
 	@FXML
 	HBox hButtonFilter;
-
-	@FXML
-	private BorderPane pnlBorder;	
 
 	@FXML
 	private Button btnBuscar;
@@ -63,12 +60,12 @@ public class PanelGrillaVenta extends PanelControlesABM implements Initializable
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
-		
+        
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
-        }      
+        }
     }
 
 	public void initialize(URL location, ResourceBundle resources) {
@@ -82,12 +79,11 @@ public class PanelGrillaVenta extends PanelControlesABM implements Initializable
 		    }
 		});
 		loadGrilla();
+		this.autosize();
 
-		pnlBotones.getChildren().add(0, generarPanel());
-		pnlBorder.setPadding(new Insets(10, 0, 0, 0));	
-		this.btnAgregar.setOnAction(this);
-		this.btnEditar.setOnAction(this);
-		this.btnEliminar.setOnAction(this);
+		panelControlesABM.getBtnAgregar().setOnAction(this);
+		panelControlesABM.getBtnEditar().setOnAction(this);
+		panelControlesABM.getBtnEliminar().setOnAction(this);
 		this.btnBuscar.setOnAction(this);
 		this.btnLimpiar.setOnAction(this);
 	}
@@ -108,16 +104,7 @@ public class PanelGrillaVenta extends PanelControlesABM implements Initializable
 
 	public void setVentaServicio(IVentaServicio ventaServicio) {
 		this.ventaServicio = ventaServicio;
-	}
-
-	@Override
-	public BorderPane getPnlBorder() {
-		return pnlBorder;
-	}
-
-	public void setPnlBorder(BorderPane pnlBorder) {
-		this.pnlBorder = pnlBorder;
-	}
+	}	
 
 	@Override
 	public IVentaServicio getServicio() {
@@ -164,13 +151,13 @@ public class PanelGrillaVenta extends PanelControlesABM implements Initializable
 			tblVenta.setItems(data);							
 		}
 
-		if (event.getSource().equals(btnAgregar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnAgregar())) {
 			new PanelVenta(PanelGrillaVenta.this);
 		}
-		if (event.getSource().equals(btnEditar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnEditar())) {
 			btnEditarAction();					
 		}
-		if (event.getSource().equals(btnEliminar)) {
+		if (event.getSource().equals(panelControlesABM.getBtnEliminar())) {
 			
 			Venta itemSelected = tblVenta.getSelectionModel().getSelectedItem();
 			if(itemSelected != null){

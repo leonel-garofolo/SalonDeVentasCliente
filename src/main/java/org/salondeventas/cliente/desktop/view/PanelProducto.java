@@ -3,45 +3,47 @@ package org.salondeventas.cliente.desktop.view;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-
-import org.javafx.controls.customs.NumberField;
-import org.javafx.controls.customs.StringField;
-import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
-import org.salondeventas.cliente.desktop.modelo.Producto;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import org.javafx.controls.panels.PanelControlesEdit;
+
+
+
+import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
+import org.salondeventas.cliente.desktop.modelo.Producto;
 
 public class PanelProducto extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
 	private PanelGrillaProducto father;
+
+	@FXML
+	private PanelControlesEdit panelControlesEdit;
 	
 	@FXML
 	private VBox vBoxMsg;
 
 
 	@FXML
-	private StringField txtidproducto;
+	private TextField txtidproducto;
 
 	@FXML
-	private StringField txtnombre;
+	private TextField txtnombre;
 
 	@FXML
-	private StringField txtcodbarras;
+	private TextField txtcodbarras;
 
 	@FXML
-	private NumberField txtmininventario;
+	private TextField txtmininventario;
 
 	@FXML
-	private StringField txtprecio;
+	private TextField txtprecio;
 
 	public PanelProducto(PanelGrillaProducto father) {
 		this.modoEdit = false;
@@ -81,12 +83,11 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        
-        this.setTop(father.generarPanelFormulario());
+                
         this.setLeft(null);
         this.setRight(null);
-        father.btnGuardar.setOnAction(this);        
-        father.btnCancelar.setOnAction(this);
+        panelControlesEdit.getBtnGuardar().setOnAction(this);        
+        panelControlesEdit.getBtnCancelar().setOnAction(this);
         father.getTab().setContent(this);
         
 	}
@@ -143,7 +144,7 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(event.getSource().equals(father.btnGuardar)){
+		if(event.getSource().equals(panelControlesEdit.getBtnGuardar())){
 			Producto unProducto = getProducto();
 			if(unProducto != null){
 				try {
@@ -162,7 +163,7 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 				}
 			}		
 		}
-		if(event.getSource().equals(father.btnCancelar)){
+		if(event.getSource().equals(panelControlesEdit.getBtnCancelar())){
 			father.reLoad();    
 		}
 	}

@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import org.javafx.controls.panels.PanelControlesEdit;
 #foreach($attribute in $entity.attributes)
 #if($attribute.isUtilDateType())
 import java.time.LocalDate;
@@ -30,6 +31,9 @@ import ${ROOT_PKG}.modelo.${entity.name};
 public class Panel${entity.name} extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
 	private PanelGrilla${entity.name} father;
+
+	@FXML
+	private PanelControlesEdit panelControlesEdit;
 	
 	@FXML
 	private VBox vBoxMsg;
@@ -92,12 +96,11 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        
-        this.setTop(father.generarPanelFormulario());
+                
         this.setLeft(null);
         this.setRight(null);
-        father.btnGuardar.setOnAction(this);        
-        father.btnCancelar.setOnAction(this);
+        panelControlesEdit.getBtnGuardar().setOnAction(this);        
+        panelControlesEdit.getBtnCancelar().setOnAction(this);
         father.getTab().setContent(this);
         
 #foreach($attribute in $entity.attributes)
@@ -160,7 +163,7 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 
 	@Override
 	public void handle(ActionEvent event) {
-		if(event.getSource().equals(father.btnGuardar)){
+		if(event.getSource().equals(panelControlesEdit.getBtnGuardar())){
 			${entity.name} un${entity.name} = get${entity.name}();
 			if(un${entity.name} != null){
 				try {
@@ -179,7 +182,7 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 				}
 			}		
 		}
-		if(event.getSource().equals(father.btnCancelar)){
+		if(event.getSource().equals(panelControlesEdit.getBtnCancelar())){
 			father.reLoad();    
 		}
 	}

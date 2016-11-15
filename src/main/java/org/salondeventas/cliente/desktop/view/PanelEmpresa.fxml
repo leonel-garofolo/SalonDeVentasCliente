@@ -6,29 +6,37 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
+<?import org.javafx.controls.customs.*?>
+<?import org.javafx.controls.panels.PanelControlesEdit?>
 
 <fx:root type="javafx.scene.layout.BorderPane" xmlns:fx="http://javafx.com/fxml">
 	<center>
 	 <BorderPane BorderPane.alignment="CENTER" >
 	  	<top>
-            <VBox fx:id="vBoxMsg"  BorderPane.alignment="CENTER" />
+			<VBox fx:id="vTop">
+	  			<children>
+	  				<PanelControlesEdit fx:id="panelControlesEdit" />
+	  			</children>
+	  			<children>
+	  				<VBox fx:id="vBoxMsg"  BorderPane.alignment="CENTER" />
+	  			</children>
+	  		</VBox>            
         </top>
 	 	<center>
 			<GridPane vgap="5" hgap="5">
 				<padding><Insets top="25" right="25" bottom="10" left="25"/></padding>   
 				<Label text="%Empresa.panel.field.idempresa" GridPane.columnIndex="0" GridPane.rowIndex="1"/>   
-				<TextField fx:id="txtidempresa" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+				<NumberField fx:id="txtidempresa" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 				<Label text="%Empresa.panel.field.descripcion" GridPane.columnIndex="0" GridPane.rowIndex="2"/>   
- 				<TextField fx:id="txtdescripcion"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2"/>       
+ 				<StringField fx:id="txtdescripcion"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2"/>       
 				<Label text="%Empresa.panel.field.direccion" GridPane.columnIndex="0" GridPane.rowIndex="3"/>   
- 				<TextField fx:id="txtdireccion"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3"/>       
+ 				<StringField fx:id="txtdireccion"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3"/>       
 				<Label text="%Empresa.panel.field.logo" GridPane.columnIndex="0" GridPane.rowIndex="4"/>   
 				<ImageView fx:id="bytlogo" fitHeight="20.0" fitWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 				<Label text="%Empresa.panel.field.nombre" GridPane.columnIndex="0" GridPane.rowIndex="5"/>   
- 				<TextField fx:id="txtnombre"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="5"/>       
+ 				<StringField fx:id="txtnombre"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="5"/>       
 				<Label text="%Empresa.panel.field.telefono" GridPane.columnIndex="0" GridPane.rowIndex="6"/>   
- 				<TextField fx:id="txttelefono"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="6"/>       
+ 				<StringField fx:id="txttelefono"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="6"/>       
 			</GridPane>
        </center>
 	 </BorderPane>	
