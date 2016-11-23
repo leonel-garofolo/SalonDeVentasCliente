@@ -27,9 +27,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import org.javafx.controls.customs.DecimalField;
+import org.javafx.controls.customs.NumberField;
+import org.javafx.controls.customs.StringField;
+
 public class PanelGrillaUsuario extends BorderPane implements Initializable, IPanelControllerGrilla<IUsuarioServicio>, EventHandler<ActionEvent> {
 	private IUsuarioServicio usuarioServicio;
 	private Tab tab;
+	private ResourceBundle resource;
 
 	@FXML
 	private PanelControlesABM panelControlesABM;
@@ -52,18 +57,19 @@ public class PanelGrillaUsuario extends BorderPane implements Initializable, IPa
 	private TableView<Usuario> tblUsuario;
 
 	@FXML
-	private TextField txtidusuario;
+	private NumberField txtidusuario;
 	@FXML
-	private TextField txtclave;
+	private StringField txtclave;
 	@FXML
-	private TextField txtnombre;
+	private StringField txtnombre;
 	
 	public PanelGrillaUsuario(Tab tab) {
 		this.tab = tab;
-       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
+		this.resource = ResourceBundle.getBundle("i18n.ValidationMessages");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
+		fxmlLoader.setResources(resource);
         
         try {
             fxmlLoader.load();
@@ -184,8 +190,8 @@ public class PanelGrillaUsuario extends BorderPane implements Initializable, IPa
 	
 	private void btnEditarAction(){
 		int itemSelected = tblUsuario.getSelectionModel().getSelectedIndex();
-		if(itemSelected > 0){
-			new PanelUsuario(PanelGrillaUsuario.this, itemSelected);
+		if(itemSelected >= 0){
+			new PanelUsuario(PanelGrillaUsuario.this, tblUsuario.getSelectionModel().getSelectedItem().getIdusuario());
 		}
 	}
 }

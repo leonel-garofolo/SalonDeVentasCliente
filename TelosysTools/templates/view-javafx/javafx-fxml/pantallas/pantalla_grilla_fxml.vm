@@ -28,9 +28,16 @@
 #end
 #if($attribute.isStringType())
       					 <children>
-      					 	<TextField fx:id="txt${attribute.name}" promptText="%${entity.name}.grilla.col.${attribute.name}" maxWidth="150" >
+      					 	<StringField fx:id="txt${attribute.name}" promptText="%${entity.name}.grilla.col.${attribute.name}" maxWidth="150" >
       					 		<tooltip><Tooltip text="%${entity.name}.grilla.col.${attribute.name}"></Tooltip></tooltip>
-      					 	</TextField>      					 	       			 				
+      					 	</StringField>      					 	       			 				
+      					 </children>
+#end   
+#if($attribute.isBigDecimalType())
+      					 <children>
+      					 	<DecimalField fx:id="txt${attribute.name}" promptText="%${entity.name}.grilla.col.${attribute.name}" maxWidth="150" >
+      					 		<tooltip><Tooltip text="%${entity.name}.grilla.col.${attribute.name}"></Tooltip></tooltip>
+      					 	</DecimalField>      					 	       			 				
       					 </children>
 #end      					  
 #end

@@ -3,7 +3,7 @@ package ${target.javaPackageFromFolder($SRC)};
 
 import java.util.List;
 import javax.ws.rs.core.MediaType;
-import ${ROOT_PKG}.modelo.${entity.name};
+import ${ROOT_PKG}.modelo.informes.${entity.name};
 import ${ROOT_PKG}.servicios.I${entity.name}Servicio;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;

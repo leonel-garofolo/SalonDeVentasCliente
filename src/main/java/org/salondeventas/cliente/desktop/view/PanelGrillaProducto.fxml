@@ -24,18 +24,28 @@
       					 	</NumberField>			 				     
       					 </children>
       					 <children>
-      					 	<TextField fx:id="txtnombre" promptText="%Producto.grilla.col.nombre" maxWidth="150" >
+      					 	<StringField fx:id="txtnombre" promptText="%Producto.grilla.col.nombre" maxWidth="150" >
       					 		<tooltip><Tooltip text="%Producto.grilla.col.nombre"></Tooltip></tooltip>
-      					 	</TextField>      					 	       			 				
+      					 	</StringField>      					 	       			 				
       					 </children>
       					 <children>
-      					 	<TextField fx:id="txtcodbarras" promptText="%Producto.grilla.col.codbarras" maxWidth="150" >
+      					 	<StringField fx:id="txtcodbarras" promptText="%Producto.grilla.col.codbarras" maxWidth="150" >
       					 		<tooltip><Tooltip text="%Producto.grilla.col.codbarras"></Tooltip></tooltip>
-      					 	</TextField>      					 	       			 				
+      					 	</StringField>      					 	       			 				
       					 </children>
 						<children>
       					 	<NumberField fx:id="txtmininventario" promptText="%Producto.grilla.col.mininventario" maxWidth="50" >
       					 		<tooltip><Tooltip text="%Producto.grilla.col.mininventario"></Tooltip></tooltip>      					 		
+      					 	</NumberField>			 				     
+      					 </children>
+      					 <children>
+      					 	<DecimalField fx:id="txtprecio" promptText="%Producto.grilla.col.precio" maxWidth="150" >
+      					 		<tooltip><Tooltip text="%Producto.grilla.col.precio"></Tooltip></tooltip>
+      					 	</DecimalField>      					 	       			 				
+      					 </children>
+						<children>
+      					 	<NumberField fx:id="txtcantidadStock" promptText="%Producto.grilla.col.cantidadStock" maxWidth="50" >
+      					 		<tooltip><Tooltip text="%Producto.grilla.col.cantidadStock"></Tooltip></tooltip>      					 		
       					 	</NumberField>			 				     
       					 </children>
 						 <children>
@@ -74,6 +84,11 @@
 				<TableColumn fx:id="precio" prefWidth="50.0" text="%Producto.grilla.col.precio" >
 					<cellValueFactory>
 						<PropertyValueFactory property="precio" />
+					</cellValueFactory>
+				</TableColumn>	 
+				<TableColumn fx:id="cantidadStock" prefWidth="50.0" text="%Producto.grilla.col.cantidadStock" >
+					<cellValueFactory>
+						<PropertyValueFactory property="cantidadStock" />
 					</cellValueFactory>
 				</TableColumn>	 
 			</columns>

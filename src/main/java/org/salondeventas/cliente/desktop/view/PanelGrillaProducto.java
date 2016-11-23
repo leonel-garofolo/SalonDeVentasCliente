@@ -27,6 +27,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import org.javafx.controls.customs.DecimalField;
+import org.javafx.controls.customs.NumberField;
+import org.javafx.controls.customs.StringField;
+
 public class PanelGrillaProducto extends BorderPane implements Initializable, IPanelControllerGrilla<IProductoServicio>, EventHandler<ActionEvent> {
 	private IProductoServicio productoServicio;
 	private Tab tab;
@@ -52,13 +56,17 @@ public class PanelGrillaProducto extends BorderPane implements Initializable, IP
 	private TableView<Producto> tblProducto;
 
 	@FXML
-	private TextField txtidproducto;
+	private NumberField txtidproducto;
 	@FXML
-	private TextField txtnombre;
+	private StringField txtnombre;
 	@FXML
-	private TextField txtcodbarras;
+	private StringField txtcodbarras;
 	@FXML
-	private TextField txtmininventario;
+	private NumberField txtmininventario;
+	@FXML
+	private DecimalField txtprecio;
+	@FXML
+	private NumberField txtcantidadStock;
 	
 	public PanelGrillaProducto(Tab tab) {
 		this.tab = tab;
@@ -154,6 +162,9 @@ public class PanelGrillaProducto extends BorderPane implements Initializable, IP
 			if(!txtmininventario.getText().trim().equals("")){
 				filter=filter.filtered(p -> p.getMininventario() != null && p.getMininventario() == Integer.valueOf(txtmininventario.getText()));
 			}
+			if(!txtcantidadStock.getText().trim().equals("")){
+				filter=filter.filtered(p -> p.getCantidadStock() != null && p.getCantidadStock() == Integer.valueOf(txtcantidadStock.getText()));
+			}
 			tblProducto.setItems(new SortedList<>(filter));							
 		}
 		
@@ -188,9 +199,9 @@ public class PanelGrillaProducto extends BorderPane implements Initializable, IP
 	}
 	
 	private void btnEditarAction(){
-		int itemSelected = tblProducto.getSelectionModel().getSelectedItem().getIdproducto();
-		if(itemSelected > 0){
-			new PanelProducto(PanelGrillaProducto.this, itemSelected);
+		int itemSelected = tblProducto.getSelectionModel().getSelectedIndex();
+		if(itemSelected >= 0){
+			new PanelProducto(PanelGrillaProducto.this, tblProducto.getSelectionModel().getSelectedItem().getIdproducto());
 		}
 	}
 }

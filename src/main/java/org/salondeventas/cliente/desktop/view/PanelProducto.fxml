@@ -30,11 +30,15 @@
 				<Label text="%Producto.panel.field.nombre" GridPane.columnIndex="0" GridPane.rowIndex="2"/>   
  				<StringField fx:id="txtnombre"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2"/>       
 				<Label text="%Producto.panel.field.codbarras" GridPane.columnIndex="0" GridPane.rowIndex="3"/>   
- 				<StringField fx:id="txtcodbarras"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3"/>       
-				<Label text="%Producto.panel.field.mininventario" GridPane.columnIndex="0" GridPane.rowIndex="4"/>   
-				<NumberField fx:id="txtmininventario" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-				<Label text="%Producto.panel.field.precio" GridPane.columnIndex="0" GridPane.rowIndex="5"/>   
-				<NumberField fx:id="txtprecio" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+ 				<StringField fx:id="txtcodbarras"  maxWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3"/>       				
+				<Label text="%Producto.panel.field.precio" GridPane.columnIndex="0" GridPane.rowIndex="4"/>   
+				<DecimalField fx:id="txtprecio" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+				<Label text="%Producto.panel.field.mininventario" GridPane.columnIndex="0" GridPane.rowIndex="5"/>   
+				<NumberField fx:id="txtmininventario" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+				<Label text="%Producto.panel.field.cantIngreso" GridPane.columnIndex="0" GridPane.rowIndex="6"/>   
+				<NumberField fx:id="txtcantIngreso" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+				<Label text="%Producto.panel.field.cantidadStock" GridPane.columnIndex="0" GridPane.rowIndex="7"/>   
+				<NumberField fx:id="txtcantidadStock" maxWidth="100" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 			</GridPane>
        </center>
 	 </BorderPane>	

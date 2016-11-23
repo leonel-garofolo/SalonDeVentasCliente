@@ -1,27 +1,38 @@
 package org.salondeventas.cliente.desktop.view;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
+import org.javafx.controls.customs.DecimalField;
+import org.javafx.controls.customs.NumberField;
+import org.javafx.controls.panels.PanelControlesEdit;
+import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
+import org.salondeventas.cliente.desktop.modelo.Producto;
+import org.salondeventas.cliente.desktop.modelo.ProductoIngreso;
+import org.salondeventas.cliente.desktop.servicios.IProductoIngresoServicio;
+import org.salondeventas.cliente.desktop.servicios.impl.ProductoIngresoServicio;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import org.javafx.controls.panels.PanelControlesEdit;
-
-
-
-import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
-import org.salondeventas.cliente.desktop.modelo.Producto;
 
 public class PanelProducto extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
 	private PanelGrillaProducto father;
+	private Producto unProducto;
+	private IProductoIngresoServicio productoIngresoServicio;
 
 	@FXML
 	private PanelControlesEdit panelControlesEdit;
@@ -31,7 +42,7 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 
 
 	@FXML
-	private TextField txtidproducto;
+	private NumberField txtidproducto;
 
 	@FXML
 	private TextField txtnombre;
@@ -40,10 +51,16 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 	private TextField txtcodbarras;
 
 	@FXML
-	private TextField txtmininventario;
+	private NumberField txtmininventario;
 
 	@FXML
-	private TextField txtprecio;
+	private DecimalField txtprecio;
+	
+	@FXML
+	private NumberField txtcantIngreso;
+	
+	@FXML
+	private NumberField txtcantidadStock;
 
 	public PanelProducto(PanelGrillaProducto father) {
 		this.modoEdit = false;
@@ -54,15 +71,19 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 	public PanelProducto(PanelGrillaProducto father, int id) {
 		this.modoEdit = true;
 		this.father = father;
-		initComponentes();
+		initComponentes();		
 		loadEntity(id);		
     }
 
+	private void callServices() {
+		 productoIngresoServicio = new ProductoIngresoServicio();		
+	}
+
 	private void loadEntity(int id) {
 		try {
-			Producto unProducto = new Producto();
-			unProducto.setIdproducto(id);
-			unProducto =father.getServicio().load(unProducto);
+			this.unProducto = new Producto();
+			this.unProducto.setIdproducto(id);
+			this.unProducto =father.getServicio().load(unProducto);
 			loadForm(unProducto);
 		} catch (Exception e) {
 			Label label = new Label();
@@ -73,6 +94,7 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 	}
 
 	private void initComponentes(){
+		callServices();
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
@@ -82,14 +104,25 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
             fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
-        }
-                
+        }              
+        
         this.setLeft(null);
         this.setRight(null);
         panelControlesEdit.getBtnGuardar().setOnAction(this);        
         panelControlesEdit.getBtnCancelar().setOnAction(this);
-        father.getTab().setContent(this);
+        father.getTab().setContent(this);       
         
+        txtcantIngreso.focusedProperty().addListener(new ChangeListener<Boolean>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+            {            
+            	 if (!newPropertyValue){
+            		 txtcantidadStock.setValue((unProducto != null && unProducto.getCantidadStock() != null ? unProducto.getCantidadStock(): 0) + (txtcantIngreso.getValue() != null? txtcantIngreso.getValue(): 0));	 
+            	 }
+                
+            }
+        });
 	}
 
 	public void loadForm(Producto producto){
@@ -104,10 +137,13 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 				txtcodbarras.setText(producto.getCodbarras());
 			}
 			if(producto.getMininventario() != null){
-				txtmininventario.setText(String.valueOf(producto.getMininventario()));
+				txtmininventario.setValue(producto.getMininventario());
 			}
 			if(producto.getPrecio() != null){
-				txtprecio.setText(String.valueOf(producto.getPrecio()));
+				txtprecio.setValue(producto.getPrecio());
+			}
+			if(producto.getCantidadStock() != null){
+				txtcantidadStock.setValue(producto.getCantidadStock());
 			}
 		}
 	}
@@ -122,9 +158,21 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 		unProducto.setNombre(txtnombre.getText());
 		unProducto.setCodbarras(txtcodbarras.getText());
 		try{
-			unProducto.setMininventario(Integer.valueOf(txtmininventario.getText()));
+			unProducto.setMininventario(txtmininventario.getValue());
 		}catch (NumberFormatException e) {
 			unProducto.setMininventario(null);
+		}
+		
+		try{
+			unProducto.setPrecio(txtprecio.getValue());
+		}catch (NumberFormatException e) {
+			unProducto.setPrecio(null);
+		}
+		
+		try{
+			unProducto.setCantidadStock(txtcantidadStock.getValue());
+		}catch (NumberFormatException e) {
+			unProducto.setCantidadStock(null);
 		}
 		
 		Label label = null;	
@@ -152,6 +200,14 @@ public class PanelProducto extends BorderPane implements EventHandler<ActionEven
 						father.getServicio().update(unProducto);
 					}else{
 						father.getServicio().insert(unProducto);
+					}
+					
+					if(txtcantIngreso.getValue() != null){
+						ProductoIngreso unIngreso = new ProductoIngreso();
+						unIngreso.setIdproducto(unProducto.getIdproducto());
+						unIngreso.setFechaingreso(new Date());
+						unIngreso.setCantidad(txtcantIngreso.getValue());
+						productoIngresoServicio.insert(unIngreso);
 					}
 					
 					father.reLoad();    

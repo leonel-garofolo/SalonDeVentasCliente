@@ -14,14 +14,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.javafx.controls.panels.PanelControlesEdit;
 
-
-
+import org.javafx.controls.customs.DecimalField;
+import org.javafx.controls.customs.NumberField;
+import org.javafx.controls.customs.StringField;
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
 import org.salondeventas.cliente.desktop.modelo.Pantalla;
 
 public class PanelPantalla extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
 	private PanelGrillaPantalla father;
+	private ResourceBundle resource;
 
 	@FXML
 	private PanelControlesEdit panelControlesEdit;
@@ -31,10 +33,10 @@ public class PanelPantalla extends BorderPane implements EventHandler<ActionEven
 
 
 	@FXML
-	private TextField txtidpantalla;
+	private NumberField txtidpantalla;
 
 	@FXML
-	private TextField txtnombre;
+	private StringField txtnombre;
 
 	public PanelPantalla(PanelGrillaPantalla father) {
 		this.modoEdit = false;
@@ -64,10 +66,11 @@ public class PanelPantalla extends BorderPane implements EventHandler<ActionEven
 	}
 
 	private void initComponentes(){
+		this.resource = ResourceBundle.getBundle("i18n.ValidationMessages");
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
+		fxmlLoader.setResources(this.resource);
 
         try {
             fxmlLoader.load();
@@ -86,10 +89,10 @@ public class PanelPantalla extends BorderPane implements EventHandler<ActionEven
 	public void loadForm(Pantalla pantalla){
 		if(pantalla !=null){
 			if(pantalla.getIdpantalla() != null){
-				txtidpantalla.setText(String.valueOf(pantalla.getIdpantalla()));
+				txtidpantalla.setValue(pantalla.getIdpantalla());
 			}
 			if(pantalla.getNombre() != null){
-				txtnombre.setText(pantalla.getNombre());
+				txtnombre.setValue(pantalla.getNombre());
 			}
 		}
 	}

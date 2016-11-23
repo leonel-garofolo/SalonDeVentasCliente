@@ -24,9 +24,9 @@
       					 	</NumberField>			 				     
       					 </children>
       					 <children>
-      					 	<TextField fx:id="txtnombre" promptText="%Perfiles.grilla.col.nombre" maxWidth="150" >
+      					 	<StringField fx:id="txtnombre" promptText="%Perfiles.grilla.col.nombre" maxWidth="150" >
       					 		<tooltip><Tooltip text="%Perfiles.grilla.col.nombre"></Tooltip></tooltip>
-      					 	</TextField>      					 	       			 				
+      					 	</StringField>      					 	       			 				
       					 </children>
 						 <children>
       					 	<Button  fx:id="btnBuscar" text="Buscar" maxWidth="60" />      					 		      					 	       			 			

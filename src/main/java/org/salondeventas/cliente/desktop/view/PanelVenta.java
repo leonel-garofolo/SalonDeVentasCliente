@@ -1,9 +1,11 @@
 package org.salondeventas.cliente.desktop.view;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.javafx.controls.customs.ComboBoxAutoComplete;
+import org.javafx.controls.customs.DecimalField;
 import org.javafx.controls.customs.NumberField;
 import org.javafx.controls.panels.PanelControlesEdit;
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
@@ -38,6 +41,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -67,7 +71,7 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 	private DatePicker dprfechaPago;
 
 	@FXML
-	private NumberField txttotal;
+	private DecimalField txttotal;
 	
 	@FXML
 	private TableView<Lineadeventa> tblLineaDeVentas;
@@ -129,6 +133,7 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
                
         this.setLeft(null);
         this.setRight(null);
+        panelControlesEdit.setScene(ControllLogin.getScene());
         panelControlesEdit.getBtnGuardar().setOnAction(this);        
         panelControlesEdit.getBtnCancelar().setOnAction(this);
         father.getTab().setContent(this);       
@@ -153,6 +158,7 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 			e.printStackTrace();
 		}		
 		
+		cbxAgregarProducto.requestFocus();		
 		tblLineaDeVentas.setRowFactory(new Callback<TableView<Lineadeventa>, TableRow<Lineadeventa>>() {  
             @Override  
             public TableRow<Lineadeventa> call(TableView<Lineadeventa> tableView) {  
@@ -165,8 +171,18 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
                     	Lineadeventa linea = row.getItem();
                 		if(linea.getIdventa() != null){
                 			try {
-    							iLineadeventaServicio.delete(linea);
-    							tblLineaDeVentas.getItems().remove(linea);  
+                				if(modoEdit){
+                					int stock = 0;
+                					iLineadeventaServicio.delete(linea);	                					
+                					if(linea.getProducto().getCantidadStock() != null){
+                						stock = linea.getProducto().getCantidadStock() + linea.getCantidad();
+                						linea.getProducto().setCantidadStock(stock);
+                						productoServicio.update(linea.getProducto());
+                					}
+                				}
+    							
+    							tblLineaDeVentas.getItems().remove(linea); 
+    							calcularTotal();
     						} catch (Exception e) {
     							// TODO Auto-generated catch block
     							e.printStackTrace();
@@ -201,13 +217,32 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 						cbxAgregarProducto.getEditor().setText("");
 						return;
 					}
-				}				
+				}
 				
-				Lineadeventa nuevaLinea = new Lineadeventa();												
-				nuevaLinea.setIdproducto(prodSelected.getIdproducto());
-				nuevaLinea.setProducto(prodSelected);
-				nuevaLinea.setPrecio(prodSelected.getPrecio());
-				tblLineaDeVentas.getItems().add(nuevaLinea);
+				TextInputDialog dialog = new TextInputDialog("Ingrese un numero");
+				dialog.setTitle("Ingresar la cantidad del Producto");
+				dialog.setContentText("Cantidad:");
+				// Traditional way to get the response value.
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()){
+				    Lineadeventa nuevaLinea = new Lineadeventa();												
+					nuevaLinea.setIdproducto(prodSelected.getIdproducto());
+					nuevaLinea.setProducto(prodSelected);
+					try{
+						nuevaLinea.setCantidad(Integer.valueOf(result.get()));	
+					}catch (NumberFormatException e) {
+						Alert alert = new Alert(AlertType.ERROR);		
+						alert.setHeaderText("Cantidad Incorrecta.");				
+						alert.showAndWait();
+						return;
+					}					
+					nuevaLinea.setPrecio(new BigDecimal(nuevaLinea.getCantidad() * prodSelected.getPrecio().doubleValue()));
+					tblLineaDeVentas.getItems().add(nuevaLinea);					
+					
+					calcularTotal();
+				}else{					
+					return;
+				}
 				cbxAgregarProducto.setValue(null);
 			}
 		}		
@@ -225,10 +260,9 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 				dprfechaPago.setValue(new java.sql.Date(venta.getFechaPago().getTime()).toLocalDate());		
 			}
 			if(venta.getTotal() != null){
-				txttotal.setText(String.valueOf(venta.getTotal()));
+				txttotal.setValue(venta.getTotal());
 			}
-			
-			 							
+						 							
 			data = FXCollections.observableArrayList(venta.getListOfLineadeventa());
 			tblLineaDeVentas.setItems(data);															
 		}
@@ -242,7 +276,14 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 			unVenta.setIdventa(null);
 		}
 		unVenta.setFecha(java.sql.Date.valueOf(dprfecha.getValue()));
-		unVenta.setFechaPago(java.sql.Date.valueOf(dprfechaPago.getValue()));				
+		unVenta.setFechaPago(java.sql.Date.valueOf(dprfechaPago.getValue()));
+		
+		calcularTotal();
+		unVenta.setTotal(txttotal.getValue());
+		//Tiene que haber al menos un producto para que guarde
+		if(unVenta.getTotal() == null){
+			return null;
+		}
 		
 		Label label = null;	
 		vBoxMsg.getChildren().clear();
@@ -292,10 +333,16 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 						unVenta.setIdventa(Integer.valueOf(father.getServicio().insert(unVenta)));
 					}
 					
+					int stock = 0;
 					List<Lineadeventa> lineas=getLineasDeVentas(unVenta);
 					for(Lineadeventa linea: lineas){
-						linea.setIdventa(unVenta.getIdventa());
-						iLineadeventaServicio.insert(linea);
+						linea.setIdventa(unVenta.getIdventa());								
+						iLineadeventaServicio.insert(linea);		
+						if(linea.getProducto().getCantidadStock() != null){
+							stock = linea.getProducto().getCantidadStock() - linea.getCantidad();
+							linea.getProducto().setCantidadStock(stock);
+							productoServicio.update(linea.getProducto());
+						}
 					}
 					
 					father.reLoad();    
@@ -310,5 +357,13 @@ public class PanelVenta extends BorderPane implements EventHandler<ActionEvent>{
 		if(event.getSource().equals(panelControlesEdit.getBtnCancelar())){
 			father.reLoad();    
 		}			
+	}
+	
+	private void calcularTotal(){
+		double total = 0;
+		for(Lineadeventa linea: tblLineaDeVentas.getItems()){
+			total += linea.getCantidad() * linea.getPrecio().doubleValue();
+		}
+		txttotal.setValue(new BigDecimal(total));
 	}
 }

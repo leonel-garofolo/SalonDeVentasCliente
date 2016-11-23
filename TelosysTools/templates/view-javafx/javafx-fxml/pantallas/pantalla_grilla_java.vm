@@ -29,9 +29,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import org.javafx.controls.customs.DecimalField;
+import org.javafx.controls.customs.NumberField;
+import org.javafx.controls.customs.StringField;
+
 public class PanelGrilla${entity} extends BorderPane implements Initializable, IPanelControllerGrilla<I${entity}Servicio>, EventHandler<ActionEvent> {
 	private I${entity}Servicio ${uncapitalizedEntityName}Servicio;
 	private Tab tab;
+	private ResourceBundle resource;
 
 	@FXML
 	private PanelControlesABM panelControlesABM;
@@ -56,20 +61,25 @@ public class PanelGrilla${entity} extends BorderPane implements Initializable, I
 #foreach($attribute in $entity.attributes)
 #if($attribute.isIntegerType())
 	@FXML
-	private TextField txt${attribute.name};
+	private NumberField txt${attribute.name};
 #end
 #if($attribute.isStringType())
 	@FXML
-	private TextField txt${attribute.name};
+	private StringField txt${attribute.name};
+#end
+#if($attribute.isBigDecimalType())
+	@FXML
+	private DecimalField txt${attribute.name};
 #end
 #end
 	
 	public PanelGrilla${entity}(Tab tab) {
 		this.tab = tab;
-       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
+		this.resource = ResourceBundle.getBundle("i18n.ValidationMessages");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
+		fxmlLoader.setResources(resource);
         
         try {
             fxmlLoader.load();
@@ -203,8 +213,8 @@ public class PanelGrilla${entity} extends BorderPane implements Initializable, I
 	
 	private void btnEditarAction(){
 		int itemSelected = tbl${entity}.getSelectionModel().getSelectedIndex();
-		if(itemSelected > 0){
-			new Panel${entity}(PanelGrilla${entity}.this, itemSelected);
+		if(itemSelected >= 0){
+			new Panel${entity}(PanelGrilla${entity}.this, tbl${entity}.getSelectionModel().getSelectedItem().getId${uncapitalizedEntityName}());
 		}
 	}
 }

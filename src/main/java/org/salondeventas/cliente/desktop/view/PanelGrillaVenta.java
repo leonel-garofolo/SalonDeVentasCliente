@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.javafx.controls.panels.PanelControlesABM;
 import org.salondeventas.cliente.desktop.modelo.Venta;
 import org.salondeventas.cliente.desktop.servicios.IVentaServicio;
 import org.salondeventas.cliente.desktop.servicios.impl.VentaServicio;
-import org.javafx.controls.panels.PanelControlesABM;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -80,10 +80,11 @@ public class PanelGrillaVenta extends BorderPane implements Initializable, IPane
 		});
 		loadGrilla();
 		this.autosize();
-
+		
+		panelControlesABM.setScene(ControllLogin.getScene());		
 		panelControlesABM.getBtnAgregar().setOnAction(this);
 		panelControlesABM.getBtnEditar().setOnAction(this);
-		panelControlesABM.getBtnEliminar().setOnAction(this);
+		panelControlesABM.getBtnEliminar().setOnAction(this);		
 		this.btnBuscar.setOnAction(this);
 		this.btnLimpiar.setOnAction(this);
 	}
@@ -173,9 +174,9 @@ public class PanelGrillaVenta extends BorderPane implements Initializable, IPane
 	}
 	
 	private void btnEditarAction(){
-		int itemSelected = tblVenta.getSelectionModel().getSelectedItem().getIdventa();
-		if(itemSelected > 0){
-			new PanelVenta(PanelGrillaVenta.this, itemSelected);
+		int itemSelected = tblVenta.getSelectionModel().getSelectedIndex();
+		if(itemSelected >= 0){
+			new PanelVenta(PanelGrillaVenta.this, tblVenta.getSelectionModel().getSelectedItem().getIdventa());
 		}
 	}
 }

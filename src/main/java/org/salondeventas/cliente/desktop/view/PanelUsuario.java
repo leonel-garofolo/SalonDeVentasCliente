@@ -14,14 +14,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.javafx.controls.panels.PanelControlesEdit;
 
-
-
+import org.javafx.controls.customs.DecimalField;
+import org.javafx.controls.customs.NumberField;
+import org.javafx.controls.customs.StringField;
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
 import org.salondeventas.cliente.desktop.modelo.Usuario;
 
 public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
 	private PanelGrillaUsuario father;
+	private ResourceBundle resource;
 
 	@FXML
 	private PanelControlesEdit panelControlesEdit;
@@ -31,13 +33,13 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
 
 
 	@FXML
-	private TextField txtidusuario;
+	private NumberField txtidusuario;
 
 	@FXML
-	private TextField txtclave;
+	private StringField txtclave;
 
 	@FXML
-	private TextField txtnombre;
+	private StringField txtnombre;
 
 	public PanelUsuario(PanelGrillaUsuario father) {
 		this.modoEdit = false;
@@ -67,10 +69,11 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
 	}
 
 	private void initComponentes(){
+		this.resource = ResourceBundle.getBundle("i18n.ValidationMessages");
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
+		fxmlLoader.setResources(this.resource);
 
         try {
             fxmlLoader.load();
@@ -89,13 +92,13 @@ public class PanelUsuario extends BorderPane implements EventHandler<ActionEvent
 	public void loadForm(Usuario usuario){
 		if(usuario !=null){
 			if(usuario.getIdusuario() != null){
-				txtidusuario.setText(String.valueOf(usuario.getIdusuario()));
+				txtidusuario.setValue(usuario.getIdusuario());
 			}
 			if(usuario.getClave() != null){
-				txtclave.setText(usuario.getClave());
+				txtclave.setValue(usuario.getClave());
 			}
 			if(usuario.getNombre() != null){
-				txtnombre.setText(usuario.getNombre());
+				txtnombre.setValue(usuario.getNombre());
 			}
 		}
 	}

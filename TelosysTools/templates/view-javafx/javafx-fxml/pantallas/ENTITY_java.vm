@@ -23,14 +23,16 @@ import javafx.scene.image.ImageView;
 #end
 #end
 
-
-
+import org.javafx.controls.customs.DecimalField;
+import org.javafx.controls.customs.NumberField;
+import org.javafx.controls.customs.StringField;
 import ${ROOT_PKG}.PropertyResourceBundleMessageInterpolator;
 import ${ROOT_PKG}.modelo.${entity.name};
 
 public class Panel${entity.name} extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
 	private PanelGrilla${entity.name} father;
+	private ResourceBundle resource;
 
 	@FXML
 	private PanelControlesEdit panelControlesEdit;
@@ -40,13 +42,17 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 
 #foreach($attribute in $entity.attributes)
 
-#if($attribute.isIntegerType() || $attribute.type == "BigDecimal")
+#if($attribute.isIntegerType())
 	@FXML
-	private TextField txt${attribute.name};
+	private NumberField txt${attribute.name};
+#end
+#if($attribute.isBigDecimalType())
+	@FXML
+	private DecimalField txt${attribute.name};
 #end
 #if($attribute.isStringType())
 	@FXML
-	private TextField txt${attribute.name};
+	private StringField txt${attribute.name};
 #end
 #if($attribute.isUtilDateType())
 	@FXML
@@ -86,10 +92,11 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 	}
 
 	private void initComponentes(){
+		this.resource = ResourceBundle.getBundle("i18n.ValidationMessages");
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
+		fxmlLoader.setResources(this.resource);
 
         try {
             fxmlLoader.load();
@@ -115,10 +122,10 @@ public class Panel${entity.name} extends BorderPane implements EventHandler<Acti
 #foreach($attribute in $entity.attributes)
 			if(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})() != null){
 #if(${attribute.isIntegerType()} || $attribute.type == "BigDecimal")
-				txt${attribute.name}.setText(String.valueOf(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})()));
+				txt${attribute.name}.setValue(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})());
 #end
 #if(${attribute.isStringType()})
-				txt${attribute.name}.setText(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})());
+				txt${attribute.name}.setValue(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})());
 #end			
 #if($attribute.isUtilDateType())			
 				dpr${attribute.name}.setValue(new java.sql.Date(${uncapitalizedEntityName}.get$fn.capitalize(${attribute.name})().getTime()).toLocalDate());		

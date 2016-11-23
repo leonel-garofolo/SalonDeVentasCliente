@@ -7,9 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import org.javafx.controls.customs.ComboBoxAutoComplete?>
-<?import org.javafx.controls.customs.StringField?>
-<?import org.javafx.controls.customs.NumberField?>
+<?import org.javafx.controls.customs.*?>
 <?import javafx.scene.layout.HBox?>
 <?import org.javafx.controls.panels.PanelControlesEdit?>
 
@@ -79,7 +77,7 @@
          	<HBox alignment="BASELINE_CENTER"  >
          		<children>
          			<Label style="-fx-font-size: 18px; -fx-font-weight: bold;-fx-text-fill: black;" text="%Venta.panel.field.total" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-	      			<NumberField style="-fx-font-size: 14px; -fx-font-weight: bold;-fx-text-fill: black;" fx:id="txttotal" editable="false" maxWidth="100" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+	      			<DecimalField style="-fx-font-size: 14px; -fx-font-weight: bold;-fx-text-fill: black;" fx:id="txttotal" editable="false" maxWidth="100" GridPane.columnIndex="7" GridPane.rowIndex="1" />
          		</children>         	
 	      	</HBox>
          </bottom>

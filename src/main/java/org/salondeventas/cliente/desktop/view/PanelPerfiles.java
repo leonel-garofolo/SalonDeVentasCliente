@@ -14,14 +14,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.javafx.controls.panels.PanelControlesEdit;
 
-
-
+import org.javafx.controls.customs.DecimalField;
+import org.javafx.controls.customs.NumberField;
+import org.javafx.controls.customs.StringField;
 import org.salondeventas.cliente.desktop.PropertyResourceBundleMessageInterpolator;
 import org.salondeventas.cliente.desktop.modelo.Perfiles;
 
 public class PanelPerfiles extends BorderPane implements EventHandler<ActionEvent>{
 	private boolean modoEdit = false;
 	private PanelGrillaPerfiles father;
+	private ResourceBundle resource;
 
 	@FXML
 	private PanelControlesEdit panelControlesEdit;
@@ -31,10 +33,10 @@ public class PanelPerfiles extends BorderPane implements EventHandler<ActionEven
 
 
 	@FXML
-	private TextField txtidperfiles;
+	private NumberField txtidperfiles;
 
 	@FXML
-	private TextField txtnombre;
+	private StringField txtnombre;
 
 	public PanelPerfiles(PanelGrillaPerfiles father) {
 		this.modoEdit = false;
@@ -64,10 +66,11 @@ public class PanelPerfiles extends BorderPane implements EventHandler<ActionEven
 	}
 
 	private void initComponentes(){
+		this.resource = ResourceBundle.getBundle("i18n.ValidationMessages");
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));
+		fxmlLoader.setResources(this.resource);
 
         try {
             fxmlLoader.load();
@@ -86,10 +89,10 @@ public class PanelPerfiles extends BorderPane implements EventHandler<ActionEven
 	public void loadForm(Perfiles perfiles){
 		if(perfiles !=null){
 			if(perfiles.getIdperfiles() != null){
-				txtidperfiles.setText(String.valueOf(perfiles.getIdperfiles()));
+				txtidperfiles.setValue(perfiles.getIdperfiles());
 			}
 			if(perfiles.getNombre() != null){
-				txtnombre.setText(perfiles.getNombre());
+				txtnombre.setValue(perfiles.getNombre());
 			}
 		}
 	}

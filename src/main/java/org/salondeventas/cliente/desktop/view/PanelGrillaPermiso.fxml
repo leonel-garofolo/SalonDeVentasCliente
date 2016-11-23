@@ -19,19 +19,19 @@
           <children>
         	 <HBox fx:id="hButtonFilter" >                     
       					 <children>
-      					 	<TextField fx:id="txtidpermiso" promptText="%Permiso.grilla.col.idpermiso" maxWidth="150" >
+      					 	<StringField fx:id="txtidpermiso" promptText="%Permiso.grilla.col.idpermiso" maxWidth="150" >
       					 		<tooltip><Tooltip text="%Permiso.grilla.col.idpermiso"></Tooltip></tooltip>
-      					 	</TextField>      					 	       			 				
+      					 	</StringField>      					 	       			 				
       					 </children>
       					 <children>
-      					 	<TextField fx:id="txtnombre" promptText="%Permiso.grilla.col.nombre" maxWidth="150" >
+      					 	<StringField fx:id="txtnombre" promptText="%Permiso.grilla.col.nombre" maxWidth="150" >
       					 		<tooltip><Tooltip text="%Permiso.grilla.col.nombre"></Tooltip></tooltip>
-      					 	</TextField>      					 	       			 				
+      					 	</StringField>      					 	       			 				
       					 </children>
       					 <children>
-      					 	<TextField fx:id="txtdescripcion" promptText="%Permiso.grilla.col.descripcion" maxWidth="150" >
+      					 	<StringField fx:id="txtdescripcion" promptText="%Permiso.grilla.col.descripcion" maxWidth="150" >
       					 		<tooltip><Tooltip text="%Permiso.grilla.col.descripcion"></Tooltip></tooltip>
-      					 	</TextField>      					 	       			 				
+      					 	</StringField>      					 	       			 				
       					 </children>
 						 <children>
       					 	<Button  fx:id="btnBuscar" text="Buscar" maxWidth="60" />      					 		      					 	       			 			

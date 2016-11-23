@@ -3,11 +3,11 @@ package org.salondeventas.cliente.desktop.view;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-import org.salondeventas.desktop.view.TableViewColumnResizePolicyDemoApp;
-
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,14 +15,18 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;		
 
 
 public class Principal extends AnchorPane {
-
+	private ResourceBundle resource;
+	
 	@FXML
 	private TabPane tabPane;
 	
@@ -60,11 +64,12 @@ public class Principal extends AnchorPane {
 		initComponentes();
 	}
 
-	private void initComponentes(){		
+	private void initComponentes(){	
+		this.resource = ResourceBundle.getBundle("i18n.ValidationMessages");
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(this.getClass().getSimpleName() + ".fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
-		fxmlLoader.setResources(ResourceBundle.getBundle("i18n.ValidationMessages"));		
+		fxmlLoader.setResources(resource);		
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
@@ -75,6 +80,28 @@ public class Principal extends AnchorPane {
 		Rectangle2D bounds = screen.getVisualBounds();	
 		this.setWidth(bounds.getWidth());
 		this.setHeight(bounds.getHeight());
+		
+		HBox hButtons = new HBox();
+		hButtons.setPadding(new Insets(15, 15, 0, 15));
+		
+		Image imageVenta = new Image(getClass().getResourceAsStream("/image/anadir-al-carrito.png"));		
+		Button btnVenta = new Button();		
+		btnVenta.setGraphic(new ImageView(imageVenta));	
+		btnVenta.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				handleItemVentaAction(event);				
+			}
+		});
+		hButtons.getChildren().addAll(btnVenta);
+		
+		Tab homeTab = new Tab();
+		homeTab.setContent(hButtons);
+		homeTab.closableProperty().set(false);
+		Image imageHome = new Image(getClass().getResourceAsStream("/image/casa.png"));
+		homeTab.setGraphic(new ImageView(imageHome));
+		tabPane.getTabs().add(homeTab);				
 	}
 
 	@FXML
@@ -95,56 +122,54 @@ public class Principal extends AnchorPane {
 	}	
 
 	@FXML
-	private void handleItemEmpresaAction(ActionEvent event) {
-		for(Tab unTab: tabPane.getTabs()){
-			if(unTab.getText().equals("Empresas")){
-				tabPane.getSelectionModel().select(unTab);				
-				return;
-			}			
-		}
-		
-		Tab tab = new Tab("Empresas");
+	private void handleItemEmpresaAction(ActionEvent event) {		
+		Tab tab = new Tab(resource.getString("pantalla.name.empresa"));
 		PanelGrillaEmpresa grilla = new PanelGrillaEmpresa(tab);
 		tab.setContent(grilla);
 		tabPane.getTabs().add(tab);	
+		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(tab);	
 	}
 
 	@FXML
 	private void handleItemProductoAction(ActionEvent event) {
-		Tab tab = new Tab("Productos");
+		Tab tab = new Tab(resource.getString("pantalla.name.producto"));		
 		PanelGrillaProducto grilla = new PanelGrillaProducto(tab);
-		tab.setContent(grilla);		
-		tabPane.getTabs().add(tab);	
+		tab.setContent(grilla);
+		tabPane.getTabs().add(tab);		
 		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
 		selectionModel.select(tab);
 	}
 
 	@FXML
 	private void handleItemUsuarioAction(ActionEvent event) {
-		Tab tab = new Tab("Usuarios");
-		TableViewColumnResizePolicyDemoApp grilla = new TableViewColumnResizePolicyDemoApp();
-		grilla.configureTable();
-		/*
+		Tab tab = new Tab(resource.getString("pantalla.name.usuario"));		
 		PanelGrillaUsuario grilla = new PanelGrillaUsuario(tab);
 		tab.setContent(grilla);
 		tabPane.getTabs().add(tab);	
 		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-		selectionModel.select(tab);
-		*/
-		tab.setContent(grilla);
-		tabPane.getTabs().add(tab);	
-		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-		selectionModel.select(tab);		
+		selectionModel.select(tab);			
 	}
 
 	@FXML
 	private void handleItemVentaAction(ActionEvent event) {
-		Tab tab = new Tab("Ventas");
+		Tab tab = new Tab(resource.getString("pantalla.name.venta"));
 		PanelGrillaVenta grilla = new PanelGrillaVenta(tab);
 		tab.setContent(grilla);
 		tabPane.getTabs().add(tab);	
+		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(tab);	
 	}
-
+	
+	@FXML
+	private void handleItemCantidadProductosAction(ActionEvent event) {		
+		Tab tab = new Tab(resource.getString("pantalla.name.vCantProdVendidos"));
+		PanelGrillaVCantProdVendidos grilla = new PanelGrillaVCantProdVendidos(tab);
+		tab.setContent(grilla);
+		tabPane.getTabs().add(tab);	
+		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(tab);	
+	}
 
 	@FXML
 	private void closeButtonAction(){
@@ -201,10 +226,5 @@ public class Principal extends AnchorPane {
 
 	public void setMyPane(AnchorPane myPane) {
 		this.anchorPane = myPane;
-	}
-	
-
-	public void setScene(Scene scene) {
-		this.scene = scene;
-	}		
+	}	
 }

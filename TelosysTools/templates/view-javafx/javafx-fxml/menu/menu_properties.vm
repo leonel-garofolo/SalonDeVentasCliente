@@ -1,0 +1,4 @@
+#Clases | Nombre
+#foreach( $entity in $selectedEntities )
+${ROOT_PKG}.view.PanelGrilla${entity}= Pantalla de ${entity.name}
+#end

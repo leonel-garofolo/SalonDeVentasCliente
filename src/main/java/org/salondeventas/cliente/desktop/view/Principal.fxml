@@ -25,6 +25,12 @@
 					<MenuItem mnemonicParsing="false" onAction="#handleItemVentaAction" text="%pantalla.name.venta" />
 					</items>
 				</Menu>
+				
+				<Menu mnemonicParsing="false" text="Informes">
+					<items>
+					<MenuItem mnemonicParsing="false" onAction="#handleItemCantidadProductosAction" text="%pantalla.name.vCantProdVendidos" />
+					</items>
+				</Menu>
 
                 <Menu mnemonicParsing="false" text="Ayuda">
                   <items>

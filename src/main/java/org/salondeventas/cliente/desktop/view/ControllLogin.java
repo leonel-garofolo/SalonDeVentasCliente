@@ -30,6 +30,10 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -44,7 +48,7 @@ import javafx.stage.WindowEvent;
  * @author Herudi
  */
 public class ControllLogin extends Application implements Initializable {
-	private Stage primaryStage;
+	private static Stage primaryStage;
 	
 	private Scene primaryLogin;
 	
@@ -79,6 +83,9 @@ public class ControllLogin extends Application implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		Image imageDecline = new Image(getClass().getResourceAsStream("/image/otro.png"));
+		btnLogin.setGraphic(new ImageView(imageDecline));		
+		
 		Platform.runLater(() -> {
 			new FadeInRightTransition(lblUserLogin).play();
 			new FadeInLeftTransition(lblWelcome).play();
@@ -143,6 +150,14 @@ public class ControllLogin extends Application implements Initializable {
 
 		fxmlLoader.setRoot(root);
 		this.primaryLogin = new Scene(root);		
+		this.primaryLogin.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+		    public void handle(KeyEvent ke) {
+		        if (ke.getCode() == KeyCode.ESCAPE) {
+		        	Platform.exit();
+					System.exit(0);
+		        }
+		    }
+		});
 		
 		Platform.runLater(() -> {
 			new FadeInRightTransition(lblUserLogin).play();
@@ -165,7 +180,7 @@ public class ControllLogin extends Application implements Initializable {
 		primaryStage.setX(400.0);
 		primaryStage.setY(200.0);
 		primaryStage.setWidth(493.0);
-		primaryStage.setHeight(327.0);										
+		primaryStage.setHeight(300.0);				
 	}
 	
 	private void preparedScenePrincipal(){		
@@ -196,4 +211,8 @@ public class ControllLogin extends Application implements Initializable {
 			alert.showAndWait();			
 		}
 	}		
+	
+	public static Scene getScene(){
+		return primaryStage.getScene();
+	}
 }
